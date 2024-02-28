@@ -2,20 +2,35 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from "moment";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 
 export const UserCalendar = () => {
 
+    const dispatch = useDispatch()
+    const events = useSelector(s => s.events)
+
+    useEffect(() => {
+        if (!events) {
+            dispatch(getAllEvents());
+
+        }
+    })
+
     const localizer = momentLocalizer(moment)
+
 
     const state = {
         events: [
             {
                 start: moment().toDate(),
                 end: moment().add(1, "days").toDate(),
-                title: "Somereetyj title",
+                title: `רארקאקר`,
+                prefession: "hgg",
+
             },
         ],
     };
@@ -52,7 +67,7 @@ export const UserCalendar = () => {
                 resizable
                 style={{ height: "50vh", width: "80vh" }}
                 rtl={true}
-                onSelectEvent = {onSelectEvent}
+                onSelectEvent={onSelectEvent}
             />
         </div>
     );
