@@ -9,6 +9,7 @@ import { Request } from "../pages/request"
 import { Offer } from "../pages/offer"
 import { SendEmail } from "../pages/sendEmail/sendEmail"
 import { AddComment } from "../pages/addComment"
+import { Calendar, UserCalendar } from "../pages/calendar"
 
 export const AppRouter = () => {
     return (
@@ -22,6 +23,7 @@ export const AppRouter = () => {
                     <Route path='/homeUser' element={<HomeUser />} />
                     <Route path='/request' element={<Request />} />
                     <Route path='/offer' element={<Offer />} />
+                    <Route path='/calendar' element={<UserCalendar />} />
                     <Route path="/sendEmail" element={<SendEmail />} />
                     <Route path="/addComment" element={<AddComment />} />
                 </Route>

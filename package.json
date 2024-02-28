@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "-": "^0.0.1",
+    "@babel/runtime": "^7.24.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -14,6 +15,8 @@
     "@types/react-dom": "^18.2.5",
     "axios": "^1.6.2",
     "dom": "^0.0.3",
+    "moment": "^2.30.1",
+    "popper": "^1.0.1",
     "primereact": "^10.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -48,5 +51,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-big-calendar": "^1.8.8",
+    "react-big-calendar": "^1.11.0"
   }
 }
