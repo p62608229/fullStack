@@ -16,11 +16,12 @@ const eventsSlice = createSlice({
             // מחזירה אובייקט שעליו 3 פונקציות
             // 1. לפני שהפעולה הסתיימה - pending לכאן נגיע במצב של
             .addCase(getAllEvents.fulfilled, (state, action) => {
-
                 const events = action.paylode.map((e) => {
-                    return {start: e.start, end: e.end, title: `profession ${e.proffetion}`, moreOption: {e}
-                }})
-                state = action.paylode
+                    return {
+                        start: e.start, end: e.end, title: `profession ${e.proffetion}`, moreOption: { e }
+                    }
+                })
+                state = events
             })
     }
 });

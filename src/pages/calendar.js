@@ -4,6 +4,7 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAllEvents } from '../Redux/API/events';
 
 
 
@@ -16,7 +17,6 @@ export const UserCalendar = () => {
     useEffect(() => {
         if (!events) {
             dispatch(getAllEvents());
-
         }
     })
 
