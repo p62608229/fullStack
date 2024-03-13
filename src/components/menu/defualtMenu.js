@@ -8,7 +8,8 @@ export const DefualtMenu = () => {
             <button onClick={(e) => navigate("/login")}>sign in</button>
             <button onClick={(e) => navigate("/register")}>sign up</button>
             <button onClick={(e) => navigate("/about")}>about</button>
-            <button onClick={(e) => navigate("/")}>home</button>
+
+
         </>
     )
 }

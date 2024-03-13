@@ -11,5 +11,4 @@ export const CommentList = () => {
             <div>{c.namecomment} : {c.contentCommentv}</div>
         )}
     </>
-
 }

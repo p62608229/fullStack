@@ -8,7 +8,8 @@ import { HomeUser } from "../pages/homeUser"
 import { Request } from "../pages/request"
 import { Offer } from "../pages/offer"
 import { SendEmail } from "../pages/sendEmail/sendEmail"
-import { AddComment } from "../pages/addComment"
+import { CommentPage } from "../components/pages/commentPage"
+import { CheckReq } from "../pages/checkreq"
 
 export const AppRouter = () => {
     return (
@@ -23,7 +24,10 @@ export const AppRouter = () => {
                     <Route path='/request' element={<Request />} />
                     <Route path='/offer' element={<Offer />} />
                     <Route path="/sendEmail" element={<SendEmail />} />
-                    <Route path="/addComment" element={<AddComment />} />
+                    <Route path="/commentsPage" element={<CommentPage />} />
+                    <Route path="/checkreq" element={<CheckReq />} />
+                   
+
                 </Route>
             </Routes>
         </BrowserRouter>

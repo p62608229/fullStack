@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { GetComments, getAllCustomers } from "../Redux/API/api"
+import { GetComments, getAllCustomers } from "../Redux/API/comment"
 import { CommentPage, commentPage } from "./pages/commentPage"
 import { Outlet, useNavigate } from "react-router-dom"
 

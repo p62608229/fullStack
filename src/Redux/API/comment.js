@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../../utils/URLs";
+import { Addcomment } from "../../components/add";
 
 export const GetComments = createAsyncThunk(
 
@@ -8,10 +9,10 @@ export const GetComments = createAsyncThunk(
     'comments/GetComment',
     // שנשלח מהקומפוננטה person לכאן מגיע ה 
     async () => {
-        const response = await axios.get(
-            `${BASE_URL}/comment`);
+        const response = await axios.get(`${BASE_URL}/comment`);
 
-            const comments = response.data;
+            const comments = response.data;     
+                   
   
         // reducerב fullfiled מה שחוזר מהפונקציה יבוא לפונקציה ה 
         // rejected אם זה נכשל אז השגיאה תגיע לפונקציית ה
@@ -22,33 +23,25 @@ export const GetComments = createAsyncThunk(
 export const AddComment = createAsyncThunk(
     'comments/AddComment',
     async (newcomment) => {
+        console.log(newcomment, "newComment")
         const response = await axios.post(`${BASE_URL}/comment` ,newcomment);
         console.log(response.data, "respo");
-
         const AddComment = response.data; 
-        return AddComment
+        return AddComment;
     }
 )
-export const Login = createAsyncThunk(
-    'user/login',
-    async () => {
-        const response = await axios.get(`${BASE_URL}/User` );
-        console.log(response, "respo");
 
-        const Login = response.data; 
-        return Login
-    }
-)
-export const Register = createAsyncThunk(
-    'user/register',
-    async () => {
-        const response = await axios.get(`${BASE_URL}/User` );
-        console.log(response, "respo");
 
-        const Register = response.data; 
-        return Register
-    }
-)
+// export const Register = createAsyncThunk(
+//     'user/register',
+//     async () => {
+//         const response = await axios.get(`${BASE_URL}/User` );
+//         console.log(response, "respo");
+
+//         const Register = response.data; 
+//         return Register
+//     }
+// )
 
 //   export const createNewCustomer = createAsyncThunk(
 

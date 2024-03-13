@@ -1,12 +1,8 @@
-
-
 import { useState, useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 export  const EditCustomer = (props) => {
   const [newCustomer, setNewCustomer] = useState(props.customer);
   // const dispatch = useDispatch();
-
-
   useEffect(() => {
       setNewCustomer(props.customer)
   }, [props.customer])
@@ -18,13 +14,8 @@ export  const EditCustomer = (props) => {
     setNewCustomer({ ...newCustomer, [name]: value});
   };
 
-
-
   const handleSubmit = async () => {
 
-    
-
-  
   };
 
   return (

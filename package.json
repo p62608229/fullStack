@@ -1,5 +1,5 @@
 {
-  "name": "my-app1",
+  "name": "fullstack",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,7 +12,7 @@
     "@types/node": "^17.0.45",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
-    "axios": "^1.6.2",
+    "axios": "^1.6.7",
     "dom": "^0.0.3",
     "primereact": "^10.5.0",
     "react": "^18.2.0",

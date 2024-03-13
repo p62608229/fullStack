@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { AddComment, GetComments } from '../API/comment';
+import { profession } from '../API/profession';
 
 // איתחול של הסטיט
 const initialState = {
-  comments: [],
+  profession: null,
   status: "init"
 }
 
 
-export const commentSlice = createSlice({
+export const proffesionSlice = createSlice({
   // שם הסלייס – אסור לשתי סלייסים להיות בעלי אותו שם
-  name: 'comment',
+  name: 'profession',
   initialState,
   reducers: {
   },
@@ -20,37 +20,23 @@ export const commentSlice = createSlice({
       // updatePersonServerAction - פונקצית ה asyncThunk
       // מחזירה אובייקט שעליו 3 פונקציות
       // 1. לפני שהפעולה הסתיימה - pending לכאן נגיע במצב של
-      .addCase(GetComments.pending, (state, action) => {
+      .addCase(profession.pending, (state, action) => {
         state.status = "pending"
       })
       // 2. fulfilled -> הצלחה - לכאן נגע כאשר הפעולה הסתימה בהצלחה
-      .addCase(GetComments.fulfilled, (state, action) => {
-        state.comments = action.payload;
-        
+      .addCase(profession.fulfilled, (state, action) => {
+        state.profession = action.payload;
+      debugger
         state.status = "success"
-
 
       })
       // 3. לכאן נגיע במקרה של כישלון
-      .addCase(GetComments.rejected, (state, action) => {
+      .addCase(profession.rejected, (state, action) => {
         state.status = "error"
       })
-      // .addCase(AddComment.pending, (state, action) => {
-      //   state.status = "pending"
-      // })
-
-      .addCase(AddComment.fulfilled, (state, action) => {
-        state.status = "success"
-        debugger
-        state.comments.push(action.payload)
-      })
-
-
-      .addCase(AddComment.rejected, (state, action) => {
-        state.status = "error"
-      })
+  
 
   },
 
 })
-export default commentSlice.reducer
+export default proffesionSlice.reducer

@@ -4,11 +4,14 @@ import { UserMenu } from "./userMenu";
 import { DefualtMenu } from "./defualtMenu";
 
 export const Menu = () => {
+
     const currentUser = useSelector(s => s.users.currentUser);
+    const navigate = useNavigate();
 
     return (
         <>
-        logo
+            logo
+            <button onClick={(e) => navigate("/")}>home</button>
             {currentUser ? <UserMenu /> : <DefualtMenu />}
             <Outlet />
         </>

@@ -14,17 +14,20 @@ export const Login = () => {
     const dispatch = useDispatch();
 
     const hundleSubmit = async () => {
+
         const url = `${BASE_URL}/User/${name}/${password}`
         console.log("log in", url)
         const response = await axios.get(url);
         // // const response = await axios.post(`${BASE_URL}/login`, {name, password});
         const currentUser = response.data
         console.log(response.data)
+        
         if (currentUser) {
             dispatch(updateCurrentUser(currentUser));
             navigate("/homeUser");
         }
         else
+        
             setLoginError(true);
     }
 

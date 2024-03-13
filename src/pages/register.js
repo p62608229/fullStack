@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { BASE_URL } from "../utils/URLs";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -8,49 +8,64 @@ import { updateCurrentUser } from "../Redux/slices/users";
 export const Register = () => {
 
     const [newUserError, setnewUserError] = useState(null);
-    const [id, setid] = useState();
-    const [firstName, setfirstName] = useState();
-    const [lastName, setlasttName] = useState();
-    const [city, setcity] = useState();
-    const [street, setstreet] = useState();
-    const [email, setemail] = useState();
-    const [phone, setphone] = useState();
-    const [password, setPassword] = useState();
+    const [Id, setId] = useState();
+    const [FirstName, setfirstName] = useState();
+    const [LastName, setlastName] = useState();
+    const [City, setCity] = useState();
+    const [Address, setAddress] = useState();
+    const [Mail, setMail] = useState();
+    const [Phone, setPhone] = useState();
+    const [Password, setPassword] = useState();
+    const [Postalcode, setPostalcode] = useState();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handlBlur = (e) => {
         console.log(e.target.id)
         if (!e.target.value)
             setnewUserError(`${e.target.id} not can be null`)
+        else {
+            setnewUserError(null)
+        }
     }
 
     const hundleSubmit = async () => {
 
-        const user = { id, firstName, lastName, password, email, city, street, phone }
-        const url = `${BASE_URL}/User`
-        console.log("newUser", user)
-        const response = await axios.put(url, user);
+        try {
+            const user = { Id, FirstName, LastName, Password, Address, Postalcode, City, Mail, Phone }
+            const url = `${BASE_URL}/User`
 
-        const currentUser = response.data
-        console.log(response.data, "response")
-        dispatch(updateCurrentUser(currentUser));
-        navigate("/homeUser");
+            console.log("newUser", typeof (JSON.stringify(user)))
+            const response = await axios.put(url, user);
+
+            const currentUser = response.data
+            console.log(response.data, "response")
+            dispatch(updateCurrentUser(currentUser));
+            if (response.data) {
+                navigate("/homeUser");
+            }
+            else {
+                setnewUserError("some error")
+            }
+        } catch (e) {
+            setnewUserError("some error")
+
+        }
 
     }
-
     return (
         <div>
-            <input placeholder="id" onChange={(e) => { setid(e.target.value) }} onBlur={(e) => handlBlur(e)} id="id" />
-            <input placeholder="first name" onChange={(e) => { setfirstName(e.target.value) }} onBlur={(e) => handlBlur(e)} id="first name" />
-            <input placeholder="input lastName" onChange={(e) => { setlasttName(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Last name" />
-            <input placeholder="input city" onChange={(e) => { setcity(e.target.value) }} onBlur={(e) => handlBlur(e)} id="city" />
-            <input placeholder="input street" onChange={(e) => { setstreet(e.target.value) }} onBlur={(e) => handlBlur(e)} id="street" />
-            <input placeholder="input email" onChange={(e) => { setemail(e.target.value) }} onBlur={(e) => handlBlur(e)} id="email" />
-            <input placeholder="input phone" onChange={(e) => { setphone(e.target.value) }} onBlur={(e) => handlBlur(e)} id="phone" />
-            <input placeholder="input password" onChange={(e) => { setPassword(e.target.value) }}onBlur={(e) => handlBlur(e)} id="password"  />
+            <input placeholder="Id" onChange={(e) => { setId(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Id" />
+            <input placeholder="FirstName" onChange={(e) => { setfirstName(e.target.value) }} onBlur={(e) => handlBlur(e)} id="FirstName" />
+            <input placeholder="LastName" onChange={(e) => { setlastName(e.target.value) }} onBlur={(e) => handlBlur(e)} id="LastName" />
+            <input placeholder="City" onChange={(e) => { setCity(e.target.value) }} onBlur={(e) => handlBlur(e)} id="City" />
+            <input placeholder="Postalcode" onChange={(e) => { setPostalcode(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Postalcode" />
+            <input placeholder="Mail" onChange={(e) => { setMail(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Mail" />
+            <input placeholder="Phone" onChange={(e) => { setPhone(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Phone" />
+            <input placeholder="Password" onChange={(e) => { setPassword(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Password" />
+            <input placeholder="Address" onChange={(e) => { setAddress(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Address" />
             <button onClick={hundleSubmit}>submit</button>
-            <Link to='/login'>sign in</Link>
             {newUserError ? <>{newUserError}</> : <></>}
+
         </div>
     )
 

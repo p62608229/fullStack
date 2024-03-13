@@ -2,19 +2,20 @@
 
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddComment, createNewCustomer } from '../Redux/API/api';
+import { AddComment, createNewCustomer } from '../Redux/API/comment';
 
 export const Addcomment = (props) => {
 
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.addcomments.currentUser);
+  const currentUser = useSelector(state => state.users.currentUser);
+  console.log(currentUser, "current user from add comments")
   const [commentv, setCommentv] = useState();
 
   const handleSubmit =  () => {
     const newComment = {
       namecomment: currentUser.name,
       ContentCommentv: commentv,
-      CommentUserId: "12345678",
+      CommentUserId: currentUser.id,
     }
 
     dispatch(AddComment(newComment))

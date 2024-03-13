@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Main } from './components/main';
 import { Provider, useDispatch } from 'react-redux';
 import { store } from './Redux/store';
-import { GetComments } from './Redux/API/api';import { AppRouter } from './app/router';
+import { GetComments } from './Redux/API/comment';import { AppRouter } from './app/router';
 
 function App() {
 
