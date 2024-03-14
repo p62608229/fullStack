@@ -12,8 +12,7 @@ export const commentSlice = createSlice({
   // שם הסלייס – אסור לשתי סלייסים להיות בעלי אותו שם
   name: 'comment',
   initialState,
-  reducers: {
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -50,4 +49,5 @@ export const commentSlice = createSlice({
   },
 
 })
+
 export default commentSlice.reducer

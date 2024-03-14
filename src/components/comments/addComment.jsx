@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddComment, createNewCustomer } from '../Redux/API/comment';
 import { useNavigate } from 'react-router-dom';
+import { AddComment } from '../../Redux/API/comment';
 
-export const Addcomment = () => {
+export const Addcomment = (props) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export const Addcomment = () => {
       CommentUserId: currentUser.id,
     }
     dispatch(AddComment(newComment))
-    navigate("/comments")
+    props.closeMe()
   };
 
   return (

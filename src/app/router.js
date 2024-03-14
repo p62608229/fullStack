@@ -7,12 +7,12 @@ import { Register } from "../pages/register"
 import { Request } from "../pages/request"
 import { Offer } from "../pages/offer"
 import { SendEmail } from "../pages/sendEmail/sendEmail"
-import { CommentPage } from "../components/comments/commentPage"
+import { CommentPage } from "../pages/commentPage"
 import { CheckReq } from "../pages/checkreq"
-import { ShowAllComments } from "../pages/comments/showAllComments"
-import { Addcomment } from "../pages/comments/addComment"
+import { Addcomment } from "../components/comments/addComment"
 import Profile from "../pages/profile"
 import { UserCalendar } from "../pages/calendar"
+import { CommentsByCurrentUserId } from "../components/comments/commentsByCurrentUserId"
 
 export const AppRouter = () => {
     return (
@@ -25,12 +25,13 @@ export const AppRouter = () => {
                     <Route path='/about' element={<About />} />
                     <Route path='/request' element={<Request />} />
                     <Route path='' element={<Home />} />
-                    <Route path="profile" element={<Profile />} />
+                    <Route path="profile" element={<Profile />}>
+                        <Route path="comments" element={<CommentsByCurrentUserId />} />
+                    </Route>
                     <Route path='offer' element={<Offer />} />
                     <Route path="sendEmail" element={<SendEmail />} />
-                    {/* <Route path="/commentsPage" element={<CommentPage />} /> */}
                     <Route path="comments" >
-                        <Route path="" element={<ShowAllComments />} />
+                        <Route path="" element={<CommentPage />} />
                         <Route path="new" element={<Addcomment />} />
                     </Route>
                     <Route path="calendar" element={<UserCalendar />} />
