@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { updateCurrentUser } from "../Redux/slices/users";
 
 
-export const Login = () => {
+export const Loginn = () => {
 
     const [loginError, setLoginError] = useState(false);
     const [name, setName] = useState();

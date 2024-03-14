@@ -1,7 +1,6 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 import { Home } from "../pages/home"
 import { Menu } from "../components/menu/menu"
-import { Login } from "../pages/login"
 import { About } from "../pages/about"
 import { Register } from "../pages/register"
 import { Request } from "../pages/request"
@@ -11,12 +10,14 @@ import { CommentPage } from "../pages/commentPage"
 import { CheckReq } from "../pages/checkreq"
 import { Addcomment } from "../components/comments/addComment"
 import { UserCalendar } from "../pages/calendar"
-import { CommentsByCurrentUserId, CurrentUserComments } from "../components/profile/currentUserComments"
+import { CurrentUserComments } from "../components/profile/currentUserComments"
 import { Profile } from "../components/profile/profile"
 import { EditProfile } from "../components/profile/editProfile"
 import { ProfileMenu } from "../components/profile/profileMenu"
 import { CurrentUserOffers } from "../components/profile/currentUserOffers"
 import { CurrentUserRequests } from "../components/profile/currentUserRequests"
+import { Login } from "../pages/login"
+import { Loginn } from "../~not use/login"
 
 export const AppRouter = () => {
     return (
@@ -24,7 +25,7 @@ export const AppRouter = () => {
             <Routes>
                 <Route path='' element={<Menu />}>
                     <Route path='' element={<Home />} />
-                    <Route path='login' element={<Login />} />
+                    <Route path='login' element={<Loginn />} />
                     <Route path='register' element={<Register />} />
                     <Route path='about' element={<About />} />
                     <Route path='request' element={<Request />} />
