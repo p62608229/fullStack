@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { Main } from './components/main';
+import { useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import { store } from './Redux/store';
-import { GetComments } from './Redux/API/comment';import { AppRouter } from './app/router';
+import { GetComments } from './Redux/API/comment'; import { AppRouter } from './app/router';
 
 function App() {
 

@@ -10,23 +10,31 @@ import { SendEmail } from "../pages/sendEmail/sendEmail"
 import { CommentPage } from "../pages/commentPage"
 import { CheckReq } from "../pages/checkreq"
 import { Addcomment } from "../components/comments/addComment"
-import Profile from "../pages/profile"
 import { UserCalendar } from "../pages/calendar"
-import { CommentsByCurrentUserId } from "../components/comments/commentsByCurrentUserId"
+import { CommentsByCurrentUserId, CurrentUserComments } from "../components/profile/currentUserComments"
+import { Profile } from "../components/profile/profile"
+import { EditProfile } from "../components/profile/editProfile"
+import { ProfileMenu } from "../components/profile/profileMenu"
+import { CurrentUserOffers } from "../components/profile/currentUserOffers"
+import { CurrentUserRequests } from "../components/profile/currentUserRequests"
 
 export const AppRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Menu />}>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Register />} />
-                    <Route path='/about' element={<About />} />
-                    <Route path='/request' element={<Request />} />
+                <Route path='' element={<Menu />}>
                     <Route path='' element={<Home />} />
-                    <Route path="profile" element={<Profile />}>
-                        <Route path="comments" element={<CommentsByCurrentUserId />} />
+                    <Route path='login' element={<Login />} />
+                    <Route path='register' element={<Register />} />
+                    <Route path='about' element={<About />} />
+                    <Route path='request' element={<Request />} />
+                    <Route path="profile" element={<ProfileMenu />}>
+                        <Route path="" element={<Profile />} />
+                        <Route path="edit" element={<EditProfile />} />
+                        <Route path="offers" element={<CurrentUserOffers />} />
+                        <Route path="requests" element={<CurrentUserRequests />} />
+                        <Route path="comments" element={<CurrentUserComments />} />
+                        <Route path="calendar" element={<UserCalendar />} />
                     </Route>
                     <Route path='offer' element={<Offer />} />
                     <Route path="sendEmail" element={<SendEmail />} />

@@ -1,6 +1,4 @@
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteCurrentUser } from "../../Redux/slices/users";
 import { Menubar } from 'primereact/menubar';
 
 

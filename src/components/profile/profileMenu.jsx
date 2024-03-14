@@ -2,32 +2,46 @@
 import { useRef } from 'react';
 import { Menu } from 'primereact/menu';
 import { useDispatch } from 'react-redux';
-import { deleteCurrentUser } from '../Redux/slices/users';
+import { deleteCurrentUser } from '../../Redux/slices/users';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-export default function Profile() {
+export const ProfileMenu = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const items = [
         {
+            label: "profile", icon: "pi pi-user", command: () => { navigate("/profile") }
+        },
+        {
             label: 'my actions',
-            className: "file1",
             items: [
                 {
                     label: 'requests',
-                    icon: 'pi pi-question'
+                    icon: 'pi pi-question',
+                    command: () => { navigate("./requests") }
                 },
                 {
                     label: 'offers',
-                    icon: 'pi pi-wrench'
+                    icon: 'pi pi-wrench',
+                    command: () => { navigate("./offers") }
                 },
                 {
                     label: 'comments',
                     icon: 'pi pi-comment',
-                    command: () => { navigate("comments") }
+                    command: () => { navigate("./comments") }
                 }
+            ]
+        },
+        {
+            label: 'calendar', items: [
+                {
+                    label: 'calendar',
+                    icon: 'pi pi-calendar',
+                    command: () => { navigate("./calendar") }
+                }
+
             ]
         },
         {
@@ -36,6 +50,7 @@ export default function Profile() {
                 {
                     label: 'Edit Profile',
                     icon: 'pi pi-user-edit',
+                    command: () => { navigate("./edit") }
                 },
                 {
                     label: 'Logout',

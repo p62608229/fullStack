@@ -10,7 +10,6 @@ import offer, { addNewOffer } from "../Redux/slices/offer";
 export const Offer = () => {
 
     const currentUser = useSelector(s => s.users.currentUser)
-
     const [professionCode, setProfessionCode] = useState()
     const [newUserError, setnewUserError] = useState(null);
     const [PriceForWork, setPriceForWork] = useState();
