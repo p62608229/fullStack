@@ -20,7 +20,9 @@ export const Addcomment = (props) => {
       CommentUserId: currentUser.id,
     }
     dispatch(AddComment(newComment))
-    props.closeMe()
+    if (props.closeMe)
+      props.closeMe()
+    else navigate("/")
   };
 
   return (

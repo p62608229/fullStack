@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Menubar } from 'primereact/menubar';
+import { BackAndNextButtons } from "./backAndNextButtons";
 
 
 export const UserMenu = () => {
 
   const navigate = useNavigate();
+  const end = <BackAndNextButtons />
 
   const userMenuItems = [
     { icon: 'pi pi-user', command: () => { navigate("/profile") } },
@@ -26,7 +28,7 @@ export const UserMenu = () => {
 
   return (
     <div className="card">
-      <Menubar model={userMenuItems} />
+      <Menubar model={userMenuItems} end={end}/>
     </div>
   )
 }
