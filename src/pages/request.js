@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/URLs";
 
+
 export const Request = ()=> { 
   
-
         const pro = [{code: 5, name: "hhh"}, {code: 54, name: "hh"}]
         const [selectedProCode, setSelectedProCode] = useState()
         const [newUserError, setnewUserError] = useState(null);
@@ -20,9 +20,6 @@ export const Request = ()=> {
         const [city, Setcity] = useState();
         const [note, Setnote] = useState();
         const [offerUserId, SetofferUserId] = useState();
-
-
-    
     
         // const currentUser = useSelector(s => s.users.currentUser)
     
@@ -80,4 +77,3 @@ export const Request = ()=> {
         )
     }
     
-  

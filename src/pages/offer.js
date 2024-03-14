@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/URLs";
-import { ProfessionSelector } from "../components/pages/profession";
+import { ProfessionSelector } from "../components/profession";
 import offer, { addNewOffer } from "../Redux/slices/offer";
 
 
@@ -77,6 +77,5 @@ export const Offer = () => {
 
             professionCode {professionCode}
         </div>
-
     )
 }

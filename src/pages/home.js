@@ -1,8 +1,8 @@
-import { CommentList } from "../components/pages/commentList";
+import { CommentList } from "../components/comments/commentList";
 
 export function Home() {
     return (<>
-        home page
+        home page 
 
         <CommentList />
     </>)

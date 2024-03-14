@@ -5,12 +5,13 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { updateCurrentUser } from "../Redux/slices/users";
 
+
 export const Login = () => {
 
     const [loginError, setLoginError] = useState(false);
     const [name, setName] = useState();
     const [password, setPassword] = useState();
-    const navigate =  useNavigate();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const hundleSubmit = async () => {
@@ -21,13 +22,12 @@ export const Login = () => {
         // // const response = await axios.post(`${BASE_URL}/login`, {name, password});
         const currentUser = response.data
         console.log(response.data)
-        
+
         if (currentUser) {
             dispatch(updateCurrentUser(currentUser));
-            navigate("/homeUser");
+            navigate("/");
         }
         else
-        
             setLoginError(true);
     }
 
@@ -40,5 +40,4 @@ export const Login = () => {
             {loginError ? <>some error in connected</> : <></>}
         </div>
     )
-
 }

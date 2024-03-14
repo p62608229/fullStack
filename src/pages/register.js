@@ -41,7 +41,7 @@ export const Register = () => {
             console.log(response.data, "response")
             dispatch(updateCurrentUser(currentUser));
             if (response.data) {
-                navigate("/homeUser");
+                navigate("/");
             }
             else {
                 setnewUserError("some error")
@@ -52,6 +52,7 @@ export const Register = () => {
         }
 
     }
+    
     return (
         <div>
             <input placeholder="Id" onChange={(e) => { setId(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Id" />

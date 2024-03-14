@@ -26,7 +26,7 @@ export const commentSlice = createSlice({
       // 2. fulfilled -> הצלחה - לכאן נגע כאשר הפעולה הסתימה בהצלחה
       .addCase(GetComments.fulfilled, (state, action) => {
         state.comments = action.payload;
-        
+
         state.status = "success"
 
 
@@ -41,11 +41,8 @@ export const commentSlice = createSlice({
 
       .addCase(AddComment.fulfilled, (state, action) => {
         state.status = "success"
-        debugger
         state.comments.push(action.payload)
       })
-
-
       .addCase(AddComment.rejected, (state, action) => {
         state.status = "error"
       })

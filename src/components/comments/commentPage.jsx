@@ -4,34 +4,24 @@ import { useState } from "react"
 import { FailedConnectToDB } from "../shared/failedConnectToDB"
 import { Spinner } from "../shared/sppiner."
 import { CommentList } from "./commentList"
-import  {  Addcomment } from "../add"
+import { Addcomment } from "../add"
 
 export const CommentPage = () => {
-
     
-
     const status = useSelector(s => s.comments.status)
     const currentUser = useSelector(s => s.users.currentUser)
-  
 
-    const [ isAddOpen, setIsAddOpen] = useState(false);
-
-
+    const [isAddOpen, setIsAddOpen] = useState(false);
 
     function closeAddPanel() {
         setIsAddOpen(false);
     }
     return <>
-   
-       { currentUser && <button onClick={() => {setIsAddOpen(prev => !prev)}}>הוספת תגובה</button> }
+        {currentUser && <button onClick={() => { setIsAddOpen(prev => !prev) }}>הוספת תגובה</button>}
         <button onClick={closeAddPanel}>סגור</button>
-      {isAddOpen &&  <Addcomment  closeMe={closeAddPanel}/> }
-       
-      { status == 'error' && <FailedConnectToDB />}
-       { status == 'pending' && <Spinner />}
-       { status == 'success' && <CommentList />}
-
-      
-
+        {isAddOpen && <Addcomment closeMe={closeAddPanel} />}
+        {status == 'error' && <FailedConnectToDB />}
+        {status == 'pending' && <Spinner />}
+        {status == 'success' && <CommentList />}
     </>
 }

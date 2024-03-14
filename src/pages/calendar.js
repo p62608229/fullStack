@@ -1,12 +1,10 @@
-import { Calendar, momentLocalizer } from 'react-big-calendar'
+// import { Calendar } from 'react-big-calendar'
 import moment from "moment";
 
-import "react-big-calendar/lib/css/react-big-calendar.css";
+// import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllEvents } from '../Redux/API/events';
-
-
 
 
 export const UserCalendar = () => {
@@ -20,7 +18,6 @@ export const UserCalendar = () => {
         }
     })
 
-    const localizer = momentLocalizer(moment)
 
 
     const state = {
@@ -57,7 +54,7 @@ export const UserCalendar = () => {
     return (
         <div>
             calnder
-            <Calendar
+            {/* <Calendar
                 defaultDate={moment().toDate()}
                 defaultView="month"
                 events={state.events}
@@ -68,9 +65,7 @@ export const UserCalendar = () => {
                 style={{ height: "50vh", width: "80vh" }}
                 rtl={true}
                 onSelectEvent={onSelectEvent}
-            />
+            /> */}
         </div>
     );
 }
-
-

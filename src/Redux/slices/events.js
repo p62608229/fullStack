@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Login } from '../API/api';
 import { getAllEvents } from '../API/events';
 
 // איתחול של הסטיט

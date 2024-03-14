@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { profession } from "../../Redux/API/profession";
+import { profession } from "../Redux/API/profession";
 
 
 export const ProfessionSelector = (props) => {

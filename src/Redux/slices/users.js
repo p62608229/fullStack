@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-
 // איתחול של הסטיט
 const initialState = {
-  currentUser: null,
+  currentUser: {},
 }
 
 export const usersSlice = createSlice({
