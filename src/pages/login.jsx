@@ -4,11 +4,8 @@ import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
-import { Dialog } from 'primereact/dialog';
-import { Divider } from 'primereact/divider';
 import { classNames } from 'primereact/utils';
-// import { CountryService } from '../service/CountryService';
-import '../css/register.css'
+import '../css/form.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateCurrentUser } from '../Redux/slices/users';
@@ -67,8 +64,8 @@ export const Login = () => {
         <div className="form-demo" style={{ padding: "30px" }}>
             <div className="flex justify-content-center">
                 <div className="card">
-                    <h3 className="text-center">login</h3>
-                    <p className="text-center">new user? <Link to="/register" style={{ color: "blue" }}>register now</Link></p>
+                    <h5 className="text-center">login</h5>
+                    {/* <p className="text-center">new user? <Link to="/register" style={{ color: "blue" }}>register now</Link></p> */}
                     <Form onSubmit={onSubmit} initialValues={{ name: '', password: '' }} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
                             <Field name="name" render={({ input, meta }) => (

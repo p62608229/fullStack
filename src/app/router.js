@@ -2,7 +2,6 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 import { Home } from "../pages/home"
 import { Menu } from "../components/menu/menu"
 import { About } from "../pages/about"
-import { Register } from "../pages/register"
 import { Request } from "../pages/request"
 import { Offer } from "../pages/offer"
 import { SendEmail } from "../pages/sendEmail/sendEmail"
@@ -17,7 +16,7 @@ import { ProfileMenu } from "../components/profile/profileMenu"
 import { CurrentUserOffers } from "../components/profile/currentUserOffers"
 import { CurrentUserRequests } from "../components/profile/currentUserRequests"
 import { Login } from "../pages/login"
-import { Loginn } from "../~not use/login"
+import { Register } from "../pages/register"
 
 export const AppRouter = () => {
     return (
