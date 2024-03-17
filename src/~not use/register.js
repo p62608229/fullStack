@@ -5,7 +5,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { updateCurrentUser } from "../Redux/slices/users";
 
-export const Register = () => {
+export const Registerr = () => {
 
     const [newUserError, setnewUserError] = useState(null);
     const [Id, setId] = useState();
@@ -55,15 +55,15 @@ export const Register = () => {
     
     return (
         <div>
-            <input placeholder="Id" onChange={(e) => { setId(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Id" />
+            {/* <input placeholder="Id" onChange={(e) => { setId(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Id" />
             <input placeholder="FirstName" onChange={(e) => { setfirstName(e.target.value) }} onBlur={(e) => handlBlur(e)} id="FirstName" />
-            <input placeholder="LastName" onChange={(e) => { setlastName(e.target.value) }} onBlur={(e) => handlBlur(e)} id="LastName" />
-            <input placeholder="City" onChange={(e) => { setCity(e.target.value) }} onBlur={(e) => handlBlur(e)} id="City" />
+            <input placeholder="LastName" onChange={(e) => { setlastName(e.target.value) }} onBlur={(e) => handlBlur(e)} id="LastName" /> */}
+            {/* <input placeholder="City" onChange={(e) => { setCity(e.target.value) }} onBlur={(e) => handlBlur(e)} id="City" /> */}
             <input placeholder="Postalcode" onChange={(e) => { setPostalcode(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Postalcode" />
-            <input placeholder="Mail" onChange={(e) => { setMail(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Mail" />
+            {/* <input placeholder="Mail" onChange={(e) => { setMail(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Mail" /> */}
             <input placeholder="Phone" onChange={(e) => { setPhone(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Phone" />
-            <input placeholder="Password" onChange={(e) => { setPassword(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Password" />
-            <input placeholder="Address" onChange={(e) => { setAddress(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Address" />
+            {/* <input placeholder="Password" onChange={(e) => { setPassword(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Password" /> */}
+            {/* <input placeholder="Address" onChange={(e) => { setAddress(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Address" /> */}
             <button onClick={hundleSubmit}>submit</button>
             {newUserError ? <>{newUserError}</> : <></>}
 

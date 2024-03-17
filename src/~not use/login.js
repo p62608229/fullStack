@@ -37,7 +37,6 @@ export const Loginn = () => {
             <input placeholder="input password" onChange={(e) => { setPassword(e.target.value) }} />
             <button onClick={hundleSubmit}>submit</button>
             <Link to='/register'>sign up</Link>
-            {loginError ? <>some error in connected</> : <></>}
         </div>
     )
 }
