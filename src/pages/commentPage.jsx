@@ -17,12 +17,12 @@ export const CommentPage = () => {
     function closeAddPanel() {
         setIsAddOpen(false);
     }
-    return (<div>
-        {currentUser && <div>
-            <Button icon={isAddOpen ? "pi pi-times" : "pi pi-plus"} rounded text raised aria-label="Filter" onClick={() => setIsAddOpen(prev => !prev)} />
+    return (<div  style={{margin: "30px"}}>
+        {currentUser && <div  >
+            <Button style={{margin: "0px 10px"}} icon={isAddOpen ? "pi pi-times" : "pi pi-plus"} rounded text raised aria-label="Filter" onClick={() => setIsAddOpen(prev => !prev)} />
             {isAddOpen && <Addcomment closeMe={closeAddPanel} />}
         </div>}
-        <CommentsTable />
+        <CommentsTable  />
         {status == 'error' && <FailedConnectToDB />}
         {status == 'pending' && <Spinner />}
     </div>)

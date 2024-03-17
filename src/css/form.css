@@ -8,6 +8,7 @@
 
 .form-demo .card .field {
     margin-bottom: 1.5rem;
+    background-color: lightgray;
 }
 
 @media screen and (max-width: 960px) {

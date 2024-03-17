@@ -55,7 +55,7 @@ export const ProfileMenu = () => {
                 {
                     label: 'Logout',
                     icon: 'pi pi-sign-out',
-                    command: () => { dispatch(deleteCurrentUser()) }
+                    command: () => { dispatch(deleteCurrentUser()); navigate("/"); }
                 }
             ]
         }
