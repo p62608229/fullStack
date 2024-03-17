@@ -6,6 +6,7 @@ import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 
 
+
 export const DefualtMenu = () => {
     const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ export const DefualtMenu = () => {
             {/* <button onClick={(e) => navigate("/login")}>sign in</button>
             <button onClick={(e) => navigate("/register")}>sign up</button>
             <button onClick={(e) => navigate("/about")}>about</button> */}
+
         </>
     )
 }
