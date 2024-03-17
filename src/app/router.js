@@ -18,6 +18,7 @@ import { CurrentUserRequests } from "../components/profile/currentUserRequests"
 import { Login } from "../pages/login"
 import { Register } from "../pages/register"
 
+
 export const AppRouter = () => {
     return (
         <BrowserRouter>
@@ -44,6 +45,7 @@ export const AppRouter = () => {
                     </Route>
                     <Route path="calendar" element={<UserCalendar />} />
                     <Route path="checkreq" element={<CheckReq />} />
+
                 </Route>
             </Routes>
         </BrowserRouter>

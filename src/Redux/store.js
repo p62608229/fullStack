@@ -4,7 +4,7 @@ import usersReducer from "./slices/users"
 import offerReducer from './slices/offer'
 import requestReducer from './slices/request'
 import proffesionReducer from './slices/profession'
-
+//import eventsReducer from "./slices/events"
 
 
 export const store = configureStore({
@@ -14,5 +14,7 @@ export const store = configureStore({
         offer: offerReducer,
         request:requestReducer,
         profession:proffesionReducer
+       // events: eventsReducer
+
     },
 })

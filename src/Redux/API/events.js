@@ -2,6 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/URLs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+
 export const getAllEvents = createAsyncThunk(
 
     'events/getAllEvents',
