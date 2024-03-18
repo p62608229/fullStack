@@ -36,22 +36,27 @@ export const Offer = () => {
         }
     }
 
+    const getAllREquestByOffer = async (offer) => {
+        const url = `${BASE_URL}/Offer`
+        // לבדוק האם הבדיקה היא נכונה אם לא לזמן את הפונקציה הנכונה מטבל היוזר
+        const allRequestResponse = await axios.get(url, offer)
+        console.log(allRequestResponse, "response from chek request")
+        return allRequestResponse.data
+    }
 
     const hundleSubmit = async () => {
-        console.log("SDF")
-        console.log(currentUser)
-        const Offer = {  offerUserId: currentUser.id, PriceForWork, Note, PricePerVisit, DateTime, professionCode ,FromHour,ToHour}
+        const Offer = { offerUserId: currentUser.id, PriceForWork, Note, PricePerVisit, DateTime, professionCode, FromHour, ToHour }
         // const DayTo = {DateTime,FromHour,ToHour}
-        const url = `${BASE_URL}/Offer`
-        const response = await axios.put(url,Offer); 
-   
+        const url = `${BASE_URL}/Offer/newoffer`
+        const response = await axios.put(url, Offer);
+        console.log(response, "response offer")
+
         console.log(response.data, "proffetion response")
         // const responseDayTo = await axios.get(url, DayTo);
-        if (response.data==true){
-        //     debugger
-        console.log("ghj") 
-            dispatch(addNewOffer(offer))
-            navigate("/checkreq" ,{state:Offer });
+        if (response.data == false) {
+            dispatch(addNewOffer(offer));
+            const requests = await getAllREquestByOffer(offer)
+            navigate("/checkreq", { state: {requests: requests} });
         }
         else {
             setnewUserError("some error")
@@ -59,7 +64,7 @@ export const Offer = () => {
 
     }
     return (
-        <div>            
+        <div>
             <input placeholder="PriceForWork" onChange={(e) => { setPriceForWork(e.target.value) }} onBlur={(e) => handlBlur(e)} id="PriceForWork" />
             <input placeholder="Note" onChange={(e) => { setNote(e.target.value) }} onBlur={(e) => handlBlur(e)} id="Note" />
             <input placeholder="PricePerVisit" onChange={(e) => { setPricePerVisit(e.target.value) }} onBlur={(e) => handlBlur(e)} id="PricePerVisit" />
@@ -67,7 +72,7 @@ export const Offer = () => {
             <input placeholder="ToHour" onChange={(e) => { SetToHour(e.target.value) }} onBlur={(e) => handlBlur(e)} id="ToHour" />
             {/* <input placeholder="offercode" onChange={(e) => { SetofferCode(e.target.value) }} onBlur={(e) => handlBlur(e)} id="offercode" /> */}
             <input placeholder="DateTime" onChange={(e) => { SetDateTime(e.target.value) }} onBlur={(e) => handlBlur(e)} id="DateTime" />
-
+            
             <button onClick={hundleSubmit}>submit</button>
             {newUserError ? <>{newUserError}</> : <></>}
 
