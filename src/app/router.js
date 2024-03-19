@@ -3,7 +3,6 @@ import { Home } from "../pages/home"
 import { Menu } from "../components/menu/menu"
 import { About } from "../pages/about"
 import { Request } from "../pages/request"
-import { Offer } from "../pages/offer"
 import { SendEmail } from "../pages/sendEmail/sendEmail"
 import { CommentPage } from "../pages/commentPage"
 import { CheckReq } from "../pages/checkreq"
@@ -17,6 +16,7 @@ import { CurrentUserOffers } from "../components/profile/currentUserOffers"
 import { CurrentUserRequests } from "../components/profile/currentUserRequests"
 import { Login } from "../pages/login"
 import { Register } from "../pages/register"
+import { Offer } from "../pages/offer"
 
 
 export const AppRouter = () => {

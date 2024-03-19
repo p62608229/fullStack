@@ -7,7 +7,7 @@ import { ProfessionSelector } from "../components/profession";
 import offer, { addNewOffer } from "../Redux/slices/offer";
 
 
-export const Offer = () => {
+export const Offerr = () => {
 
     const currentUser = useSelector(s => s.users.currentUser)
     const [professionCode, setProfessionCode] = useState()
