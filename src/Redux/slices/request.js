@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { deleteCurrentUserOneRequest, getCurrentUserRequests, updateCurrentUserOneRequest,  } from '../API/request';
+import { deleteCurrentUserOneRequest, getAllCurrentUserRequests, updateCurrentUserOneRequest,  } from '../API/request';
 
 
 // איתחול של הסטיט
@@ -21,7 +21,7 @@ export const RequestSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(getCurrentUserRequests.fulfilled, (state, action) => {{
+    .addCase(getAllCurrentUserRequests.fulfilled, (state, action) => {{
       state.currentUserRequests  = action.payload;
     }}) 
     .addCase(updateCurrentUserOneRequest.fulfilled, (state, action) => {{

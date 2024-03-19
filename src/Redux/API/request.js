@@ -2,20 +2,20 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../utils/URLs";
 import axios from "axios";
 
-export const getCurrentUserRequests = createAsyncThunk(
-    'request/getCurrentUserRequests',
+export const getAllCurrentUserRequests = createAsyncThunk(
+    'request/getAllCurrentUserRequests',
     async (arg, { getState }) => {        
         try {
             const state = getState();
             console.log(state)
             const response = await axios.get(`${BASE_URL}/Request?id=${state.users.currentUser.id}`);
-            console.log(response, "getCurrentUserRequests response");
+            console.log(response, "getAllCurrentUserRequests response");
 
             const Offers = response.data; 
             return Offers
 
         } catch (e) {
-            console.log(e, "getCurrentUserRequests error")
+            console.log(e, "getAllCurrentUserRequests error")
         }
     }
 )
