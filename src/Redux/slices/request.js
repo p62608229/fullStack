@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { deleteCurrentUserOneRequest, getCurrentUserRequests, updateCurrentUserOneRequest,  } from '../API/request';
 
 
 // איתחול של הסטיט
 const initialState = {
-  request: []
+  request: [],
+  currentUserRequests:  null
 }
 
 export const RequestSlice = createSlice({
@@ -12,10 +14,25 @@ export const RequestSlice = createSlice({
   reducers: {
     Request: (state, action) => {
       state.request.push(action.payload);
+    },
+    deleteCurrentUserRequests: (state) => {
+      state.currentUserRequests = null
     }
+  },
+  extraReducers: (builder) => {
+    builder
+    .addCase(getCurrentUserRequests.fulfilled, (state, action) => {{
+      state.currentUserRequests  = action.payload;
+    }}) 
+    .addCase(updateCurrentUserOneRequest.fulfilled, (state, action) => {{
+      state.currentUserRequests.push(action.payload);
+    }})
+    .addCase(deleteCurrentUserOneRequest.fulfilled, (state, action) => {{
+      state.currentUserRequests = state.currentUserRequests.filter(r => r.id != action.payload);
+    }})
   }
 });
 
-export const { addNewRequest } = RequestSlice.actions
+export const { deleteCurrentUserRequests } = RequestSlice.actions
 
 export default RequestSlice.reducer
