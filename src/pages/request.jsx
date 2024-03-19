@@ -15,7 +15,7 @@ import moment from 'moment';
 import { InputNumber } from 'primereact/inputnumber';
 
 
-export const Offer = () => {
+export const Request = () => {
 
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
@@ -24,14 +24,14 @@ export const Offer = () => {
     const validate = (data) => {
         let errors = {};
 
-        if (!data.PriceForWork && !data.PricePerVisit) { 
-            errors.PricePerVisit = 'Price for work or price per visit is required.'; 
-            errors.PriceForWork = "Price for work or price per visit is required.            "
-        }
-        else {
-            if (data.PriceForWork && !/^\d+$/.test(data.PriceForWork)) { errors.PriceForWork = 'Price for work can be only numbers.'; }
-            if (data.PricePerVisit && !/^\d+$/.test(data.PricePerVisit)) { errors.PricePerVisit = 'Price per visite can be only numbers.'; }
-        }
+        // if (!data.PriceForWork && !data.PricePerVisit) { 
+        //     errors.PricePerVisit = 'Price for work or price per visit is required.'; 
+        //     errors.PriceForWork = "Price for work or price per visit is required.            "
+        // }
+        // else {
+        //     if (data.PriceForWork && !/^\d+$/.test(data.PriceForWork)) { errors.PriceForWork = 'Price for work can be only numbers.'; }
+        //     if (data.PricePerVisit && !/^\d+$/.test(data.PricePerVisit)) { errors.PricePerVisit = 'Price per visite can be only numbers.'; }
+        // }
 
         if (!data.FromHour) { errors.FromHour = 'From hour is required.'; }
         else if (!/^(0[0-9]|2[0-3]):[0-5][0-9]$/.test(data.FromHour)) { errors.FromHour = 'From hour not mutch to HH:mm format or not valdate hour.'; }
@@ -48,14 +48,12 @@ export const Offer = () => {
         const date = moment('', "dd/mm/yyyy")
         const hour = moment()
         try {
-            const url = `${BASE_URL}/User/${data.name}/${data.password}`
-            console.log("log in", url)
-            const response = await axios.get(url);
+            const url = `${BASE_URL}/Request`
+            const response = await axios.put(url, Request);
             const currentUser = response.data
-            console.log(response.data)
 
             if (currentUser) {
-                dispatch(updateCurrentUser(currentUser));
+                // dispatch(updateCurrentUser(currentUser));
                 navigate("/");
             }
             else
@@ -80,7 +78,7 @@ export const Offer = () => {
                 <div className="card">
                     <Form onSubmit={onSubmit} initialValues={{ PriceForWork: '', Note: '' }} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
-                            <Field name="PriceForWork" render={({ input, meta }) => (
+                            {/* <Field name="PriceForWork" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
                                         <InputText id="PriceForWork" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
@@ -97,7 +95,7 @@ export const Offer = () => {
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
-                            )} />
+                            )} /> */}
                             <Field name="Note" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
