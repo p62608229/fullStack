@@ -13,14 +13,14 @@ export const Offer = createAsyncThunk(
     }
 )
 
-export const getCurrentUserOffers = createAsyncThunk(
-    'offer/getCurrentUserOffers',
+export const getAllCurrentUserOffers = createAsyncThunk(
+    'offer/getALlCurrentUserOffers',
     async (arg, { getState }) => {
         try {
             const state = getState();
             console.log(state)
             const response = await axios.get(`${BASE_URL}/offer?id=${state.users.currentUser.id}`);
-            console.log(response, "getCurrentUserOffers response");
+            console.log(response, "getAllCurrentUserOffers response");
     
             const Offers = response.data; 
             return Offers

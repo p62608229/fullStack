@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { deleteCurrentUserOneOffer, getCurrentUserOffers, updateCurrentUserOneOffer } from '../API/offer';
+import { deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../API/offer';
 
 
 // איתחול של הסטיט
@@ -21,7 +21,7 @@ export const offerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(getCurrentUserOffers.fulfilled, (state, action) => {{
+    .addCase(getAllCurrentUserOffers.fulfilled, (state, action) => {{
       state.currentUserOffers  = action.payload;
     }})
     .addCase(updateCurrentUserOneOffer.fulfilled, (state, action) => {{
