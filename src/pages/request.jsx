@@ -34,9 +34,9 @@ export const Request = () => {
         // }
 
         if (!data.FromHour) { errors.FromHour = 'From hour is required.'; }
-        else if (!/^(0[0-9]|2[0-3]):[0-5][0-9]$/.test(data.FromHour)) { errors.FromHour = 'From hour not mutch to HH:mm format or not valdate hour.'; }
+        else if (!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data.FromHour)) { errors.FromHour = 'From hour not mutch to HH:mm format or not valdate hour.'; }
         if (!data.ToHour) { errors.ToHour = 'From hour is required.'; }
-        else if (!/^(0[0-9]|2[0-3]):[0-5][0-9]$/.test(data.ToHour)) { errors.ToHour = 'To hour not mutch to HH:mm format or not valdate hour.'; }
+        else if (!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data.ToHour)) { errors.ToHour = 'To hour not mutch to HH:mm format or not valdate hour.'; }
            
 
 
