@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 // איתחול של הסטיט
 const initialState = {
-  currentUser: {},
+  currentUser: null,
 }
 
 export const usersSlice = createSlice({
