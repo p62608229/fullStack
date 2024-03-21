@@ -24,17 +24,17 @@ export const Register = () => {
     const validate = (data) => {
         let errors = {};
 
-        if (!data.Id) { errors.name = 'Id is required.'; }
-        if (!data.FirstName) { errors.FirstName = 'First name is required.'; }
-        if (!data.LastName) { errors.LastName = 'Last name is required.'; }
-        if (!data.Password) { errors.Password = 'Password is required.'; }
-        if (!data.Address) { errors.Address = 'Address is required.'; }
-        if (!data.Postalcode) { errors.Postalcode = 'Postalcode is required.'; }
-        if (!data.City) { errors.City = 'City is required.'; }
-        if (!data.Phone) { errors.Phone = 'Phone is required.'; }
-        else if (/^[0-9\b]+$/.test(data.Phone)) { errors.Phone = 'Invalid phone number/ put only numbers' }
-        if (!data.Mail) { errors.Mail = 'Email is required.'; }
-        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.Mail)) { errors.Mail = 'Invalid email address. E.g. example@email.com'; }
+        if (!data.id) { errors.name = 'id is required.'; }
+        if (!data.firstName) { errors.firstName = 'First name is required.'; }
+        if (!data.lastName) { errors.lastName = 'Last name is required.'; }
+        if (!data.password) { errors.password = 'Password is required.'; }
+        if (!data.address) { errors.address = 'address is required.'; }
+        if (!data.postalcode) { errors.postalcode = 'postalcode is required.'; }
+        if (!data.city) { errors.city = 'city is required.'; }
+        if (!data.phone) { errors.phone = 'phone is required.'; }
+        // else if (/^[0-9\b]+$/.test(data.phone)) { errors.phone = 'Invalid phone number/ put only numbers' }
+        if (!data.mail) { errors.mail = 'Email is required.'; }
+        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.mail)) { errors.mail = 'Invalid email address. E.g. example@email.com'; }
 
         return errors;
     };
@@ -86,96 +86,106 @@ export const Register = () => {
             <div className="flex justify-content-center">
                 <div className="card">
                     <h5 className="text-center">Register</h5>
-                    <Form onSubmit={onSubmit} initialValues={{ Id: "", FirstName: '', LastName: '', Password: '', Address: '', Postalcode: '', City: '', Mail: '', Phone: null }} validate={validate} render={({ handleSubmit }) => (
+                    <Form onSubmit={onSubmit} initialValues={{ id: "", firstName: '', lastName: '', password: '', address: '', postalcode: '', city: '', houseNumber: null, mail: '', phone: null }} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
                             {/*        ======= id ===== */}
-                            <Field name="Id" render={({ input, meta }) => (
+                            <Field name="id" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="Id" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="Id" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Id*</label>
+                                        <InputText id="id" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="id" className={classNames({ 'p-error': isFormFieldValid(meta) })}>id*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
                             {/*        ======= first name ===== */}
-                            <Field name="FirstName" render={({ input, meta }) => (
+                            <Field name="firstName" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="FirstName" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="FirstName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>First Name*</label>
+                                        <InputText id="firstName" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="firstName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>First Name*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
                             {/*        ======= last name ===== */}
-                            <Field name="LastName" render={({ input, meta }) => (
+                            <Field name="lastName" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="LastName" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="LastName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Last Name*</label>
+                                        <InputText id="lastName" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="lastName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Last Name*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
                             {/*        ======= eamil ===== */}
-                            <Field name="Mail" render={({ input, meta }) => (
+                            <Field name="mail" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label p-input-icon-right">
                                         <i className="pi pi-envelope" />
-                                        <InputText id="Mail" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="Mail" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Email*</label>
+                                        <InputText id="mail" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="mail" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Email*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
                             {/*        ======= password ===== */}
-                            <Field name="Password" render={({ input, meta }) => (
+                            <Field name="password" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Password id="Password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) })} header={passwordHeader} footer={passwordFooter} />
-                                        <label htmlFor="Password" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Password*</label>
+                                        <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) })} header={passwordHeader} footer={passwordFooter} />
+                                        <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid(meta) })}>password*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            {/*        ======= Phone  ===== */}
-                            <Field name="Phone" render={({ input, meta }) => (
+                            {/*        ======= phone  ===== */}
+                            <Field name="phone" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label p-input-icon-right">
                                         <i className="pi pi-phone" />
-                                        <InputMask id="Phone" mask="(999) 999-9999" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })}></InputMask>
-                                        <label htmlFor="Phone" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Phone*</label>
+                                        <InputText id="phone" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })}></InputText>
+                                        <label htmlFor="phone" className={classNames({ 'p-error': isFormFieldValid(meta) })}>phone*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
                             {/*        ======= adrsee  ===== */}
-                            <Field name="Address" render={({ input, meta }) => (
+                            <Field name="address" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="Address" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="Address" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Address*</label>
+                                        <InputText id="address" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="address" className={classNames({ 'p-error': isFormFieldValid(meta) })}>address*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            {/*        ======= City  ===== */}
-                            <Field name="City" render={({ input, meta }) => (
+                            {/*        ======= city  ===== */}
+                            <Field name="city" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="City" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="City" className={classNames({ 'p-error': isFormFieldValid(meta) })}>City*</label>
+                                        <InputText id="city" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="city" className={classNames({ 'p-error': isFormFieldValid(meta) })}>city*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            {/*        ======= Postalcode  ===== */}
-                            <Field name="Postalcode" render={({ input, meta }) => (
+                            {/*        ======= houseNumber  ===== */}
+                            <Field name="houseNumber" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="Postalcode" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="Postalcode" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Postalcode*</label>
+                                        <InputText id="houseNumber" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="houseNumber" className={classNames({ 'p-error': isFormFieldValid(meta) })}>houseNumber*</label>
+                                    </span>
+                                    {getFormErrorMessage(meta)}
+                                </div>
+                            )} />
+                            {/*        ======= postalcode  ===== */}
+                            <Field name="postalcode" render={({ input, meta }) => (
+                                <div className="field">
+                                    <span className="p-float-label">
+                                        <InputText id="postalcode" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="postalcode" className={classNames({ 'p-error': isFormFieldValid(meta) })}>postalcode*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
