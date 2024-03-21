@@ -8,7 +8,8 @@ export const demoOffersList = [
         profession: 1,
         daysToWork: [
             { date: "21/03/24", fromhour: "14:00", tohour: "16:00" },
-            { date: "24/03/24", fromhour: "14:00", tohour: "16:00" }
+            { date: "21/03/24", fromhour: "14:00", tohour: "16:00" },
+
         ],
         inCalendar: true
     },
