@@ -46,7 +46,7 @@ export const Addcomment = (props) => {
 
   return (
 
-    <div className="form-demo" style={{ padding: "30px" }}>
+    <div className="form-demo" style={{ padding: "5px" }}>
       <div className="flex justify-content-center">
           <div className="card">
               <Form onSubmit={onSubmit} initialValues={{ commentv: '' }} validate={validate} render={({ handleSubmit }) => (

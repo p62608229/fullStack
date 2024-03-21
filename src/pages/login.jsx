@@ -80,7 +80,7 @@ export const Login = () => {
                             <Field name="password" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <Password id="password" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Password*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
