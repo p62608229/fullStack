@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../API/offer';
+import { chngeInCalnderMode, deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../API/offer';
+import { demoOffersList } from '../../~not use/demoValues/offers';
 
 
 // איתחול של הסטיט
@@ -28,7 +29,11 @@ export const offerSlice = createSlice({
       state.currentUserOffers.push(action.payload);
     }})
     .addCase(deleteCurrentUserOneOffer.fulfilled, (state, action) => {{
-      state.currentUserOffers = state.currentUserOffers.filter(o => o.id != action.payload)
+      state.currentUserOffers = state.currentUserOffers.filter(o => o.offerCode != action.payload)
+    }})
+    .addCase(chngeInCalnderMode.fulfilled, (state, action) => {{
+      state.currentUserOffers = state.currentUserOffers.filter(o => o.offerCode != action.payload.offerCode)
+      state.currentUserOffers.push(action.payload);
     }})
   }
 });

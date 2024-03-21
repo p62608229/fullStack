@@ -2,20 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
-import { getAllCurrentUserOffers } from '../../Redux/API/offer';
-import { demoOffersList } from '../../~not use/demoValues/offers';
+
+import { chngeInCalnderMode, deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../../Redux/API/offer';
+import { InputText } from 'primereact/inputtext';
+import { Calendar } from 'primereact/calendar';
+
 
 export const CurrentUserOffers = () => {
+
   const dispatch = useDispatch();
-  const offers = demoOffersList;
+  const offers = useSelector(s => s.offer.currentUserOffers);
+  const professions = useSelector(s => s.profession.profession);
+
   const [editingRow, setEditingRow] = useState(null);
   const [errors, setErrors] = useState({});
   const toast = React.useRef(null);
 
   useEffect(() => {
-    dispatch(getAllCurrentUserOffers());
+    if (!offers)
+      dispatch(getAllCurrentUserOffers());
   }, [dispatch]);
 
   const validateData = (rowData) => {
@@ -53,12 +59,12 @@ export const CurrentUserOffers = () => {
   };
 
   const onDelete = (rowData) => {
-    // Dispatch delete action here
+    dispatch(deleteCurrentUserOneOffer(rowData.offerCode))
     showToast('success', 'Success', 'Row deleted successfully');
   };
 
   const onAddToCalendar = (rowData) => {
-    // Dispatch add to calendar action here
+    dispatch(chngeInCalnderMode(rowData.offerCode))
     showToast('info', 'Add to Calendar', 'Added to calendar successfully');
   };
 
@@ -66,21 +72,19 @@ export const CurrentUserOffers = () => {
     toast.current.show({ severity, summary, detail, life: 3000 });
   };
 
-  const renderEditButton = (rowData) => {
-    return (
-      <Button icon="pi pi-pencil" onClick={() => onEdit(rowData)} />
-    );
-  };
-
   const renderDeleteButton = (rowData) => {
     return (
-      <Button icon="pi pi-trash" onClick={() => onDelete(rowData)} />
+      <div className="icon-button" onClick={() => onDelete(rowData)}>
+        <i className="pi pi-trash"></i>
+      </div>
     );
   };
 
   const renderAddToCalendarButton = (rowData) => {
     return (
-      <Button icon="pi pi-calendar-plus" onClick={() => onAddToCalendar(rowData)} />
+      <div className="icon-button" onClick={() => onAddToCalendar(rowData.offerCode)}>
+        <i className={rowData.inCalendar ? "pi pi-calendar-minus" : "pi pi-calendar-plus"}></i>
+      </div>
     );
   };
 
@@ -89,22 +93,29 @@ export const CurrentUserOffers = () => {
       <div>
         {rowData.daysToWork.map((day, index) => (
           <div key={index}>
-            <span>Date: {day.date}</span>
+            <span>Date: {day.date}</span> {/* Format date using Moment.js */}
             <span> Hours: {day.fromhour} - {day.tohour}</span>
+            {index !== rowData.daysToWork.length - 1 && <hr />}
           </div>
         ))}
+      </div>
+    );
+  };
+  const renderProfession = (rowData) => {
+    return (
+      <div>
+        { professions.find(p=> p.professionCode == rowData.profession)?.profession1}
       </div>
     );
   };
 
   const renderInputText = (rowData, field) => {
     return (
-      <input
-        type="text"
+      <InputText
         value={editingRow ? editingRow[field] : rowData[field]}
         onChange={(e) => {
           const newValue = e.target.value;
-          setEditingRow((prevState) => ({
+          setEditingRow(prevState => ({
             ...prevState,
             [field]: newValue
           }));
@@ -113,12 +124,41 @@ export const CurrentUserOffers = () => {
     );
   };
 
-  const onRowEditSave = () => {
-    const errors = validateData(editingRow);
+  const renderDaysToWorkEditor = (props) => {
+    return (
+      <div>
+        <Calendar type="date" showIcon value={editingRow ? editingRow['date'] : ''} onChange={(e) => {
+          const newValue = e.target.value;
+          setEditingRow((prevState) => ({
+            ...prevState,
+            'date': newValue
+          }));
+        }} />
+        <InputText type="text" value={editingRow ? editingRow['fromhour'] : ''} onChange={(e) => {
+          const newValue = e.target.value;
+          setEditingRow((prevState) => ({
+            ...prevState,
+            'fromhour': newValue
+          }));
+        }} placeholder="From Hour (HH:mm)" />
+        <InputText type="text" value={editingRow ? editingRow['tohour'] : ''} onChange={(e) => {
+          const newValue = e.target.value;
+          setEditingRow((prevState) => ({
+            ...prevState,
+            'tohour': newValue
+          }));
+        }} placeholder="To Hour (HH:mm)" />
+      </div>
+    );
+  }
+
+  const onRowEditSave = (event) => {
+    debugger
+    const errors = validateData(event.data);
+    debugger
     if (Object.keys(errors).length === 0) {
-      // Dispatch action here with edited data
-      setEditingRow(null);
-      showToast('success', 'Success', 'Row edited successfully');
+        dispatch(updateCurrentUserOneOffer(event.data))
+        showToast('success', 'Success', 'Row edited successfully');
     } else {
       setErrors(errors);
     }
@@ -130,16 +170,16 @@ export const CurrentUserOffers = () => {
   };
 
   return (
-    <div style={{margin: "0 40px"}}>
+    <div style={{ margin: "0 40px", width: "100%"}}>
       <Toast ref={toast} />
-      <DataTable value={offers} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+      <DataTable value={offers} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} editMode="row">
         <Column field="offerCode" header="Offer Code"></Column>
-        <Column field="offerUserId" header="Offer User ID"></Column>
+        <Column field="offerUserId" header="
+        Offer User ID"></Column>
         <Column field="priceForWork" header="Price for Work" editor={(props) => renderInputText(props.rowData, 'priceForWork')}></Column>
         <Column field="pricePerVisit" header="Price per Visit" editor={(props) => renderInputText(props.rowData, 'pricePerVisit')}></Column>
-        <Column field="profession" header="Profession"></Column>
-        <Column field="daysToWork" header="Days to Work" body={renderDaysToWork}></Column>
-        <Column header="" body={renderEditButton}></Column>
+        <Column field="profession" header="Profession" body={renderProfession}></Column>
+        <Column field="daysToWork" header="Days to Work" body={renderDaysToWork} editor={renderDaysToWorkEditor}></Column>
         <Column header="" body={renderDeleteButton}></Column>
         <Column header="" body={renderAddToCalendarButton}></Column>
         <Column rowEditor rowEditorSaveIcon="pi pi-check" rowEditorCancelIcon="pi pi-times" headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }} onRowEditSave={onRowEditSave} onRowEditCancel={onRowEditCancel}></Column>

@@ -48,13 +48,30 @@ export const updateCurrentUserOneOffer = createAsyncThunk(
 
 export const deleteCurrentUserOneOffer = createAsyncThunk(
     'offer/deleteCurrentUserOneOffer',
-    async (offerId) => {
+    async (offerCode) => {
         try  {
-            const response = await axios.delete(`${BASE_URL}/offer/${offerId}`);
+            const response = await axios.delete(`${BASE_URL}/offer/${offerCode}`);
             console.log(response, "deleteCurrentUserOneOffer response");
-            return offerId
+            return offerCode
         } catch(e) {
             console.log(e, "deleteCurrentUserOneOffer error")
+        }
+
+    }
+)
+
+
+
+
+export const chngeInCalnderMode = createAsyncThunk(
+    'offer/chngeInCalnderMode',
+    async (offerCode) => {
+        try  {
+            const response = await axios.delete(`${BASE_URL}/offer/${offerCode}`);
+            console.log(response, "chngeInCalnderMode response");
+            return response.data
+        } catch(e) {
+            console.log(e, "chngeInCalnderMode error")
         }
 
     }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -6,18 +6,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllCurrentUserOffers } from '../Redux/API/offer';
 import { getAllCurrentUserRequests } from '../Redux/API/request';
 import { calnderEventsArray } from '../components/calendar/calnderEvents';
-import { demoOffersList } from '../~not use/demoValues/offers';
-import { demoRequestList } from '../~not use/demoValues/requests';
 
 export const UserCalendar = () => {
   const dispatch = useDispatch();
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-      // const requests = useSelector(s => s.request.currentUserRequests);
-    // const offers = useSelector(s=> s.offer.currentUserOffers);
+    const requests = useSelector(s => s.request.currentUserRequests);
+    const offers = useSelector(s=> s.offer.currentUserOffers);
 
-  const offers = demoOffersList;
-  const requests = demoRequestList;
+    useEffect(()=> {
+        if (!offers) 
+            dispatch(getAllCurrentUserOffers())
+        if (!requests)
+            dispatch(getAllCurrentUserRequests())
+    })
 
   const localizer = momentLocalizer(moment);
   const events = calnderEventsArray(offers, requests);
