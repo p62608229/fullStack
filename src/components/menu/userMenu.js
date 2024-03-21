@@ -28,7 +28,6 @@ export const UserMenu = () => {
       ]
     },
     { label: 'calendar', icon: 'pi pi-calendar', command: () => { navigate("/calendar") } },
-    { label: 'checkreq', icon: 'pi pi-checkreq', command: () => { navigate("/checkreq") } },
   ]
 
   return (

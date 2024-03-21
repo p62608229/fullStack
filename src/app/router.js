@@ -5,7 +5,6 @@ import { About } from "../pages/about"
 import { Request } from "../pages/request"
 import { SendEmail } from "../pages/sendEmail/sendEmail"
 import { CommentPage } from "../pages/commentPage"
-import { CheckReq } from "../pages/checkreq"
 import { Addcomment } from "../components/comments/addComment"
 import { UserCalendar } from "../pages/calendar"
 import { CurrentUserComments } from "../components/profile/currentUserComments"
@@ -36,8 +35,6 @@ export const AppRouter = () => {
                         <Route path="requests" element={<CurrentUserRequests />} />
                         <Route path="comments" element={<CurrentUserComments />} />
                         <Route path="calendar" element={<UserCalendar />} />
-                        <Route path="checkreq" element={<CheckReq />} />
-
                     </Route>
                     <Route path='offer' element={<Offer />} />
                     <Route path="sendEmail" element={<SendEmail />} />
@@ -46,8 +43,6 @@ export const AppRouter = () => {
                         <Route path="new" element={<Addcomment />} />
                     </Route>
                     <Route path="calendar" element={<UserCalendar />} />
-                    <Route path="checkreq" element={<CheckReq />} />
-
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { demoUser } from '../../~not use/demoValues/user';
 
-// איתחול של הסטיט
 const initialState = {
-  currentUser: null,
+  currentUser: demoUser,
 }
 
 export const usersSlice = createSlice({
@@ -20,6 +20,3 @@ export const usersSlice = createSlice({
 export const { updateCurrentUser,  deleteCurrentUser } = usersSlice.actions
 
 export default usersSlice.reducer
-
-
-
