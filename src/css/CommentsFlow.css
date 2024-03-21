@@ -7,10 +7,11 @@
 .comment {
     margin-bottom: 10px;
     text-align: center;
+    color: rgb(174, 225, 225);
 }
 
 .content {
-    color: red;
+    color: rgb(236, 128, 128);
 }
 
 .name {

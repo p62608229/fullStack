@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { deleteCurrentUserOneRequest, getAllCurrentUserRequests, updateCurrentUserOneRequest,  } from '../API/request';
+import { demoRequestList } from '../../~not use/demoValues/requests';
 
 
 // איתחול של הסטיט
 const initialState = {
   request: [],
   currentUserRequests:  null
+  // currentUserRequests:  demoRequestList
 }
 
 export const RequestSlice = createSlice({

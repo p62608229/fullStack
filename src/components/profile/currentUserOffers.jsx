@@ -25,6 +25,7 @@ export const CurrentUserOffers = () => {
   }, [dispatch]);
 
   const validateData = (rowData) => {
+    debugger
     const errors = {};
 
     if (!rowData.priceForWork && !rowData.pricePerVisit) {
@@ -55,6 +56,7 @@ export const CurrentUserOffers = () => {
   };
 
   const onEdit = (rowData) => {
+    debugger
     setEditingRow(rowData);
   };
 
@@ -165,20 +167,20 @@ export const CurrentUserOffers = () => {
   };
 
   const onRowEditCancel = () => {
+    debugger
     setEditingRow(null);
     setErrors({});
   };
 
   return (
-    <div style={{ margin: "0 40px", width: "100%"}}>
+    <div style={{ margin: "0 40px", width: "80%"}}>
       <Toast ref={toast} />
       <DataTable value={offers} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} editMode="row">
         <Column field="offerCode" header="Offer Code"></Column>
-        <Column field="offerUserId" header="
-        Offer User ID"></Column>
+        <Column field="offerUserId" header="Offer User ID"></Column>
+        <Column field="profession" header="Profession" body={renderProfession}></Column>
         <Column field="priceForWork" header="Price for Work" editor={(props) => renderInputText(props.rowData, 'priceForWork')}></Column>
         <Column field="pricePerVisit" header="Price per Visit" editor={(props) => renderInputText(props.rowData, 'pricePerVisit')}></Column>
-        <Column field="profession" header="Profession" body={renderProfession}></Column>
         <Column field="daysToWork" header="Days to Work" body={renderDaysToWork} editor={renderDaysToWorkEditor}></Column>
         <Column header="" body={renderDeleteButton}></Column>
         <Column header="" body={renderAddToCalendarButton}></Column>

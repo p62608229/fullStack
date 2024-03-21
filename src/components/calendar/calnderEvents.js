@@ -1,14 +1,12 @@
 const moment = require('moment');
 
-
-
 const convertOffersToEventsArray = (offersArray) => {
 
     // New array to store events
     const offersEvents = [];
 
     // Convert original list to events array
-    offersArray.forEach(item => {
+    offersArray && offersArray.forEach(item => {
         if (item.inCalendar) {
             item.daysToWork.forEach(day => {
                 const start = moment(day.date + ' ' + day.fromHour, 'DD/MM/YY HH:mm');
@@ -17,10 +15,10 @@ const convertOffersToEventsArray = (offersArray) => {
                 offersEvents.push({
                     ...item,
                     type: "offer",
-                    start: start,
-                    end: end,
+                    start: moment(start).toDate()                    ,
+                    end: moment(end).toDate() ,
                     title: item.note,
-                    backgroundColor: 'red'
+                    backgroundColor: 'rgb(236, 128, 128)'
                 });
             });
         }
@@ -37,7 +35,7 @@ const convertOffersToEventsArray = (offersArray) => {
 const convertRequestsToEventsArray = (requestArray) => {
     const requestEvents = [];
   
-    requestArray.forEach(request => {
+    requestArray && requestArray.forEach(request => {
         if (request.inCalendar) {
             // Parse date, fromhour, and tohour
             const date = moment(request.date, 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -51,11 +49,11 @@ const convertRequestsToEventsArray = (requestArray) => {
             // Push event object to array
             requestEvents.push({
                 ...request,
-                start: start,
+                start: moment(start).toDate() ,
                 type: "request",
-                end: end,
+                end: moment(end).toDate() ,
                 title: request.note,
-                backgroundColor: 'blue'
+                backgroundColor: 'rgb(174, 225, 225)'
             });
       }   
     })
@@ -68,7 +66,7 @@ export const calnderEventsArray = (offersArray, requestsArray) => {
 
     const offersEvents = convertOffersToEventsArray(offersArray);
     const requestEvents = convertRequestsToEventsArray(requestsArray)
-
+    
     return [...offersEvents, ...requestEvents]
 
 }

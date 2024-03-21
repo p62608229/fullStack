@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { AddComment, GetComments } from '../API/comment';
+import { demoCommentsList } from '../../~not use/demoValues/comments';
 
 // איתחול של הסטיט
 const initialState = {
   comments: [],
+  // comments: demoCommentsList,
   status: "init"
 }
 

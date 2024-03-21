@@ -7,6 +7,8 @@ import { demoOffersList } from '../../~not use/demoValues/offers';
 const initialState = {
   offers: [],
   currentUserOffers: null
+  // currentUserOffers: demoOffersList
+
 }
 
 export const offerSlice = createSlice({
