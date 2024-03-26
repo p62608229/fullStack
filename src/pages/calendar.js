@@ -6,29 +6,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllCurrentUserOffers } from '../Redux/API/offer';
 import { getAllCurrentUserRequests } from '../Redux/API/request';
 
+//  offer
+// const daysToworks = [{date: "dd/mm/yyyy", fromHour: "hh:mm", tohour: "hh:mm"}]
 export const UserCalendar = () => {
 
     const dispatch = useDispatch();
     const currentUserRequests = useSelector(s => s.request.currentUserRequests);
-    const currentUserOffers = useSelector(s=> s.offer.currentUserOffers);
+    const currentUserOffers = useSelector(s => s.offer.currentUserOffers);
 
     const localizer = momentLocalizer(moment);
     const events = [];
 
     useEffect(() => {
-        if (!currentUserOffers) 
+        if (!currentUserOffers)
             dispatch(getAllCurrentUserOffers());
         if (!currentUserRequests)
             dispatch(getAllCurrentUserRequests());
-
+        console.log(currentUserOffers, "currnt user offers")
         // add to events array from current user request & offers
-        currentUserRequests && currentUserRequests.map(r => r.inCalendar && events.push({...r, start: moment(r.date + r.fromHour), end: moment(r.date+r.toHour), title: r.name})) ;
-        currentUserOffers && currentUserOffers.map(o => o.inCalendar && events.push({...o, start: moment(o.date + o.fromHour), end: moment(o.date+o.toHour), title: o.name, backgroundColor: 'pink'}));
-    }, [currentUserOffers, currentUserRequests, dispatch]);
+        currentUserRequests && currentUserRequests.map(r => r.inCalendar && events.push({ ...r, start: moment(r.date + r.fromHour), end: moment(r.date + r.toHour), title: r.name }));
+        currentUserOffers && currentUserOffers.map(o => o.inCalendar && events.push({ ...o, start: moment(o.date + o.fromHour), end: moment(o.date + o.toHour), title: o.name, backgroundColor: 'pink' }));
+    }, []);
 
     const eventStyleGetter = (event, start, end, isSelected) => {
         const style = {
-            backgroundColor: event.backgroundColor , // Use the backgroundColor specified in the event object
+            backgroundColor: event.backgroundColor, // Use the backgroundColor specified in the event object
             borderRadius: '5px',
             opacity: 0.8,
             color: 'white',
@@ -55,7 +57,7 @@ export const UserCalendar = () => {
     };
 
     return (
-        <div style={{margin: "50px", position: 'center'}}>
+        <div style={{ margin: "50px", position: 'center' }}>
             <Calendar
                 defaultDate={moment().toDate()}
                 defaultView="month"

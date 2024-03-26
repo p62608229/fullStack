@@ -12,6 +12,7 @@ export const usersSlice = createSlice({
     updateCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    
     deleteCurrentUser: (state) => {
       state.currentUser = null;
     }

@@ -7,12 +7,14 @@ import { Calendar } from 'primereact/calendar';
 import { classNames } from 'primereact/utils';
 import '../css/form.css'
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateCurrentUser } from '../Redux/slices/users';
 import { BASE_URL } from '../utils/URLs';
 import axios from 'axios';
 import moment from 'moment';
 import { InputNumber } from 'primereact/inputnumber';
+import { addNewOffer } from '../Redux/slices/offer';
+import { ProfessionSelector } from '../components/profession';
 
 
 export const Offer = () => {
@@ -20,12 +22,14 @@ export const Offer = () => {
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [professionCode, setProfessionCode] = useState()
+    const currentUser = useSelector(s => s.users.currentUser)
 
     const validate = (data) => {
         let errors = {};
 
-        if (!data.PriceForWork && !data.PricePerVisit) { 
-            errors.PricePerVisit = 'Price for work or price per visit is required.'; 
+        if (!data.PriceForWork && !data.PricePerVisit) {
+            errors.PricePerVisit = 'Price for work or price per visit is required.';
             errors.PriceForWork = "Price for work or price per visit is required.            "
         }
         else {
@@ -34,10 +38,9 @@ export const Offer = () => {
         }
 
         if (!data.FromHour) { errors.FromHour = 'From hour is required.'; }
-        else if (!/^(0[0-9]|2[0-3]):[0-5][0-9]$/.test(data.FromHour)) { errors.FromHour = 'From hour not mutch to HH:mm format or not valdate hour.'; }
+        else if (!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data.FromHour)) { errors.FromHour = 'From hour not mutch to HH:mm format or not valdate hour.'; }
         if (!data.ToHour) { errors.ToHour = 'From hour is required.'; }
-        else if (!/^(0[0-9]|2[0-3]):[0-5][0-9]$/.test(data.ToHour)) { errors.ToHour = 'To hour not mutch to HH:mm format or not valdate hour.'; }
-           
+        else if (!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data.ToHour)) { errors.ToHour = 'To hour not mutch to HH:mm format or not valdate hour.'; }
 
 
 
@@ -45,18 +48,18 @@ export const Offer = () => {
     };
 
     const onSubmit = async (data, form) => {
-        const date = moment('', "dd/mm/yyyy")
-        const hour = moment()
-        try {
-            const url = `${BASE_URL}/User/${data.name}/${data.password}`
-            console.log("log in", url)
-            const response = await axios.get(url);
-            const currentUser = response.data
-            console.log(response.data)
 
-            if (currentUser) {
-                dispatch(updateCurrentUser(currentUser));
-                navigate("/");
+        data.date = moment(new Date(data.date)).format( "DD/MM/YYYY")
+        console.log(data)
+        const newOffer = {...data, professionCode, offerUserId: currentUser.id};
+
+        try {
+            const response = await axios.put(`${BASE_URL}/offer/newoffer`, newOffer)
+            console.log(response, "addNewCurrentUserOffer response");
+
+            if (response.data) {
+                dispatch(addNewOffer(newOffer));
+                navigate("/chekreq", { state: { offer: newOffer } });
             }
             else
                 setLoginError(true);
@@ -110,16 +113,16 @@ export const Offer = () => {
                             <Field name="FromHour" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="FromHour" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="FromHour" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="FromHour" className={classNames({ 'p-error': isFormFieldValid(meta) })}>From hour (HH:mm format)*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                             <Field name="ToHour" render={({ input, meta }) => (
+                            <Field name="ToHour" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="ToHour" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="ToHour" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="ToHour" className={classNames({ 'p-error': isFormFieldValid(meta) })}>To hour (HH:mm format)*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -134,6 +137,7 @@ export const Offer = () => {
                                     </span>
                                 </div>
                             )} />
+                                <ProfessionSelector setProfessionCode={setProfessionCode} />
 
                             <Button type="submit" label="Submit" className="mt-2" />
                             {loginError ? <div style={{ padding: "5px", color: "red" }}>Some error in connected</div> : <></>}

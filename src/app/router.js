@@ -36,8 +36,6 @@ export const AppRouter = () => {
                         <Route path="requests" element={<CurrentUserRequests />} />
                         <Route path="comments" element={<CurrentUserComments />} />
                         <Route path="calendar" element={<UserCalendar />} />
-                        <Route path="checkreq" element={<CheckReq />} />
-
                     </Route>
                     <Route path='offer' element={<Offer />} />
                     <Route path="sendEmail" element={<SendEmail />} />

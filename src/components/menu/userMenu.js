@@ -28,12 +28,11 @@ export const UserMenu = () => {
       ]
     },
     { label: 'calendar', icon: 'pi pi-calendar', command: () => { navigate("/calendar") } },
-    { label: 'checkreq', icon: 'pi pi-checkreq', command: () => { navigate("/checkreq") } },
   ]
 
   return (
     <div className="card">
-      <Menubar model={userMenuItems} end={end} start={start}/>
+      <Menubar model={userMenuItems} end={end} start={start} />
     </div>
   )
 }

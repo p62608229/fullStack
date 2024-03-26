@@ -5,10 +5,10 @@ import axios from "axios";
 export const Offer = createAsyncThunk(
     'offer/offer',
     async () => {
-        const response = await axios.put(`${BASE_URL}/offer` );
+        const response = await axios.put(`${BASE_URL}/offer`);
         console.log(response, "respo");
 
-        const Offer = response.data; 
+        const Offer = response.data;
         return Offer
     }
 )
@@ -21,8 +21,8 @@ export const getAllCurrentUserOffers = createAsyncThunk(
             console.log(state)
             const response = await axios.get(`${BASE_URL}/offer?id=${state.users.currentUser.id}`);
             console.log(response, "getAllCurrentUserOffers response");
-    
-            const Offers = response.data; 
+
+            const Offers = response.data;
             return Offers
         } catch (e) {
             console.log(e, "getCurrentUserOffers error")
@@ -30,14 +30,31 @@ export const getAllCurrentUserOffers = createAsyncThunk(
     }
 )
 
+// export const addNewCurrentUserOffer = createAsyncThunk(
+//     'offer/addNewOfferForCurrentUser',
+//     async (newOffer) => {
+//         try {
+//             const response = await axios.put(`${BASE_URL}/offer/newoffer`, newOffer)
+//             console.log(response, "addNewCurrentUserOffer response");
+//             if (response.data)
+//                 return newOffer
+//             else
+//                 console.log("addNewOfferForCurrentUser server call return false")
+
+//         } catch (e) {
+//             console.log(e, "addNewOfferForCurrentUser error");
+//         }
+//     }
+// )
+
 export const updateCurrentUserOneOffer = createAsyncThunk(
     'offer/updateCurrentUserOneOffer',
     async (newOffer) => {
         try {
-            const response = await axios.post(`${BASE_URL}/offer`, {newOffer});
+            const response = await axios.post(`${BASE_URL}/offer`, newOffer);
             console.log(response, "updateCurrentUserOneOffer response");
-    
-            const Offers = response.data; 
+
+            const Offers = response.data;
             return Offers
         } catch (e) {
             console.log(e, "updateCurrentUserOneOffer error")
@@ -49,13 +66,14 @@ export const updateCurrentUserOneOffer = createAsyncThunk(
 export const deleteCurrentUserOneOffer = createAsyncThunk(
     'offer/deleteCurrentUserOneOffer',
     async (offerId) => {
-        try  {
+        try {
             const response = await axios.delete(`${BASE_URL}/offer/${offerId}`);
             console.log(response, "deleteCurrentUserOneOffer response");
             return offerId
-        } catch(e) {
+        } catch (e) {
             console.log(e, "deleteCurrentUserOneOffer error")
         }
 
     }
 )
+

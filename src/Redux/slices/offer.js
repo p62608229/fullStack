@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../API/offer';
+import { addNewCurrentUserOffer, deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../API/offer';
 
 
 // איתחול של הסטיט
 const initialState = {
   offers: [],
-  currentUserOffers: null
+  currentUserOffers: null,
 }
 
 export const offerSlice = createSlice({
@@ -21,17 +21,25 @@ export const offerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(getAllCurrentUserOffers.fulfilled, (state, action) => {{
-      state.currentUserOffers  = action.payload;
-    }})
-    .addCase(updateCurrentUserOneOffer.fulfilled, (state, action) => {{
-      state.currentUserOffers.push(action.payload);
-    }})
-    .addCase(deleteCurrentUserOneOffer.fulfilled, (state, action) => {{
-      state.currentUserOffers = state.currentUserOffers.filter(o => o.id != action.payload)
-    }})
+      .addCase(getAllCurrentUserOffers.fulfilled, (state, action) => {
+        {
+          state.currentUserOffers = action.payload;
+        }
+      })
+      .addCase(updateCurrentUserOneOffer.fulfilled, (state, action) => {
+        {
+          state.currentUserOffers.push(action.payload);
+        }
+      })
+      .addCase(deleteCurrentUserOneOffer.fulfilled, (state, action) => {
+        {
+          state.currentUserOffers = state.currentUserOffers.filter(o => o.id != action.payload)
+        }
+      })
   }
 });
+
+
 
 export const { addNewOffer } = offerSlice.actions
 

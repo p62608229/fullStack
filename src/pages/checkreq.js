@@ -7,35 +7,44 @@ import { BASE_URL } from "../utils/URLs";
 
 export const CheckReq = () => {
 
-    const location = useLocation()
-    const requests = location.state.requests.map(r => {
-        const { priceForWork, pricePerVisit, note } = r;
-        return { priceForWork, pricePerVisit, note };
-    })
+    const location = useLocation();
+    const requests = null;
 
-
-    // const [requests, setRequests] = useState()
     const { offer } = location.state
+
+    async function getRequests(requests) {
+        const url = `${BASE_URL}/User/searchrequest`
+        // לבדוק האם הבדיקה היא נכונה אם לא לזמן את הפונקציה הנכונה מטבל היוזר
+        const allRequest = await axios.post(url, requests)
+        console.log(allRequest, " from chek request")
+        requests = allRequest.data
+    }
+
+
     useEffect(() => {
-        //  const {name, user}  
-        const url = `${BASE_URL}/Offer`
-
-        const response = axios.get(url, offer)
-        // setRequests(response.data)
-
+        getRequests()
 
     })
 
-    const req = useSelector(s => s.request.request);
     return (
         <>
 
             {
-                requests.map(c =>
-                    <div>note:  {c.note} {c.priceForWork} {c.pricePerVisit}</div>)
+                requests && requests.map(c =>
+                    <div>
+                        <div>note:  {c.note} </div>
+                        <div>priceForWork:  {c.priceForWork}  </div>
+                        <div>pricePerVisit:  {c.pricePerVisit} </div>
+                    </div>
+
+                )
+
+
+
+
             }
             <h1> המערכת מצאה עבורך{requests.length}אפשרויות</h1>
-                {/* req.map(c =>
+            {/* req.map(c =>
                     <div>{c.Profession}  {c.AddressProfession}      </div>)
 
 
