@@ -6,8 +6,8 @@ import { demoOffersList } from '../../~not use/demoValues/offers';
 // איתחול של הסטיט
 const initialState = {
   offers: [],
-  currentUserOffers: null
-  // currentUserOffers: demoOffersList
+  // currentUserOffers: null
+  currentUserOffers: demoOffersList
 
 }
 

@@ -7,21 +7,18 @@ const convertOffersToEventsArray = (offersArray) => {
 
     // Convert original list to events array
     offersArray && offersArray.forEach(item => {
-        if (item.inCalendar) {
             item.daysToWork.forEach(day => {
                 const start = moment(day.date + ' ' + day.fromHour, 'DD/MM/YY HH:mm');
                 const end = moment(day.date + ' ' + day.toHour, 'DD/MM/YY HH:mm');
-
                 offersEvents.push({
                     ...item,
                     type: "offer",
                     start: moment(start).toDate()                    ,
                     end: moment(end).toDate() ,
                     title: item.note,
-                    backgroundColor: 'rgb(236, 128, 128)'
+                    backgroundColor: item.inCalendar ? '#87CEEB' : "#90EE90"
                 });
             });
-        }
     });
 
     // Log the events array
@@ -36,7 +33,6 @@ const convertRequestsToEventsArray = (requestArray) => {
     const requestEvents = [];
   
     requestArray && requestArray.forEach(request => {
-        if (request.inCalendar) {
             // Parse date, fromhour, and tohour
             const date = moment(request.date, 'DD/MM/YYYY').format('YYYY-MM-DD');
             const fromHour = moment(request.fromhour, 'mm:hh').format('HH:mm');
@@ -53,12 +49,9 @@ const convertRequestsToEventsArray = (requestArray) => {
                 type: "request",
                 end: moment(end).toDate() ,
                 title: request.note,
-                backgroundColor: 'rgb(174, 225, 225)'
+                backgroundColor: request.inCalendar ? '#FFA07A' : "#FFD700"
             });
-      }   
     })
-
-  
     return requestEvents;
   };
 
