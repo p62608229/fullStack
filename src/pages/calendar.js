@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllCurrentUserOffers } from '../Redux/API/offer';
 import { getAllCurrentUserRequests } from '../Redux/API/request';
 import { calnderEventsArray } from '../utils/calendar/calnderEvents';
+import { CircleColors } from '../components/calendar.js/circleColors';
 
 export const UserCalendar = () => {
   const dispatch = useDispatch();
   const [selectedEvent, setSelectedEvent] = useState(null);
-
     const requests = useSelector(s => s.request.currentUserRequests);
     const offers = useSelector(s=> s.offer.currentUserOffers);
 
@@ -24,7 +24,7 @@ export const UserCalendar = () => {
   const localizer = momentLocalizer(moment);
   const events = calnderEventsArray(offers, requests);
 
-  const handleEventClick = event => {
+  const handleEventClick = async (event) => {
     setSelectedEvent(event);
   };
 
@@ -43,7 +43,7 @@ export const UserCalendar = () => {
 
   return (
     <div style={{ margin: '50px', position: 'center' }}>
-      {/* <CircleColors /> */}
+      <CircleColors />
       <Calendar
         defaultDate={moment().toDate()}
         defaultView="month"
@@ -61,6 +61,10 @@ export const UserCalendar = () => {
           <p>Date: {moment(selectedEvent.start).format('DD/MM/YYYY')}</p>
           <p>Hours: {moment(selectedEvent.start).format('HH:mm')} - {moment(selectedEvent.end).format('HH:mm')}</p>
           <p>Note: {selectedEvent.note}</p>
+          {  selectedEvent.matchedName && <p style={{backgroundColor: "gray", padding: "5px"}}> {selectedEvent.type == "request" ? "Offers" : "Requesting"} details: 
+            <p>Name: {selectedEvent.matchedName} | Phone: {selectedEvent.matchedPhon} | Email: {selectedEvent.matchedEmail}</p>
+          </p>
+         }
           <p></p>
         </div>
       )}

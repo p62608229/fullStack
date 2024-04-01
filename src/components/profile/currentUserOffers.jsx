@@ -4,9 +4,10 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 
-import { chngeInCalnderMode, deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../../Redux/API/offer';
+import { deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../../Redux/API/offer';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
+import { AddMatchedDetails } from './addMatchedDetails';
 
 
 export const CurrentUserOffers = () => {
@@ -15,8 +16,9 @@ export const CurrentUserOffers = () => {
   const offers = useSelector(s => s.offer.currentUserOffers);
   const professions = useSelector(s => s.profession.profession);
 
-  const [editingRow, setEditingRow] = useState(null);
+  const [currentRow, setCurrentRow] = useState(null);
   const [errors, setErrors] = useState({});
+  const [addToCalnderStatus, setAddToCalnderStatus] = useState(false);
   const toast = React.useRef(null);
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export const CurrentUserOffers = () => {
 
   const onEdit = (rowData) => {
     debugger
-    setEditingRow(rowData);
+    setCurrentRow(rowData);
   };
 
   const onDelete = (rowData) => {
@@ -65,13 +67,15 @@ export const CurrentUserOffers = () => {
     showToast('success', 'Success', 'Row deleted successfully');
   };
 
-  const onAddToCalendar = (rowData) => {
-    dispatch(chngeInCalnderMode(rowData.offerCode))
-    showToast('info', 'Add to Calendar', 'Added to calendar successfully');
-  };
+
 
   const showToast = (severity, summary, detail) => {
     toast.current.show({ severity, summary, detail, life: 3000 });
+  };
+
+  const onAddToCalendar = (rowData) => {
+    setCurrentRow(rowData)
+    setAddToCalnderStatus(true);
   };
 
   const renderDeleteButton = (rowData) => {
@@ -84,7 +88,7 @@ export const CurrentUserOffers = () => {
 
   const renderAddToCalendarButton = (rowData) => {
     return (
-      <div className="icon-button" onClick={() => onAddToCalendar(rowData.offerCode)}>
+      <div className="icon-button" onClick={() => onAddToCalendar(rowData)}>
         <i className={rowData.inCalendar ? "pi pi-calendar-minus" : "pi pi-calendar-plus"}></i>
       </div>
     );
@@ -114,10 +118,10 @@ export const CurrentUserOffers = () => {
   const renderInputText = (rowData, field) => {
     return (
       <InputText
-        value={editingRow ? editingRow[field] : rowData[field]}
+        value={currentRow ? currentRow[field] : rowData[field]}
         onChange={(e) => {
           const newValue = e.target.value;
-          setEditingRow(prevState => ({
+          setCurrentRow(prevState => ({
             ...prevState,
             [field]: newValue
           }));
@@ -129,23 +133,23 @@ export const CurrentUserOffers = () => {
   const renderDaysToWorkEditor = (props) => {
     return (
       <div>
-        <Calendar type="date" showIcon value={editingRow ? editingRow['date'] : ''} onChange={(e) => {
+        <Calendar type="date" showIcon value={currentRow ? currentRow['date'] : ''} onChange={(e) => {
           const newValue = e.target.value;
-          setEditingRow((prevState) => ({
+          setCurrentRow((prevState) => ({
             ...prevState,
             'date': newValue
           }));
         }} />
-        <InputText type="text" value={editingRow ? editingRow['fromhour'] : ''} onChange={(e) => {
+        <InputText type="text" value={currentRow ? currentRow['fromhour'] : ''} onChange={(e) => {
           const newValue = e.target.value;
-          setEditingRow((prevState) => ({
+          setCurrentRow((prevState) => ({
             ...prevState,
             'fromhour': newValue
           }));
         }} placeholder="From Hour (HH:mm)" />
-        <InputText type="text" value={editingRow ? editingRow['tohour'] : ''} onChange={(e) => {
+        <InputText type="text" value={currentRow ? currentRow['tohour'] : ''} onChange={(e) => {
           const newValue = e.target.value;
-          setEditingRow((prevState) => ({
+          setCurrentRow((prevState) => ({
             ...prevState,
             'tohour': newValue
           }));
@@ -168,7 +172,7 @@ export const CurrentUserOffers = () => {
 
   const onRowEditCancel = () => {
     debugger
-    setEditingRow(null);
+    setCurrentRow(null);
     setErrors({});
   };
 
@@ -186,6 +190,7 @@ export const CurrentUserOffers = () => {
         <Column header="" body={renderAddToCalendarButton}></Column>
         <Column rowEditor rowEditorSaveIcon="pi pi-check" rowEditorCancelIcon="pi pi-times" headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }} onRowEditSave={onRowEditSave} onRowEditCancel={onRowEditCancel}></Column>
       </DataTable>
+       {addToCalnderStatus &&  <AddMatchedDetails showToast={showToast} setAddToCalnderStatus = {setAddToCalnderStatus} type="offer" eventId={currentRow.offerCode} setCurrentRow={setCurrentRow}/> } 
     </div>
   );
 };

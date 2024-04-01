@@ -3,7 +3,7 @@ import { demoUser } from '../../~not use/demoValues/user';
 
 const initialState = {
   // currentUser: null
-  currentUser: {sjf},
+  currentUser: demoUser,
 }
 
 export const usersSlice = createSlice({

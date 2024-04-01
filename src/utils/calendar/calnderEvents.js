@@ -16,7 +16,7 @@ const convertOffersToEventsArray = (offersArray) => {
                     start: moment(start).toDate()                    ,
                     end: moment(end).toDate() ,
                     title: item.note,
-                    backgroundColor: item.inCalendar ? '#87CEEB' : "#90EE90"
+                    backgroundColor: item.Calander ? '#87CEEB' : "#90EE90"
                 });
             });
     });
@@ -49,7 +49,7 @@ const convertRequestsToEventsArray = (requestArray) => {
                 type: "request",
                 end: moment(end).toDate() ,
                 title: request.note,
-                backgroundColor: request.inCalendar ? '#FFA07A' : "#FFD700"
+                backgroundColor: request.Calander ? '#FFA07A' : "#FFD700"
             });
     })
     return requestEvents;
