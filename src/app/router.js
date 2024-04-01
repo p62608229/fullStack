@@ -7,8 +7,6 @@ import { SendEmail } from "../pages/sendEmail/sendEmail"
 import { CommentPage } from "../pages/commentPage"
 import { Addcomment } from "../components/comments/addComment"
 import { UserCalendar } from "../pages/calendar"
-import { CurrentUserComments } from "../components/profile/currentUserComments"
-import { Profile } from "../components/profile/profile"
 import { EditProfile } from "../components/profile/editProfile"
 import { ProfileMenu } from "../components/profile/profileMenu"
 import { CurrentUserOffers } from "../components/profile/currentUserOffers"
@@ -29,11 +27,9 @@ export const AppRouter = () => {
                     <Route path='about' element={<About />} />
                     <Route path='request' element={<Request />} />
                     <Route path="profile" element={<ProfileMenu />}>
-                        <Route path="" element={<Profile />} />
                         <Route path="edit" element={<EditProfile />} />
                         <Route path="offers" element={<CurrentUserOffers />} />
                         <Route path="requests" element={<CurrentUserRequests />} />
-                        <Route path="comments" element={<CurrentUserComments />} />
                         <Route path="calendar" element={<UserCalendar />} />
                     </Route>
                     <Route path='offer' element={<Offer />} />

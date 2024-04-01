@@ -20,6 +20,14 @@ export const offerSlice = createSlice({
     },
     deleteCurrentUserOffers: (state) => {
       state.currentUserOffers = null
+    },
+    updateOneCurrentUserOffers: (state, action) => {
+      debugger
+      const index = state.currentUserOffers.findIndex(offer => offer.offerCode === action.payload.eventId);
+      state.currentUserOffers[index] = {
+        ...state.currentUserOffers[index],
+        ...action.payload.currentEvent
+      };
     }
   },
   extraReducers: (builder) => {
@@ -40,6 +48,6 @@ export const offerSlice = createSlice({
   }
 });
 
-export const { addNewOffer } = offerSlice.actions
+export const { addNewOffer, updateOneCurrentUserOffers } = offerSlice.actions
 
 export default offerSlice.reducer

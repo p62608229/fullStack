@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { BASE_URL } from '../../utils/URLs';
+import { updateOneCurrentUserRequest } from '../../Redux/slices/request';
+import { updateOneCurrentUserOffers } from '../../Redux/slices/offer';
+import { demoOffersList } from '../../~not use/demoValues/offers';
 
 
 export const AddMatchedDetails = (props) => {
@@ -31,12 +34,22 @@ export const AddMatchedDetails = (props) => {
     const onSubmit = async (data) => {
         try {
             // צריך להוסיף קריאת שרת שתקבל את הנתונים ותחזיר לנו הצעה או בקשה מעודבדת כולל מי שתיאמנו איתו 
-            const matchedUser = { ...data }
-            const url = `${BASE_URL}/User`
-            const response = await axios.put(url);
+            // const matchedUser = {
+            //     matchedName: "Avi",
+            //     matchedPhon: "052715454",
+            //     matchedEmail: "Avi@gmail.com",
+            // }
 
+            // type, eventId
+            
+            const matchedUser = { ...data, id: eventId }
+            const url =  type  == "offer" ? `${BASE_URL}/offer/getmatchoffer/${eventId}` : `${BASE_URL}/request/getmatchrequest${eventId}`
+            const response = await axios.post(url, {matchedUser: matchedUser});
+            
             console.log(response.data, "response")
             if (response.data) {
+                const currentEvent = response.data
+                type == "offer" ?  dispatch(updateOneCurrentUserOffers({eventId: eventId, currentEvent: currentEvent})) : dispatch(updateOneCurrentUserRequest({eventId: eventId, currentEvent: currentEvent}))
                 setCurrentRow(null)
                 setAddToCalnderStatus(false)
                 showToast('info', 'Matched event', 'Matched event successfully');

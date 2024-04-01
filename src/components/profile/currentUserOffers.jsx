@@ -67,8 +67,6 @@ export const CurrentUserOffers = () => {
     showToast('success', 'Success', 'Row deleted successfully');
   };
 
-
-
   const showToast = (severity, summary, detail) => {
     toast.current.show({ severity, summary, detail, life: 3000 });
   };
@@ -89,7 +87,7 @@ export const CurrentUserOffers = () => {
   const renderAddToCalendarButton = (rowData) => {
     return (
       <div className="icon-button" onClick={() => onAddToCalendar(rowData)}>
-        <i className={rowData.inCalendar ? "pi pi-calendar-minus" : "pi pi-calendar-plus"}></i>
+        <i className={rowData.Calander ? "pi pi-calendar-minus" : "pi pi-calendar-plus"}></i>
       </div>
     );
   };

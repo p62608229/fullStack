@@ -12,9 +12,6 @@ export const ProfileMenu = () => {
 
     const items = [
         {
-            label: "profile", icon: "pi pi-user", command: () => { navigate("/profile") }
-        },
-        {
             label: 'my actions',
             items: [
                 {
@@ -26,11 +23,6 @@ export const ProfileMenu = () => {
                     label: 'offers',
                     icon: 'pi pi-wrench',
                     command: () => { navigate("./offers") }
-                },
-                {
-                    label: 'comments',
-                    icon: 'pi pi-comment',
-                    command: () => { navigate("./comments") }
                 }
             ]
         },
