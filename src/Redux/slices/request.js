@@ -6,8 +6,8 @@ import { demoRequestList } from '../../~not use/demoValues/requests';
 // איתחול של הסטיט
 const initialState = {
   request: [],
-  currentUserRequests:  null
-  // currentUserRequests:  demoRequestList
+  // currentUserRequests:  null
+  currentUserRequests:  demoRequestList
 }
 
 export const RequestSlice = createSlice({
