@@ -4,9 +4,8 @@ import { demoCommentsList } from '../../~not use/demoValues/comments';
 
 // איתחול של הסטיט
 const initialState = {
-  comments: [],
-  // comments: demoCommentsList,
-  status: "init"
+  // comments: [],
+  comments: demoCommentsList,
 }
 
 

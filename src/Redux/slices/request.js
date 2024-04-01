@@ -19,6 +19,14 @@ export const RequestSlice = createSlice({
     },
     deleteCurrentUserRequests: (state) => {
       state.currentUserRequests = null
+    },
+    updateOneCurrentUserRequest: (state, action) => {
+      debugger
+      const index = state.currentUserRequests.findIndex(r => r.requestCode === action.payload.eventId);
+      state.currentUserRequests[index] = {
+        ...state.currentUserRequests[index],
+        ...action.payload.currentEvent
+      };
     }
   },
   extraReducers: (builder) => {
@@ -35,6 +43,6 @@ export const RequestSlice = createSlice({
   }
 });
 
-export const { deleteCurrentUserRequests } = RequestSlice.actions
+export const { deleteCurrentUserRequests, updateOneCurrentUserRequest } = RequestSlice.actions
 
 export default RequestSlice.reducer

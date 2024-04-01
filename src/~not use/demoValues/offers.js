@@ -11,7 +11,10 @@ export const demoOffersList = [
             { date: "21/03/24", fromhour: "14:00", tohour: "16:00" },
 
         ],
-        inCalendar: true
+        Calander: true,
+        matchedName: "Avi",
+        matchedPhon: "052715454",
+        matchedEmail: "h@gmail.com"
     },
     {
         offerCode: "DEF456",
@@ -23,6 +26,13 @@ export const demoOffersList = [
         daysToWork: [
             { date: "22/03/24", fromhour: "10:00", tohour: "13:00" },
         ],
-        inCalendar: false
+        Calander: false
     }
 ];
+
+const offerCode = "xxxx"
+const matchedUser = {
+    matchedName: "Avi",
+    matchedPhon: "052715454",
+    matchedEmail: "Avi@gmail.com"
+}
