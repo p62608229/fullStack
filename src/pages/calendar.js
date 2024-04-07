@@ -39,29 +39,33 @@ export const UserCalendar = () => {
 
   return (
     <div style={{ margin: '50px', position: 'center' }}>
-      <CircleColors />
-      <Calendar
-        defaultDate={moment().toDate()}
-        defaultView="month"
-        events={events}
-        localizer={localizer}
-        style={{ height: '60vh', width: '100%' }}
-        eventPropGetter={eventStyleGetter}
-        onSelectEvent={handleEventClick}
-      />
-      {selectedEvent && (
-        <div style={{ marginTop: '20px', borderTop: '1px solid #ccc', textAlign: "center", padding: '20px', backgroundColor: selectedEvent.backgroundColor }}>
-          <h3>Event Details:</h3>
-          <p>Type: {selectedEvent.type}</p>
-          <p>Date: {moment(selectedEvent.start).format('DD/MM/YYYY')}</p>
-          <p>Hours: {moment(selectedEvent.start).format('HH:mm')} - {moment(selectedEvent.end).format('HH:mm')}</p>
-          <p>Note: {selectedEvent.note}</p>
-          {selectedEvent.matchedName && <p style={{ backgroundColor: "gray", padding: "5px" }}> {selectedEvent.type === "request" ? "Offers" : "Requesting"} details:
-            <p>Name: {selectedEvent.matchedName} | Phone: {selectedEvent.matchedPhon} | Email: {selectedEvent.matchedEmail}</p>
-          </p>}
-          <p></p>
-        </div>
-      )}
+      {events &&
+        <>
+          <CircleColors />
+          <Calendar
+            defaultDate={moment().toDate()}
+            defaultView="month"
+            events={events}
+            localizer={localizer}
+            style={{ height: '60vh', width: '100%' }}
+            eventPropGetter={eventStyleGetter}
+            onSelectEvent={handleEventClick}
+          />
+          {selectedEvent && (
+            <div style={{ marginTop: '20px', borderTop: '1px solid #ccc', textAlign: "center", padding: '20px', backgroundColor: selectedEvent.backgroundColor }}>
+              <h3>Event Details:</h3>
+              <p>Type: {selectedEvent.type}</p>
+              <p>Date: {moment(selectedEvent.start).format('DD/MM/YYYY')}</p>
+              <p>Hours: {moment(selectedEvent.start).format('HH:mm')} - {moment(selectedEvent.end).format('HH:mm')}</p>
+              <p>Note: {selectedEvent.note}</p>
+              {selectedEvent.matchedName && <p style={{ backgroundColor: "gray", padding: "5px" }}> {selectedEvent.type === "request" ? "Offers" : "Requesting"} details:
+                <p>Name: {selectedEvent.matchedName} | Phone: {selectedEvent.matchedPhon} | Email: {selectedEvent.matchedEmail}</p>
+              </p>}
+              <p></p>
+            </div>
+          )}
+        </>
+      }
     </div>
   );
 };

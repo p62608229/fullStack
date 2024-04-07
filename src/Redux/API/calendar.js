@@ -6,7 +6,6 @@ export const getAllEvents = createAsyncThunk(
     'calendar/getAllEvents',
     async (arg, { getState }) => {
         try {
-
             const state = getState();
             const response = await axios.get(`${BASE_URL}/Request?id=${state.users.currentUser.id}`);
             console.log(response, "getAllCurrentUserRequests response");

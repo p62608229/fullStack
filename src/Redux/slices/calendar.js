@@ -19,7 +19,7 @@ export const CalendarSlice = createSlice({
     .addCase(getAllEvents.fulfilled, (state, action) => {{
       debugger
       const events = calnderEventsArray(action.payload)
-      state.currentUserRequests  = events;
+      state.events  = events;
     }}) 
     
   }
