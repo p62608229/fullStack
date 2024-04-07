@@ -11,15 +11,15 @@ import { CircleColors } from '../components/calendar.js/circleColors';
 export const UserCalendar = () => {
   const dispatch = useDispatch();
   const [selectedEvent, setSelectedEvent] = useState(null);
-    const requests = useSelector(s => s.request.currentUserRequests);
-    const offers = useSelector(s=> s.offer.currentUserOffers);
+  const requests = useSelector(s => s.request.currentUserRequests);
+  const offers = useSelector(s => s.offer.currentUserOffers);
 
-    useEffect(()=> {
-        if (!offers) 
-            dispatch(getAllCurrentUserOffers())
-        if (!requests)
-            dispatch(getAllCurrentUserRequests())
-    })
+  useEffect(() => {
+    if (!offers) 
+      dispatch(getAllCurrentUserOffers())
+    if (!requests)
+      dispatch(getAllCurrentUserRequests())
+  });
 
   const localizer = momentLocalizer(moment);
   const events = calnderEventsArray(offers, requests);
@@ -54,20 +54,20 @@ export const UserCalendar = () => {
         onSelectEvent={handleEventClick}
       />
       {selectedEvent && (
-        <div style={{ marginTop: '20px', borderTop: '1px solid #ccc',  textAlign: "center", padding: '20px', backgroundColor: selectedEvent.backgroundColor}}>
+        <div style={{ marginTop: '20px', borderTop: '1px solid #ccc', textAlign: "center", padding: '20px', backgroundColor: selectedEvent.backgroundColor }}>
           <h3>Event Details:</h3>
           <p>Type: {selectedEvent.type}</p>
-          {/* <p>Code: {selectedEvent.type =="offer" ? <>{selectedEvent.offerCode}</>  : <>{selectedEvent.requestCode}</>}</p> */}
           <p>Date: {moment(selectedEvent.start).format('DD/MM/YYYY')}</p>
           <p>Hours: {moment(selectedEvent.start).format('HH:mm')} - {moment(selectedEvent.end).format('HH:mm')}</p>
           <p>Note: {selectedEvent.note}</p>
-          {  selectedEvent.matchedName && <p style={{backgroundColor: "gray", padding: "5px"}}> {selectedEvent.type == "request" ? "Offers" : "Requesting"} details: 
+          {selectedEvent.matchedName && <p style={{ backgroundColor: "gray", padding: "5px" }}> {selectedEvent.type === "request" ? "Offers" : "Requesting"} details:
             <p>Name: {selectedEvent.matchedName} | Phone: {selectedEvent.matchedPhon} | Email: {selectedEvent.matchedEmail}</p>
-          </p>
-         }
+          </p>}
           <p></p>
         </div>
       )}
     </div>
   );
 };
+
+export default UserCalendar;
