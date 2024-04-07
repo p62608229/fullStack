@@ -4,6 +4,7 @@ import usersReducer from "./slices/users"
 import offerReducer from './slices/offer'
 import requestReducer from './slices/request'
 import proffesionReducer from './slices/profession'
+import calendarReducer from  './slices/calendar'
 
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
         comments: commentsReducer,
         offer: offerReducer,
         request:requestReducer,
-        profession:proffesionReducer
+        profession:proffesionReducer,
+        calendar: calendarReducer
     },
 })

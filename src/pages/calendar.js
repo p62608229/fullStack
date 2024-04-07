@@ -3,24 +3,22 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCurrentUserRequests } from '../Redux/API/request';
-import { calnderEventsArray } from '../utils/calendar/calnderEvents';
 import { CircleColors } from '../components/calendar.js/circleColors';
+import { getAllEvents } from '../Redux/API/calendar';
 
 
 // 
 export const UserCalendar = () => {
   const dispatch = useDispatch();
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const requests = useSelector(s => s.request.currentUserRequests);
+  const events = useSelector(s => s.calendar.events);
 
   useEffect(() => {
-    if (!requests)
-      dispatch(getAllCurrentUserRequests())
-  });
+    if (!events)
+      dispatch(getAllEvents())
+  })
 
   const localizer = momentLocalizer(moment);
-  const events = calnderEventsArray(requests);
 
   const handleEventClick = async (event) => {
     setSelectedEvent(event);

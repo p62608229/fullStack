@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 
-export const calnderEventsArray = (requestsArray, currentUser) => {
+export const calnderEventsArray = (requestsArray) => {
 
     const requestEvents = [];
   

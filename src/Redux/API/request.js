@@ -4,18 +4,20 @@ import axios from "axios";
 
 export const getAllCurrentUserRequests = createAsyncThunk(
     'request/getAllCurrentUserRequests',
-    async (arg, { getState }) => {        
+    async (arg, { getState }) => {
         try {
+
             const state = getState();
-            console.log(state)
             const response = await axios.get(`${BASE_URL}/Request?id=${state.users.currentUser.id}`);
             console.log(response, "getAllCurrentUserRequests response");
-            
-            const requests = response.data; 
 
-            return requests.map(r => 
-                r.requestUserId == state.users.currentUser.id ?  {...r, offer: true} : r
+            const requests = response.data;
+
+            const r = requests.map(r =>
+                r.requestUserId == state.users.currentUser.id ? { ...r, offer: true } : r
             )
+
+            return r;
 
         } catch (e) {
             console.log(e, "getAllCurrentUserRequests error")
@@ -27,10 +29,10 @@ export const updateCurrentUserOneRequest = createAsyncThunk(
     'request/updateCurrentUserOneRequest',
     async (newRequest) => {
         try {
-            const response = await axios.post(`${BASE_URL}/Request`, {newRequest});
+            const response = await axios.post(`${BASE_URL}/Request`, { newRequest });
             console.log(response, "updateCurrentUserOneRequest response");
 
-            const Offers = response.data; 
+            const Offers = response.data;
             return Offers
         }
         catch (e) {

@@ -5,9 +5,7 @@ import { demoRequestList } from '../../~not use/demoValues/requests';
 
 // איתחול של הסטיט
 const initialState = {
-  request: [],
-  currentUserRequests:  null
-  // currentUserRequests:  demoRequestList
+  request: []
 }
 
 export const RequestSlice = createSlice({
@@ -31,9 +29,6 @@ export const RequestSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(getAllCurrentUserRequests.fulfilled, (state, action) => {{
-      state.currentUserRequests  = action.payload;
-    }}) 
     .addCase(updateCurrentUserOneRequest.fulfilled, (state, action) => {{
       state.currentUserRequests.push(action.payload);
     }})
