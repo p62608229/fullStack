@@ -12,10 +12,6 @@ export const demoRequestList = [
       city: "ירושלים",
       fromhour: "09:00",
       user: null,
-      Calander: true,
-      matchedName: "Avi",
-      matchedPhon: "052715454",
-      matchedEmail: "h@gmail.com"
     },
     {
       requestCode: 4000,
@@ -29,7 +25,6 @@ export const demoRequestList = [
       cameThroughFriend: 1,
       city: "ירושלים",
       fromhour: "09:00",
-      user: null,
-      Calander: false,
+      user: null,  // אם מי תיאמתי את הבקשה
     }
   ];

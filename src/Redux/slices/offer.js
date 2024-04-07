@@ -2,13 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 import { chngeInCalnderMode, deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../API/offer';
 import { demoOffersList } from '../../~not use/demoValues/offers';
 
-
 // איתחול של הסטיט
 const initialState = {
   offers: [],
   // currentUserOffers: null
-  currentUserOffers: demoOffersList
-
+  // currentUserOffers: demoOffersList
 }
 
 export const offerSlice = createSlice({
@@ -22,7 +20,6 @@ export const offerSlice = createSlice({
       state.currentUserOffers = null
     },
     updateOneCurrentUserOffers: (state, action) => {
-      debugger
       const index = state.currentUserOffers.findIndex(offer => offer.offerCode === action.payload.eventId);
       state.currentUserOffers[index] = {
         ...state.currentUserOffers[index],
