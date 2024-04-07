@@ -24,7 +24,11 @@ export const CommentsFlow = () => {
     };
 
     return (
-        <Galleria value={items} numVisible={1} item={renderItem} style={galleriaStyle}/>
+        // <Galleria value={items} numVisible={1} item={renderItem} style={galleriaStyle}/>
+
+        <Galleria value={items}  numVisible={5} circular
+        showItemNavigators 
+        showThumbnails={false} item={renderItem}   />
     );
 };
 

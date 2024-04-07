@@ -2,8 +2,7 @@ import React from 'react';
 
 export const CircleColors = () => {
   const colors = [
-    { type: "Matched offer", color: '#87CEEB' },
-    { type: "Unmatched offer", color: '#90EE90' },
+    { type: "My offers", color: '#87CEEB' },
     { type: "Matched request", color: '#FFA07A' },
     { type: "Unmatched request", color: '#FFD700' }
   ];

@@ -1,0 +1,25 @@
+.p-menubar {
+    color: black;
+    background-color: #efece4;
+    border: none;
+    font-weight: bold;
+
+}
+
+.color-pink {
+    color: #fe4a6b
+}
+
+.p-menuitem-text	{
+    color: #443f3f;
+
+}
+
+.p-menuitem-icon	 {
+    color: #443f3f;
+}
+
+
+.p-submenu-icon	 {
+    color: #443f3f;
+}

@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { BASE_URL } from "../utils/URLs";
 
+
+//  POST // serchoffer  / - POST  serchRequest   - 
 export const CheckReq = () => {
 
     const location = useLocation()

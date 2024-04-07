@@ -15,6 +15,7 @@ import { CurrentUserRequests } from "../components/profile/currentUserRequests"
 import { Login } from "../pages/login"
 import { Register } from "../pages/register"
 import { Offer } from "../pages/offer"
+import Footer from "./Footer"
 
 
 export const AppRouter = () => {
@@ -43,6 +44,7 @@ export const AppRouter = () => {
                     <Route path="calendar" element={<UserCalendar />} />
                 </Route>
             </Routes>
+            <Footer />
         </BrowserRouter>
     )
 }
