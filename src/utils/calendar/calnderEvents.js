@@ -15,6 +15,15 @@ export const calnderEventsArray = (requestsArray, currentUser) => {
             // Construct start and end moments
             const start = moment(`${date} ${fromHour}`, 'YYYY-MM-DD HH:mm');
             const end = moment(`${date} ${toHour}`, 'YYYY-MM-DD HH:mm');
+
+
+            // { type: "My offers", color: '#87CEEB' },
+            // { type: "Matched request", color: '#FFA07A' },
+            // { type: "Unmatched request", color: '#FFD700' }
+            // astract colors
+            let color = '';
+            color = request.offer ? "#87CEEB" : request.user ?  "#FFA07A" : "#FFD700"
+
         
             // Push event object to array
             requestEvents.push({
@@ -23,7 +32,7 @@ export const calnderEventsArray = (requestsArray, currentUser) => {
                 type: "request",
                 end: moment(end).toDate() ,
                 title: request.note,
-                backgroundColor: request.Calander ? '#FFA07A' : "#FFD700"
+                backgroundColor: color
             });
     })
     

@@ -10,9 +10,12 @@ export const getAllCurrentUserRequests = createAsyncThunk(
             console.log(state)
             const response = await axios.get(`${BASE_URL}/Request?id=${state.users.currentUser.id}`);
             console.log(response, "getAllCurrentUserRequests response");
+            
+            const requests = response.data; 
 
-            const Offers = response.data; 
-            return Offers
+            return requests.map(r => 
+                r.requestUserId == state.users.currentUser.id ?  {...r, offer: true} : r
+            )
 
         } catch (e) {
             console.log(e, "getAllCurrentUserRequests error")

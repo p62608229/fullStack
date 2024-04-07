@@ -1,12 +1,14 @@
 import React from 'react';
 
-export const CircleColors = () => {
-  const colors = [
-    { type: "My offers", color: '#87CEEB' },
-    { type: "Matched request", color: '#FFA07A' },
-    { type: "Unmatched request", color: '#FFD700' }
-  ];
 
+export  const colors = [
+  { type: "My offers", color: '#87CEEB' },
+  { type: "Matched request", color: '#FFA07A' },
+  { type: "Unmatched request", color: '#FFD700' }
+];
+
+export const CircleColors = () => {
+ 
   return (
     <div style={{ display: 'flex', flexWrap: 'nowrap', margin: "20px" }}>
       {/* Creating four circles with alternating colors in one line */}

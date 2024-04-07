@@ -32,7 +32,6 @@ export const RequestSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(getAllCurrentUserRequests.fulfilled, (state, action) => {{
-      
       state.currentUserRequests  = action.payload;
     }}) 
     .addCase(updateCurrentUserOneRequest.fulfilled, (state, action) => {{
