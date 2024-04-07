@@ -20,5 +20,4 @@ export const ProfessionSelector = (props) => {
             return <option value={p.professionCode} key={index} >{p.profession1}</option>
         })}</select>}
     </div>)
-    
 }

@@ -29,6 +29,10 @@ export const AddComment = createAsyncThunk(
         return AddComment;
     }
 )
+/// שליחת התאריך והיום בשבוע
+// async (day, date) => {
+//     const response = await axios.get(`${BASE_URL}/day/date`);
+// };
 
 
 // export const Register = createAsyncThunk(
@@ -75,3 +79,6 @@ export const AddComment = createAsyncThunk(
 //         return customerCreated;
 //     }
 //   );
+
+
+

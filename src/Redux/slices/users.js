@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { demoUser } from '../../~not use/demoValues/user';
 
 const initialState = {
-  // currentUser: null
-  currentUser: demoUser,
+  currentUser: null
+  // currentUser: demoUser,
 }
 
 export const usersSlice = createSlice({
@@ -15,9 +15,14 @@ export const usersSlice = createSlice({
     },
     deleteCurrentUser: (state) => {
       state.currentUser = null;
-    }
+    },
+    searchrequest:(state,action)=>{
+      state.currentUser=action.payload;
+    },
+    
   }
+  
 });
-export const { updateCurrentUser,  deleteCurrentUser } = usersSlice.actions
+export const { updateCurrentUser,  deleteCurrentUser,searchrequest } = usersSlice.actions
 
 export default usersSlice.reducer

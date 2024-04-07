@@ -15,7 +15,7 @@ import { demoOffersList } from '../../~not use/demoValues/offers';
 
 export const AddMatchedDetails = (props) => {
 
-    const {showToast, setAddToCalnderStatus, type, eventId, setCurrentRow} = props
+    const {showToast, setAddToCalnderStatus, type, event, setCurrentRow} = props
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -42,14 +42,14 @@ export const AddMatchedDetails = (props) => {
 
             // type, eventId
             
-            const matchedUser = { ...data, id: eventId }
-            const url =  type  == "offer" ? `${BASE_URL}/offer/getmatchoffer/${eventId}` : `${BASE_URL}/request/getmatchrequest${eventId}`
-            const response = await axios.post(url, {matchedUser: matchedUser});
+            const matchedUser = { ...event,...data}
+            const url =  type  == "offer" ? `${BASE_URL}/offer/getmatchoffer` : `${BASE_URL}/request/getmatchrequest`
+            const response = await axios.post(url, { matchedUser});
             
             console.log(response.data, "response")
             if (response.data) {
                 const currentEvent = response.data
-                type == "offer" ?  dispatch(updateOneCurrentUserOffers({eventId: eventId, currentEvent: currentEvent})) : dispatch(updateOneCurrentUserRequest({eventId: eventId, currentEvent: currentEvent}))
+                type == "offer" ?  dispatch(updateOneCurrentUserOffers(response.data)) : dispatch(updateOneCurrentUserRequest({eventId: event.requestCode, currentEvent: currentEvent}))
                 setCurrentRow(null)
                 setAddToCalnderStatus(false)
                 showToast('info', 'Matched event', 'Matched event successfully');
@@ -74,7 +74,7 @@ export const AddMatchedDetails = (props) => {
             <div className="flex justify-content-center">
                 <div className="card">
                     <h5 className="text-center">Pls put your matched details:</h5>
-                    <Form onSubmit={onSubmit} initialValues={{ id: "", matchedName: '', lastName: '', password: '', address: '', postalcode: '', city: '', houseNumber: null, matchedEmail: '', matchedPhon: null }} validate={validate} render={({ handleSubmit }) => (
+                    <Form onSubmit={onSubmit} initialValues={{ id: "", atchedName: '', lastName: '', password: '', address: '', postalcode: '', city: '', houseNumber: null, matchedEmail: '', matchedPhon: null }} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
                             {/*        ======= matchedName ===== */}
                             <Field name="matchedName" render={({ input, meta }) => (

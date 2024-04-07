@@ -4,8 +4,8 @@ import { demoProfessionList } from '../../~not use/demoValues/profession';
 
 // איתחול של הסטיט
 const initialState = {
-  // profession: null,
-  profession: demoProfessionList,
+  profession: null,
+  // profession: demoProfessionList,
   status: "init"
 }
 

@@ -142,7 +142,7 @@ export const Register = () => {
                             {/*        ======= phone  ===== */}
                             <Field name="phone" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label p-input-icon-right">
+                                    <span className="p-float-label">
                                         <i className="pi pi-phone" />
                                         <InputText id="phone" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })}></InputText>
                                         <label htmlFor="phone" className={classNames({ 'p-error': isFormFieldValid(meta) })}>phone*</label>

@@ -8,15 +8,17 @@ import { classNames } from 'primereact/utils';
 import '../css/form.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { updateCurrentUser } from '../Redux/slices/users';
+import { searchrequest, updateCurrentUser } from '../Redux/slices/users';
 import { BASE_URL } from '../utils/URLs';
 import axios from 'axios';
 import moment from 'moment';
 import { InputNumber } from 'primereact/inputnumber';
+import { ProfessionSelector } from "../components/profession";
+
 
 
 export const Offer = () => {
-
+    const [professionCode, setProfessionCode] = useState()
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -47,26 +49,42 @@ export const Offer = () => {
     const onSubmit = async (data, form) => {
         const date = moment('', "dd/mm/yyyy")
         const hour = moment()
-        try {
-            const url = `${BASE_URL}/User/${data.name}/${data.password}`
-            console.log("log in", url)
-            const response = await axios.get(url);
-            const currentUser = response.data
+        // try {
+        //     const url = `${BASE_URL}/User/${data.name}/${data.password}`
+        //     console.log("log in", url)
+        //     const response = await axios.get(url);
+        //     const currentUser = response.data
+        //     console.log(response.data)
+
+        //     if (currentUser) {
+        //         dispatch(updateCurrentUser(currentUser));
+        //         navigate("/");
+        //     }
+        //     else
+        //         setLoginError(true);
+        // }
+        // catch {
+        //     setLoginError(true);
+
+        // }
+       try{
+         const url = `${BASE_URL}/User/searchrequest`
+            console.log("searchrequest", url)
+            const response = await axios.post(url);
+            const currentoffer = response.data
             console.log(response.data)
 
-            if (currentUser) {
-                dispatch(updateCurrentUser(currentUser));
+            if (currentoffer) {
+                dispatch(searchrequest(currentoffer));
                 navigate("/");
             }
             else
                 setLoginError(true);
-        }
-        catch {
-            setLoginError(true);
+       }
+                catch {
+                        setLoginError(true);
 
-        }
-
-    };
+    }}
 
     const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
     const getFormErrorMessage = (meta) => {
@@ -124,6 +142,7 @@ export const Offer = () => {
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
+                       
                             )} />
 
                             <Field name="date" render={({ input }) => (
@@ -131,13 +150,29 @@ export const Offer = () => {
                                     <span className="p-float-label">
                                         <Calendar id="date" {...input} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon />
                                         <label htmlFor="date">Date</label>
+
+                                    </span>
+                                </div>
+                             )} />
+                                  <Field name="choose" render={({ input,meta }) => (
+                                <div className="field">
+                                    <span className="p-float-label">
+                                    <InputText id="choose" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />                              
+                                   
+                                    <label htmlFor="choose" className={classNames({ 'p-error': isFormFieldValid(meta) })}>profession</label>
+
+                            {setProfessionCode}
+                           <ProfessionSelector setProfessionCode={setProfessionCode} />
+
                                     </span>
                                 </div>
                             )} />
 
                             <Button type="submit" label="Submit" className="mt-2" />
                             {loginError ? <div style={{ padding: "5px", color: "red" }}>Some error in connected</div> : <></>}
-                        </form>
+                        
+                          
+                           </form>
                     )} />
                 </div>
             </div>

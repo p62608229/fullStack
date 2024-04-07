@@ -8,6 +8,8 @@ import { deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOn
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { AddMatchedDetails } from './addMatchedDetails';
+import { profession } from '../../Redux/API/profession';
+
 
 
 export const CurrentUserOffers = () => {
@@ -22,9 +24,14 @@ export const CurrentUserOffers = () => {
   const toast = React.useRef(null);
 
   useEffect(() => {
+    debugger
     if (!offers)
       dispatch(getAllCurrentUserOffers());
-  }, [dispatch]);
+    if (!professions)
+      dispatch(profession())
+
+
+  }, []);
 
   const validateData = (rowData) => {
     debugger
@@ -72,8 +79,14 @@ export const CurrentUserOffers = () => {
   };
 
   const onAddToCalendar = (rowData) => {
-    setCurrentRow(rowData)
-    setAddToCalnderStatus(true);
+    if (rowData.Calander) {
+    }
+    else {
+      setCurrentRow(rowData)
+      setAddToCalnderStatus(true);
+
+    }
+
   };
 
   const renderDeleteButton = (rowData) => {
@@ -95,20 +108,20 @@ export const CurrentUserOffers = () => {
   const renderDaysToWork = (rowData) => {
     return (
       <div>
-        {rowData.daysToWork.map((day, index) => (
+        {/* {rowData.daysToWork.map((day, index) => (
           <div key={index}>
             <span>Date: {day.date}</span> {/* Format date using Moment.js */}
-            <span> Hours: {day.fromhour} - {day.tohour}</span>
+        {/* <span> Hours: {day.fromhour} - {day.tohour}</span>
             {index !== rowData.daysToWork.length - 1 && <hr />}
           </div>
-        ))}
+        ))} */}
       </div>
     );
   };
   const renderProfession = (rowData) => {
     return (
       <div>
-        { professions.find(p=> p.professionCode == rowData.profession)?.profession1}
+        {professions && professions.find(p => p.professionCode == rowData.profession)?.profession1}
       </div>
     );
   };
@@ -161,8 +174,8 @@ export const CurrentUserOffers = () => {
     const errors = validateData(event.data);
     debugger
     if (Object.keys(errors).length === 0) {
-        dispatch(updateCurrentUserOneOffer(event.data))
-        showToast('success', 'Success', 'Row edited successfully');
+      dispatch(updateCurrentUserOneOffer(event.data))
+      showToast('success', 'Success', 'Row edited successfully');
     } else {
       setErrors(errors);
     }
@@ -175,7 +188,7 @@ export const CurrentUserOffers = () => {
   };
 
   return (
-    <div style={{ margin: "0 40px", width: "80%"}}>
+    <div style={{ margin: "0 40px", width: "80%" }}>
       <Toast ref={toast} />
       <DataTable value={offers} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} editMode="row">
         <Column field="offerCode" header="Offer Code"></Column>
@@ -188,7 +201,7 @@ export const CurrentUserOffers = () => {
         <Column header="" body={renderAddToCalendarButton}></Column>
         <Column rowEditor rowEditorSaveIcon="pi pi-check" rowEditorCancelIcon="pi pi-times" headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }} onRowEditSave={onRowEditSave} onRowEditCancel={onRowEditCancel}></Column>
       </DataTable>
-       {addToCalnderStatus &&  <AddMatchedDetails showToast={showToast} setAddToCalnderStatus = {setAddToCalnderStatus} type="offer" eventId={currentRow.offerCode} setCurrentRow={setCurrentRow}/> } 
+      {addToCalnderStatus && <AddMatchedDetails showToast={showToast} setAddToCalnderStatus={setAddToCalnderStatus} type="offer" event={currentRow} setCurrentRow={setCurrentRow} />}
     </div>
   );
 };

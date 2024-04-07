@@ -50,8 +50,8 @@ export const ProfileMenu = () => {
                     command: () => { dispatch(deleteCurrentUser()); navigate("/"); }
                 }
             ]
-        }
-    ];
+        },
+        ];
 
     return (
         <div className="card flex justify-content-start" style={{ margin: '30px' }}>

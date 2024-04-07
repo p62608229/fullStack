@@ -24,7 +24,7 @@ export const DefualtMenu = () => {
             ]
         },
         { label: 'Home', icon: 'pi pi-home', command: () => { navigate("/") } },
-        { label: 'About', command: () => { navigate("/about") } },
+       
     ]
 
     return (
@@ -32,9 +32,9 @@ export const DefualtMenu = () => {
             <div className="Card" >
                 <Menubar model={defualtMenuItems} />
             </div>
-            {/* <button onClick={(e) => navigate("/login")}>sign in</button>
-            <button onClick={(e) => navigate("/register")}>sign up</button>
-            <button onClick={(e) => navigate("/about")}>about</button> */}
+             {/* <button onClick={(e) => navigate("/login")}>sign in</button>
+            <button onClick={(e) => navigate("/register")}>sign up</button> */}
+            
 
         </>
     )

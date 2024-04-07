@@ -16,6 +16,7 @@ export const Offer = createAsyncThunk(
 export const getAllCurrentUserOffers = createAsyncThunk(
     'offer/getALlCurrentUserOffers',
     async (arg, { getState }) => {
+        debugger
         try {
             const state = getState();
             console.log(state)
@@ -55,13 +56,22 @@ export const deleteCurrentUserOneOffer = createAsyncThunk(
             return offerCode
         } catch(e) {
             console.log(e, "deleteCurrentUserOneOffer error")
-        }
+        }})
+        export const searchrequest = createAsyncThunk(
+            'user/searchrequest',
+            async () => {
+            
 
-    }
-)
+                    const response = await axios.post(`${BASE_URL}/user/searchrequest`);
+                    console.log(response, "searchrequest response");
+                   const searchrequest=response.data
+               return searchrequest
+        
+            }
+        
+        )
 
-
-
+            
 
 export const chngeInCalnderMode = createAsyncThunk(
     'offer/chngeInCalnderMode',
