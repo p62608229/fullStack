@@ -1,14 +1,19 @@
-import { useNavigate, Outlet } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from "react-router-dom";
 import { Button } from 'primereact/button';
 
 export const ToRegisterFlow = () => {
-  const naviget = useNavigate()
+  const navigate = useNavigate();
 
   const buttonStyle = {
     backgroundColor: '#fe4a6b',
     color: 'white',
     border: 'none', // Remove border
     marginLeft: '10px', // Add space between text and button
+    transition: 'background-color 0.3s ease', // Smooth transition effect
+    '&:hover': {
+      backgroundColor: 'red', // Darken the color on hover
+    }
   };
 
   const containerStyle = {
@@ -22,7 +27,7 @@ export const ToRegisterFlow = () => {
   };
 
   const handleRegisterClick = () => {
-    naviget('/register');
+    navigate('/register');
   };
 
   return (
