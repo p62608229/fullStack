@@ -2,7 +2,7 @@ export const demoRequestList = [
     {
       requestCode: 4000,
       offerUserId: "12345678",
-      date: "20/03/24",
+      date: "20/03/2024",
       tohour: "12:00",
       userCodeOffers: null,
       profession: 2,

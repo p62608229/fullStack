@@ -1,9 +1,10 @@
 const moment = require('moment');
 
 
-export const calnderEventsArray = (requestsArray) => {
+export const calnderEventsArray = (requestsArray, currentUser) => {
 
     const requestEvents = [];
+    
   
     requestsArray && requestsArray.forEach(request => {
 

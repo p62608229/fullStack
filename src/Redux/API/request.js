@@ -29,7 +29,7 @@ export const updateCurrentUserOneRequest = createAsyncThunk(
     'request/updateCurrentUserOneRequest',
     async (newRequest) => {
         try {
-            const response = await axios.post(`${BASE_URL}/Request`, { newRequest });
+            const response = await axios.put(`${BASE_URL}/Request`, { newRequest });
             console.log(response, "updateCurrentUserOneRequest response");
 
             const Offers = response.data;
