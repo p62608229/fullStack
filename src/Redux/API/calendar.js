@@ -13,9 +13,9 @@ export const getAllEvents = createAsyncThunk(
             const requests = response.data;
 
             const r = requests.map(r =>
-                r.requestUserId == state.users.currentUser.id ? { ...r, offer: true } : r
+                r.userO.id == state.users.currentUser.id ? { ...r, offer: true } : r
             )
-
+debugger
             return r;
 
         } catch (e) {

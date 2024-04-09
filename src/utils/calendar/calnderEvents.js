@@ -4,7 +4,6 @@ const moment = require('moment');
 export const calnderEventsArray = (requestsArray, currentUser) => {
 
     const requestEvents = [];
-    debugger
 
 
     requestsArray && requestsArray.forEach(request => {
