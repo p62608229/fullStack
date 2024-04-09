@@ -5,7 +5,8 @@ import { demoRequestList } from '../../~not use/demoValues/requests';
 
 // איתחול של הסטיט
 const initialState = {
-  request: []
+  request: [],
+  searchOffer: null
 }
 
 export const RequestSlice = createSlice({
@@ -25,6 +26,9 @@ export const RequestSlice = createSlice({
         ...state.currentUserRequests[index],
         ...action.payload.currentEvent
       };
+    },
+    searchOffer: (state, action) => {
+      state.searchOffer = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -38,6 +42,6 @@ export const RequestSlice = createSlice({
   }
 });
 
-export const { deleteCurrentUserRequests, updateOneCurrentUserRequest } = RequestSlice.actions
+export const { deleteCurrentUserRequests, updateOneCurrentUserRequest, searchOffer } = RequestSlice.actions
 
 export default RequestSlice.reducer

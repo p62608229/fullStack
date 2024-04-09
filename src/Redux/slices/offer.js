@@ -5,7 +5,8 @@ import { demoOffersList } from '../../~not use/demoValues/offers';
 // איתחול של הסטיט
 const initialState = {
   offers: [],
-  currentUserOffers: null
+  currentUserOffers: null,
+  searchrequest: null
 
   // currentUserOffers: null
   // currentUserOffers: demoOffersList
@@ -26,8 +27,9 @@ export const offerSlice = createSlice({
       const index = state.currentUserOffers.findIndex(offer => offer.offerCode === action.payload.offerCode);
       state.currentUserOffers[index] = action.payload;
     },
-   
-
+    searchrequest: (state, action) => {
+      state.searchrequest = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -48,6 +50,6 @@ export const offerSlice = createSlice({
   }
 });
 
-export const { addNewOffer, updateOneCurrentUserOffers ,searchrequest} = offerSlice.actions
+export const { addNewOffer, updateOneCurrentUserOffers ,searchrequest } = offerSlice.actions
 
 export default offerSlice.reducer

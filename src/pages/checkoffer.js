@@ -6,19 +6,19 @@ import { useLocation } from "react-router-dom";
 import { BASE_URL } from "../utils/URLs";
 
 
-export const CheckReq = () => {
+export const CheckOffer = () => {
 
-    const requests = useSelector(s => s.offer.searchrequest);
-console.log(requests, "reqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+    const offers = useSelector(s => s.request.searchOffer);
+    console.log(offers, "oferrrrrrrrrrrr")
     return (
         <>
 
             {
-                requests.map(r =>
+                offers.map(r =>
                     <div>{r.offerCode}</div>)
             }
-            <h1> המערכת מצאה עבורך{requests.length}אפשרויות</h1>
-                {/* req.map(c =>
+            <h1> המערכת מצאה עבורך{offers.length}אפשרויות</h1>
+            {/* req.map(c =>
                     <div>{c.Profession}  {c.AddressProfession}      </div>)
 
 

@@ -28,7 +28,6 @@ export const proffesionSlice = createSlice({
       // 2. fulfilled -> הצלחה - לכאן נגע כאשר הפעולה הסתימה בהצלחה
       .addCase(profession.fulfilled, (state, action) => {
         state.profession = action.payload;
-      debugger
         state.status = "success"
 
       })

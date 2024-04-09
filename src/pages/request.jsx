@@ -7,19 +7,24 @@ import { Calendar } from 'primereact/calendar';
 import { classNames } from 'primereact/utils';
 import '../css/form.css'
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateCurrentUser } from '../Redux/slices/users';
 import { BASE_URL } from '../utils/URLs';
 import axios from 'axios';
 import moment from 'moment';
-import { InputNumber } from 'primereact/inputnumber';
+
+import { searchOffer } from '../Redux/slices/request';
+import { convertStringToNumber } from '../utils/convertStirngToNumber';
+import { ProfessionSelector } from '../components/profession';
 
 
 export const Request = () => {
 
+    const [professionCode, setProfessionCode] = useState()
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const currentUser = useSelector(s => s.users.currentUser)
 
     const validate = (data) => {
         let errors = {};
@@ -33,11 +38,11 @@ export const Request = () => {
         //     if (data.PricePerVisit && !/^\d+$/.test(data.PricePerVisit)) { errors.PricePerVisit = 'Price per visite can be only numbers.'; }
         // }
 
-        if (!data.FromHour) { errors.FromHour = 'From hour is required.'; }
-        else if (!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data.FromHour)) { errors.FromHour = 'From hour not mutch to HH:mm format or not valdate hour.'; }
-        if (!data.ToHour) { errors.ToHour = 'From hour is required.'; }
-        else if (!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data.ToHour)) { errors.ToHour = 'To hour not mutch to HH:mm format or not valdate hour.'; }
-           
+        if (!data.fromhour) { errors.fromhour = 'From hour is required.'; }
+        else if (!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data.fromhour)) { errors.fromhour = 'From hour not mutch to HH:mm format or not valdate hour.'; }
+        if (!data.tohour) { errors.tohour = 'From hour is required.'; }
+        else if (!/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data.tohour)) { errors.tohour = 'To hour not mutch to HH:mm format or not valdate hour.'; }
+
 
 
 
@@ -45,26 +50,35 @@ export const Request = () => {
     };
 
     const onSubmit = async (data, form) => {
-        const date = moment('', "dd/mm/yyyy")
-        const hour = moment()
         try {
-            const url = `${BASE_URL}/Request`
-            const response = await axios.put(url, Request);
-            const currentUser = response.data
+            // add the req to the database
+            const newreq = { ...data, fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour), requestUserId: currentUser.id }
+            const ADD_REQ_URL = `${BASE_URL}/Request`
+            const addOfferResponse = await axios.put(ADD_REQ_URL, newreq)
 
-            if (currentUser) {
-                // dispatch(updateCurrentUser(currentUser));
-                navigate("/");
+            if (addOfferResponse.data) {
+                const SERCH_OFFER_URL = `${BASE_URL}/User/searchoffer`
+                const response = await axios.post(SERCH_OFFER_URL, newreq);
+                const allOffers = response.data
+
+                if (allOffers) {
+                    dispatch(searchOffer(allOffers));
+                    navigate("/cheqoffer");
+                }
+                else
+                    setLoginError(true);
             }
-            else
+            else {
                 setLoginError(true);
+            }
         }
         catch {
             setLoginError(true);
 
         }
+    }
 
-    };
+
 
     const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
     const getFormErrorMessage = (meta) => {
@@ -76,49 +90,31 @@ export const Request = () => {
         <div className="form-demo" style={{ padding: "30px" }}>
             <div className="flex justify-content-center">
                 <div className="card">
-                    <Form onSubmit={onSubmit} initialValues={{ PriceForWork: '', Note: '' }} validate={validate} render={({ handleSubmit }) => (
+                    <Form onSubmit={onSubmit} initialValues={null} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
-                            {/* <Field name="PriceForWork" render={({ input, meta }) => (
+                            <Field name="note" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="PriceForWork" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="PriceForWork" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Price for hour*</label>
+                                        <InputText id="note" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="note" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Note</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Field name="PricePerVisit" render={({ input, meta }) => (
+                            <Field name="fromhour" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="PricePerVisit" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="PricePerVisit" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Price per visit</label>
-                                    </span>
-                                    {getFormErrorMessage(meta)}
-                                </div>
-                            )} /> */}
-                            <Field name="Note" render={({ input, meta }) => (
-                                <div className="field">
-                                    <span className="p-float-label">
-                                        <InputText id="Note" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="Note" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Note</label>
+                                        <InputText id="fromhour" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="fromhour" className={classNames({ 'p-error': isFormFieldValid(meta) })}>From hour (HH:mm format)*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Field name="FromHour" render={({ input, meta }) => (
+                            <Field name="tohour" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="FromHour" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="FromHour" className={classNames({ 'p-error': isFormFieldValid(meta) })}>From hour (HH:mm format)*</label>
-                                    </span>
-                                    {getFormErrorMessage(meta)}
-                                </div>
-                            )} />
-                             <Field name="ToHour" render={({ input, meta }) => (
-                                <div className="field">
-                                    <span className="p-float-label">
-                                        <InputText id="ToHour" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="ToHour" className={classNames({ 'p-error': isFormFieldValid(meta) })}>To hour (HH:mm format)*</label>
+                                        <InputText id="tohour" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="tohour" className={classNames({ 'p-error': isFormFieldValid(meta) })}>To hour (HH:mm format)*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
@@ -129,6 +125,19 @@ export const Request = () => {
                                     <span className="p-float-label">
                                         <Calendar id="date" {...input} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon />
                                         <label htmlFor="date">Date</label>
+                                    </span>
+                                </div>
+                            )} />
+
+                            <Field name="choose" render={({ input, meta }) => (
+                                <div className="field">
+                                    <span className="p-float-label">
+                                        <InputText id="choose" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+
+                                        <label htmlFor="choose" className={classNames({ 'p-error': isFormFieldValid(meta) })}>profession</label>
+
+                                        {setProfessionCode}
+                                        <ProfessionSelector setProfessionCode={setProfessionCode} />
                                     </span>
                                 </div>
                             )} />
