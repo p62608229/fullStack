@@ -1,0 +1,47 @@
+.how-it-works-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom:  20px ;
+    
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .content {
+    display: flex;
+  }
+  
+  .left-section,
+  .right-section {
+    flex: 1;
+  }
+
+  .left-section {
+    color: #fe4a6b;
+
+  }
+  
+  .right-section {
+    color: #fdc210;
+    
+  }
+  .stage {
+    margin-bottom: 10px;
+    color: black;
+
+  }
+  
+  .stage-number {
+    font-size: 20px;
+    margin-right: 5px;
+    color: grey;
+  }
+  
+  .divider {
+    border-right: 1px dashed #ccc;
+    margin: 0 20px;
+  }
+  
