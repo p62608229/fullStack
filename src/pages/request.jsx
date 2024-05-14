@@ -16,6 +16,7 @@ import moment from 'moment';
 import { searchOffer } from '../Redux/slices/request';
 import { convertStringToNumber } from '../utils/convertStirngToNumber';
 import { ProfessionSelector } from '../components/profession';
+import { profession } from '../Redux/API/profession';
 
 
 export const Request = () => {
@@ -50,16 +51,27 @@ export const Request = () => {
     };
 
     const onSubmit = async (data, form) => {
+
+        console.log('data', data)
+        debugger
+
         try {
             // add the req to the database
-            const newreq = { ...data, fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour), requestUserId: currentUser.id }
+
+            debugger
+            // const newreq = { ...data, date: "2024-05-07T09:56:38.754Z",  fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour), requestUserId: currentUser.id }
+            const newreq = { ...data, date: data.date.toISOString(), fromhour: 0, tohour: 0, requestUserId: currentUser.id, city: currentUser.city, profession: professionCode }
+
             const ADD_REQ_URL = `${BASE_URL}/Request`
             const addOfferResponse = await axios.put(ADD_REQ_URL, newreq)
+            debugger
 
             if (addOfferResponse.data) {
                 const SERCH_OFFER_URL = `${BASE_URL}/User/searchoffer`
                 const response = await axios.post(SERCH_OFFER_URL, newreq);
+                debugger
                 const allOffers = response.data
+                console.log('all offers', allOffers)
 
                 if (allOffers) {
                     dispatch(searchOffer(allOffers));
@@ -138,9 +150,23 @@ export const Request = () => {
 
                                         {setProfessionCode}
                                         <ProfessionSelector setProfessionCode={setProfessionCode} />
+
                                     </span>
                                 </div>
                             )} />
+
+                            {/* <Field name="choose" render={({ input, meta }) => (
+                                <div className="field">
+                                    <span className="p-float-label">
+                                        <InputText id="choose" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+
+                                        <label htmlFor="choose" className={classNames({ 'p-error': isFormFieldValid(meta) })}>profession</label>
+
+                                        {setProfessionCode}
+                                        <ProfessionSelector setProfessionCode={setProfessionCode} />
+                                    </span>
+                                </div>
+                            )} /> */}
 
                             <Button type="submit" label="Submit" className="mt-2" />
                             {loginError ? <div style={{ padding: "5px", color: "red" }}>Some error in connected</div> : <></>}

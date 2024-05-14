@@ -7,7 +7,7 @@ import { Calendar } from 'primereact/calendar';
 import { classNames } from 'primereact/utils';
 import '../css/form.css'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from '../utils/URLs';
 import axios from 'axios';
 import moment from 'moment';
@@ -15,6 +15,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { ProfessionSelector } from "../components/profession";
 import { searchrequest } from '../Redux/slices/offer';
 import DaysOfWeek from '../components/DaysOfWeek';
+import { CurrentUserOffers } from '../components/profile/currentUserOffers';
 
 
 
@@ -26,6 +27,8 @@ export const Offer = () => {
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const currentUser = useSelector(state => state.users.currentUser)
 
     const validate = (data) => {
         let errors = {};
@@ -52,20 +55,25 @@ export const Offer = () => {
 
     const onSubmit1 = async (data, form) => {
 
+        debugger
         try {
             // add the offer to the database
-            const newOffer = { ...data, daysToworks: daysToworks, profession: parseInt(professionCode, 10) , offerCode: Math.floor(Math.random() * 90000) + 10000 }   // for delete 
+            const newOffer = { ...data, daysToworks: daysToworks, profession: parseInt(professionCode, 10) , offerCode: Math.floor(Math.random() * 90000) + 10000, offerUserId: currentUser.id }   // for delete 
             // const newOffer = data   // offer code will be come identity
             const ADD_OFFER_URL = `${BASE_URL}/offer/newoffer`
+            debugger
             const addOfferResponse = await axios.put(ADD_OFFER_URL, newOffer)
 
+            debugger
             if (addOfferResponse) {
                 const SERCH_REQ_URL = `${BASE_URL}/User/searchrequest`
                 const response = await axios.post(SERCH_REQ_URL, newOffer);
-                const allRequest = response.data
-                console.log(allRequest)
+                const allRequest = await response.data
+                console.log('requests',allRequest)
+                debugger
 
-                if (allRequest.data) {
+                if (allRequest) {
+                    console.log('all reqest', allRequest)
                     dispatch(searchrequest(allRequest));
                     navigate("/cheqreq");
                 }
@@ -163,7 +171,15 @@ export const Offer = () => {
                                     </span>
                                 </div>
                             )} />
-
+                            {/* <Field name="city" render={({ input, meta }) => (
+                                <div className="field">
+                                    <span className="p-float-label">
+                                        <InputText id="city" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="city" className={classNames({ 'p-error': isFormFieldValid(meta) })}>city</label>
+                                    </span>
+                                    {getFormErrorMessage(meta)}
+                                </div> */}
+                            {/* )} />    */}
 
                             <Button type="submit" label="Submit" className="mt-2" />
                             {loginError ? <div style={{ padding: "5px", color: "red" }}>Some error in connected</div> : <></>}

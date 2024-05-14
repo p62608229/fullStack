@@ -34,7 +34,7 @@ export const offerSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(getAllCurrentUserOffers.fulfilled, (state, action) => {{
-      debugger
+      
       state.currentUserOffers  = action.payload;
     }})
     .addCase(updateCurrentUserOneOffer.fulfilled, (state, action) => {{

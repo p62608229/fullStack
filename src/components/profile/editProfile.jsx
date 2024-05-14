@@ -44,9 +44,9 @@ export const EditProfile = () => {
     const onSubmit = async (data, form) => {
         try {
             const user = { ...data }
-            const url = `${BASE_URL}/User`
+            const url = `${BASE_URL}/User/UpUsers`
 
-            const response = await axios.put(url, user);
+            const response = await axios.post(url, user);
 
             const currentUser = response.data
             console.log(response.data, "response")

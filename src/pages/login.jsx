@@ -28,8 +28,7 @@ export const Login = () => {
         if (!data.password) {
             errors.password = 'Password is required.';
         }
-
-        return errors;
+ 
     };
 
     const onSubmit = async (data, form) => {

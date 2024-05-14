@@ -28,6 +28,7 @@ export const RequestSlice = createSlice({
       };
     },
     searchOffer: (state, action) => {
+      debugger
       state.searchOffer = action.payload
     }
   },
