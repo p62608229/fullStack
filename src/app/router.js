@@ -17,7 +17,7 @@ import { Register } from "../pages/register"
 import { Offer } from "../pages/offer"
 import Footer from "./Footer"
 import { CheckReq } from "../pages/checkreq"
-import { CheckOffer } from "../pages/checkoffer"
+import Checkoffer, { CheckOffer } from "../pages/checkoffer"
 
 
 export const AppRouter = () => {
@@ -30,7 +30,7 @@ export const AppRouter = () => {
                     <Route path='register' element={<Register />} />
                     <Route path='request' element={<Request />} />
                     <Route path='cheqreq' element={<CheckReq />} />
-                    <Route path='cheqoffer' element={<CheckOffer />} />
+                    <Route path='cheqoffer' element={<Checkoffer />} />
                     <Route path="profile" element={<ProfileMenu />}>
                         <Route path="" element={<Profile />} />
                         <Route path="edit" element={<EditProfile />} />

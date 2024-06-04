@@ -15,7 +15,7 @@ export const getAllEvents = createAsyncThunk(
             const r = requests.map(r =>
                 r.userO.id == state.users.currentUser.id ? { ...r, offer: true } : r
             )
-debugger
+            debugger
             return r;
 
         } catch (e) {
@@ -23,4 +23,21 @@ debugger
         }
     }
 )
+
+export const eventsByCode = createAsyncThunk(
+  'Request/UserCodeOffer',
+  async ({ RCode, offerCode }, thunkAPI) => {
+    try {
+        const url = `${BASE_URL}/Request/UserCodeOffer`
+      const response = await axios.post(url, null, { params: { RCode, offerCode } });
+      console.log(response, "UserCodeOffer");
+
+      return response.data;
+    } catch (error) {
+      console.error(error, "updateCurrentUserOneOffer error");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { deleteCurrentUserOneRequest, getAllCurrentUserRequests, updateCurrentUserOneRequest,  } from '../API/request';
 import { demoRequestList } from '../../~not use/demoValues/requests';
 import { calnderEventsArray } from '../../utils/calendar/calnderEvents';
-import { getAllEvents } from '../API/calendar';
+import { eventsByCode, getAllEvents } from '../API/calendar';
 
 
 // איתחול של הסטיט
@@ -16,13 +16,18 @@ export const CalendarSlice = createSlice({
   reducers: { },
   extraReducers: (builder) => {
     builder
+    .addCase(eventsByCode.fulfilled, (state, action) => {{
+      debugger
+      const events = calnderEventsArray(action.payload)
+      state.events  = events;
+    }}) 
     .addCase(getAllEvents.fulfilled, (state, action) => {{
       debugger
       const events = calnderEventsArray(action.payload)
       state.events  = events;
     }}) 
-    
   }
+  
 });
 
 

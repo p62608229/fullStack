@@ -49,11 +49,11 @@ export const updateCurrentUserOneOffer = createAsyncThunk(
 
 export const deleteCurrentUserOneOffer = createAsyncThunk(
     'offer/deleteCurrentUserOneOffer',
-    async (offerCode) => {
+    async (id) => {
         try  {
-            const response = await axios.delete(`${BASE_URL}/offer/${offerCode}`);
+            const response = await axios.delete(`${BASE_URL}/offer/${id}`);
             console.log(response, "deleteCurrentUserOneOffer response");
-            return offerCode
+            return id
         } catch(e) {
             console.log(e, "deleteCurrentUserOneOffer error")
         }})

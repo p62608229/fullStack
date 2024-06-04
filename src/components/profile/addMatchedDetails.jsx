@@ -43,11 +43,11 @@ export const AddMatchedDetails = (props) => {
             // type, eventId
             
             const matchedUser = { ...event,...data}
-            const url =  type  == "offer" ? `${BASE_URL}/offer/getmatchoffer` : `${BASE_URL}/request/getmatchrequest`
-            const response = await axios.post(url, { matchedUser});
-            
+            const url =  type  == "offer" ? `${BASE_URL}/offer` : `${BASE_URL}/Request`
+            const response = await axios.put(url, { matchedUser});
             console.log(response.data, "response")
             if (response.data) {
+                debugger
                 const currentEvent = response.data
                 type == "offer" ?  dispatch(updateOneCurrentUserOffers(response.data)) : dispatch(updateOneCurrentUserRequest({eventId: event.requestCode, currentEvent: currentEvent}))
                 setCurrentRow(null)
@@ -74,7 +74,7 @@ export const AddMatchedDetails = (props) => {
             <div className="flex justify-content-center">
                 <div className="card">
                     <h5 className="text-center">Pls put your matched details:</h5>
-                    <Form onSubmit={onSubmit} initialValues={{ id: "", atchedName: '', lastName: '', password: '', address: '', postalcode: '', city: '', houseNumber: null, matchedEmail: '', matchedPhon: null }} validate={validate} render={({ handleSubmit }) => (
+                    <Form onSubmit={onSubmit} initialValues={{ id: "", matchedName: '', lastName: '', password: '', address: '', postalcode: '', city: '', houseNumber: null, matchedEmail: '', matchedPhon: null }} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
                             {/*        ======= matchedName ===== */}
                             <Field name="matchedName" render={({ input, meta }) => (
@@ -92,7 +92,6 @@ export const AddMatchedDetails = (props) => {
                                     <span className="p-float-label p-input-icon-right">
                                         <i className="pi pi-envelope" />
                                         <InputText id="matchedEmail" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="matchedEmail" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Email*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>

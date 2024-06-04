@@ -14,7 +14,6 @@ export const UserCalendar = () => {
   const events = useSelector(s => s.calendar.events);
 
   useEffect(() => {
-    debugger
     if (!events)
       dispatch(getAllEvents())
   })

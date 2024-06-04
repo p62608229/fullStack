@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
@@ -22,7 +22,7 @@ import { CurrentUserOffers } from '../components/profile/currentUserOffers';
 export const Offer = () => {
 
     const [daysToworks, setDaysToworks] = useState()
-
+    // const[selectedProfessionCode,setSetSelectedProfessionCode]=useState()
     const [professionCode, setProfessionCode] = useState()
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
@@ -30,16 +30,18 @@ export const Offer = () => {
 
     const currentUser = useSelector(state => state.users.currentUser)
 
+    useEffect(()=>{
+           }, [professionCode])
     const validate = (data) => {
         let errors = {};
 
-        if (!data.PriceForWork && !data.PricePerVisit) {
-            errors.PricePerVisit = 'Price for work or price per visit is required.';
-            errors.PriceForWork = "Price for work or price per visit is required.            "
+        if (!data.priceForWork && !data.pricePerVisit) {
+            errors.pricePerVisit = 'Price for work or price per visit is required.';
+            errors.priceForWork = "Price for work or price per visit is required.            "
         }
         else {
-            if (data.PriceForWork && !/^\d+$/.test(data.PriceForWork)) { errors.PriceForWork = 'Price for work can be only numbers.'; }
-            if (data.PricePerVisit && !/^\d+$/.test(data.PricePerVisit)) { errors.PricePerVisit = 'Price per visite can be only numbers.'; }
+            if (data.priceForWork && !/^\d+$/.test(data.priceForWork)) { errors.priceForWork = 'Price for work can be only numbers.'; }
+            if (data.pricePerVisit && !/^\d+$/.test(data.pricePerVisit)) { errors.pricePerVisit = 'Price per visite can be only numbers.'; }
         }
 
         // if (!data.FromHour) { errors.FromHour = 'From hour is required.'; }
@@ -58,16 +60,18 @@ export const Offer = () => {
         debugger
         try {
             // add the offer to the database
-            const newOffer = { ...data, daysToworks: daysToworks, profession: parseInt(professionCode, 10) , offerCode: Math.floor(Math.random() * 90000) + 10000, offerUserId: currentUser.id }   // for delete 
+            const newOffer = { ...data, daysToworks: daysToworks, profession: professionCode.professionCode , offerCode: Math.floor(Math.random() * 90000) + 10000, offerUserId: currentUser.id }   // for delete 
             // const newOffer = data   // offer code will be come identity
             const ADD_OFFER_URL = `${BASE_URL}/offer/newoffer`
             debugger
             const addOfferResponse = await axios.put(ADD_OFFER_URL, newOffer)
 
+
             debugger
-            if (addOfferResponse) {
+            if (addOfferResponse.data) {
                 const SERCH_REQ_URL = `${BASE_URL}/User/searchrequest`
                 const response = await axios.post(SERCH_REQ_URL, newOffer);
+                debugger
                 const allRequest = await response.data
                 console.log('requests',allRequest)
                 debugger
@@ -100,22 +104,22 @@ export const Offer = () => {
         <div className="form-demo" style={{ padding: "30px" }}>
             <div className="flex justify-content-center">
                 <div className="card">
-                    <Form onSubmit={onSubmit1} initialValues={{ PriceForWork: '', Note: '' }} validate={validate} render={({ handleSubmit }) => (
+                    <Form onSubmit={onSubmit1} initialValues={{ note: '' }} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
-                            <Field name="PriceForWork" render={({ input, meta }) => (
+                            <Field name="priceForWork" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="PriceForWork" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="PriceForWork" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Price for hour*</label>
+                                        <InputText id="priceForWork" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="priceForWork" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Price for hour*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Field name="PricePerVisit" render={({ input, meta }) => (
+                            <Field name="pricePerVisit" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="PricePerVisit" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="PricePerVisit" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Price per visit</label>
+                                        <InputText id="pricePerVisit" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="pricePerVisit" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Price per visit</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
@@ -127,6 +131,7 @@ export const Offer = () => {
                                         <label htmlFor="Note" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Note</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
+                                    
                                 </div>
                             )} />
                             {/* <Field name="FromHour" render={({ input, meta }) => (
@@ -159,18 +164,20 @@ export const Offer = () => {
                                 </div>
                             )} /> */}
                             <Field name="choose" render={({ input, meta }) => (
-                                <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="choose" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        {/* <InputText id="choose" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} /> */}
 
-                                        <label htmlFor="choose" className={classNames({ 'p-error': isFormFieldValid(meta) })}>profession</label>
+                                        {/* <label htmlFor="choose" className={classNames({ 'p-error': isFormFieldValid(meta) })}>profession</label> */}
 
-                                        {setProfessionCode}
-                                        <ProfessionSelector setProfessionCode={setProfessionCode} />
+                                        {/* {setProfessionCode } */}
 
-                                    </span>
-                                </div>
+                                        
+                                        < ProfessionSelector setProfessionCode={setProfessionCode} professionCode={professionCode} />
+                                
+                                    </span >
+                                    
                             )} />
+                            
                             {/* <Field name="city" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -189,8 +196,12 @@ export const Offer = () => {
                     )} />
                     <DaysOfWeek setDaysToworks={setDaysToworks} />
 
+
                 </div>
             </div>
         </div>
     );
 }
+
+
+

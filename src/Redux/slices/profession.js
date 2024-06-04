@@ -35,9 +35,6 @@ export const proffesionSlice = createSlice({
       .addCase(profession.rejected, (state, action) => {
         state.status = "error"
       })
-  
-
-  },
-
+    },
 })
 export default proffesionSlice.reducer

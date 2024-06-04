@@ -19,7 +19,10 @@ export const usersSlice = createSlice({
     searchrequestoroffers:(state,action)=>{
       state.searchrequestoroffers=action.payload;
     },
-    
+    searchrequest: (state, action) => {
+      state.searchrequest = action.payload
+    }
+  
   }
   
 });

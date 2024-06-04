@@ -8,7 +8,7 @@ const initialState = {
   currentUserOffers: null,
   searchrequest: null
 
-  // currentUserOffers: null
+
   // currentUserOffers: demoOffersList
 }
 
@@ -22,13 +22,30 @@ export const offerSlice = createSlice({
     deleteCurrentUserOffers: (state) => {
       state.currentUserOffers = null
     },
+ setSearchRequestDate : (date) => {
+      return {
+        type: 'SET_SEARCH_REQUEST_DATE',
+        payload: date
+      };
+    },
+    
     updateOneCurrentUserOffers: (state, action) => {
       debugger
       const index = state.currentUserOffers.findIndex(offer => offer.offerCode === action.payload.offerCode);
+
       state.currentUserOffers[index] = action.payload;
+      // if (index) {
+      //   const date = new Date(index.updatedAt);
+        
+        
+      // console.log('Offer updated at:', date);
+      // } else {
+      //   console.warn(`Offer with offerCode ${action.payload.offerCode} not found.`);
+      // }
     },
     searchrequest: (state, action) => {
       state.searchrequest = action.payload
+      debugger
     }
   },
   extraReducers: (builder) => {

@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { Checkbox } from 'primereact/checkbox';
 import { useSelector } from 'react-redux';
+import { classNames } from 'primereact/utils';
+import { Form, Field } from 'react-final-form';
+import { InputText } from 'primereact/inputtext';
+import { Calendar } from 'primereact/calendar';
+        
 
 const DaysOfWeek = (props) => {
-    const { setDaysToworks } = props
-    const offerCode = useSelector(s => s.users.currentUser.id)
+
+  const { setDaysToworks } = props
+  const offerCode = useSelector(s => s.users.currentUser.id)
   const [checkedDays, setCheckedDays] = useState([]);
   const [fromHour, setFromHour] = useState(0);
   const [toHour, setToHour] = useState(0);
@@ -34,21 +40,21 @@ const DaysOfWeek = (props) => {
       fromhour: fromHour,
       tohour: toHour
     }));
-    console.log(daysToWorks); // You can dispatch this array using Redux
     setDaysToworks(daysToWorks)
-
   };
+  const [time, setTime] = useState(new Date());
 
+  const handleTimeChange = (e) => {
+    setTime(e.target.value);
+  };
   return (
     <div>
-      <div>
-        <label htmlFor="fromHour">From Hour:</label>
-        <input type="number" id="fromHour" value={fromHour} onChange={handleFromHourChange} />
-      </div>
-      <div>
-        <label htmlFor="toHour">To Hour:</label>
-        <input type="number" id="toHour" value={toHour} onChange={handleToHourChange} />
-      </div>
+{/*     */}
+    {/* //  <div> <label htmlFor="fromHour">From hour </label> */}
+    {/* //   <Calendar value={time} onChange={(e) => setTime(e.value)} timeOnly /></div> */}
+    {/* //  <div><label htmlFor="tohour" >To hour</label> */}
+    {/* //   <Calendar value={time} onChange={(e) => setTime(e.value)} timeOnly /></div> */}
+
       {daysOfWeek.map((day, index) => (
         <div key={index} className="p-field-checkbox">
           <Checkbox

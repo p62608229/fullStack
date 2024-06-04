@@ -1,46 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 
-import { deleteCurrentUserOneRequest, getAllCurrentUserRequests, updateCurrentUserOneRequest } from '../../Redux/API/request';
+import { deleteCurrentUserOneRequest, getAllCurrentUserRequests, updateCurrentUser } from '../../Redux/API/request';
+import {updateOneCurrentUserRequest} from '../../Redux/slices/request'
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { AddMatchedDetails } from './addMatchedDetails';
+import { profession } from '../../Redux/API/profession';
 
+import moment from 'moment';
 
 export const CurrentUserRequests = () => {
+  const formatDate = (rowData) => moment(rowData.date).format('YYYY-MM-DD');
 
   const dispatch = useDispatch();
-  const requests = useSelector(s => s.offer.currentUserOffers);
+  const requests = useSelector(s => s.request.currentUserRequests);
   const professions = useSelector(s => s.profession.profession);
-
+  const onEditDate = (newDate, rowData) => {
+    const updatedRow = { ...rowData, date: moment(newDate).format('YYYY-MM-DD') };
+    // dispatch(updateCurrentUserOneRequest(updatedRow)); // עדכון באמצעות פעולת Redux
+    dispatch(updateOneCurrentUserRequest(updatedRow))
+  };
   const [currentRow, setCurrentRow] = useState(null);
   const [errors, setErrors] = useState({});
   const [addToCalnderStatus, setAddToCalnderStatus] = useState(false);
   const toast = React.useRef(null);
-
+  const onRowEdit = (rowData) => {
+    setCurrentRow(rowData);
+  };
   useEffect(() => {
+    debugger
     if (!requests)
       dispatch(getAllCurrentUserRequests());
-  }, [dispatch]);
+    if (!professions)
+      dispatch(profession())
+
+
+  }, []);
 
   const validateData = (rowData) => {
-    debugger
     const errors = {};
 
-    // if (!rowData.priceForWork && !rowData.pricePerVisit) {
-    //   errors.PricePerVisit = 'Price for work or price per visit is required.';
-    //   errors.PriceForWork = 'Price for work or price per visit is required.';
-    // } else {
-    //   if (rowData.priceForWork && !/^\d+$/.test(rowData.priceForWork)) {
-    //     errors.PriceForWork = 'Price for work can be only numbers.';
-    //   }
-    //   if (rowData.pricePerVisit && !/^\d+$/.test(rowData.pricePerVisit)) {
-    //     errors.PricePerVisit = 'Price per visit can be only numbers.';
-    //   }
-    // }
+    if (!rowData.priceForWork && !rowData.pricePerVisit) {
+      errors.PricePerVisit = 'Price for work or price per visit is required.';
+      errors.PriceForWork = 'Price for work or price per visit is required.';
+    } else {
+      if (rowData.priceForWork && !/^\d+$/.test(rowData.priceForWork)) {
+        errors.PriceForWork = 'Price for work can be only numbers.';
+      }
+      if (rowData.pricePerVisit && !/^\d+$/.test(rowData.pricePerVisit)) {
+        errors.PricePerVisit = 'Price per visit can be only numbers.';
+      }
+    }
 
     if (!rowData.fromHour) {
       errors.FromHour = 'From hour is required.';
@@ -57,23 +71,31 @@ export const CurrentUserRequests = () => {
     return errors;
   };
 
+  const validatByType = (rowData, type)=>{
+    const errors = validateData(rowData);
+    if(errors.hasOwnProperty(type)){
+      alert(errors.hasOwnProperty(type))
+    }
+  }
+
   const onEdit = (rowData) => {
-    debugger
     setCurrentRow(rowData);
   };
 
   const onDelete = (rowData) => {
-    dispatch(deleteCurrentUserOneRequest(rowData.offerCode))
+    dispatch(deleteCurrentUserOneRequest(rowData.requestCode))
     showToast('success', 'Success', 'Row deleted successfully');
   };
 
   const showToast = (severity, summary, detail) => {
+
     toast.current.show({ severity, summary, detail, life: 3000 });
   };
 
   const onAddToCalendar = (rowData) => {
     setCurrentRow(rowData)
     setAddToCalnderStatus(true);
+
   };
 
   const renderDeleteButton = (rowData) => {
@@ -84,6 +106,7 @@ export const CurrentUserRequests = () => {
     );
   };
 
+
   const renderAddToCalendarButton = (rowData) => {
     return (
       <div className="icon-button" onClick={() => onAddToCalendar(rowData)}>
@@ -91,28 +114,46 @@ export const CurrentUserRequests = () => {
       </div>
     );
   };
-
-  const renderDaysToWork = (rowData) => {
-    return (
-      <div>
-        {rowData.daysToWork.map((day, index) => (
-          <div key={index}>
-            <span>Date: {day.date}</span> {/* Format date using Moment.js */}
-            <span> Hours: {day.fromhour} - {day.tohour}</span>
-            {index !== rowData.daysToWork.length - 1 && <hr />}
-          </div>
-        ))}
-      </div>
-    );
-  };
+  // const renderDaysToWork = (rowData) => {
+  //   const formatDate = (dateString) => {
+  //     const date = new Date(dateString);
+  //     return new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+  //   };
+  //   console.log("rowData:", rowData); // הוסף את שורת ההדפסה הזו כדי לבדוק את הנתונים במשתנה rowData
+  //   return (
+  //     <div>
+  //     {rowData.DaysTowork && rowData.DaysTowork.map((day, index) => (
+  //       <div key={index}>
+  //         <span>Date: {formatDate(day.date)}</span>
+  //         {/* <span> Hours: {day.fromhour} - {day.tohour}</span> */}
+  //         {index !== rowData.DaysTowork.length - 1 && <hr />}
+  //       </div>
+  //     ))}
+  //   </div>
+      
+  //   );
+  // }; 
+  
+  // const renderDaysToWork = (rowData) => {
+  //   return (
+  //     <div>
+  //       {rowData.daysToWork.map((day, index) => (
+  //         <div key={index}>
+  //           <span>Date: {day.date}</span> {/* Format date using Moment.js */}
+  //           <span> Hours: {day.fromhour} - {day.tohour}</span>
+  //           {index !== rowData.daysToWork.length - 1 && <hr />}
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
   const renderProfession = (rowData) => {
     return (
       <div>
-        { professions.find(p=> p.professionCode == rowData.profession)?.profession1}
+        {professions && professions.find(p => p.professionCode == rowData.profession)?.profession1}
       </div>
     );
   };
-
   const renderInputText = (rowData, field) => {
     return (
       <InputText
@@ -129,16 +170,41 @@ export const CurrentUserRequests = () => {
   };
 
   const renderDaysToWorkEditor = (props) => {
+
     return (
       <div>
-        <Calendar type="date" showIcon value={currentRow ? currentRow['date'] : ''} onChange={(e) => {
-          const newValue = e.target.value;
-          setCurrentRow((prevState) => ({
-            ...prevState,
-            'date': newValue
-          }));
-        }} />
-        <InputText type="text" value={currentRow ? currentRow['fromhour'] : ''} onChange={(e) => {
+      <Calendar 
+      // value={props.rowData && props.rowData.date ? moment(props.rowData.date).toDate() : null} 
+      value={currentRow && currentRow.date ? moment(currentRow.date).toDate() : null} 
+      // showIcon 
+      onChange={(e) => onEditDate(e.value, props.rowData)}
+    />
+
+
+       <InputText type="text" value={currentRow ? currentRow['fromhour'] : ''} onChange={(e) => {
+        const newValue = e.target.value;
+        setCurrentRow((prevState) => ({
+          ...prevState,
+          'fromhour': newValue
+        }));
+        validatByType(currentRow, 'fromhour'); // קריאה לפונקציה לבדיקת תקינות
+
+      }} placeholder="From Hour (HH:mm)" />
+
+
+      <InputText type="text" value={currentRow ? currentRow['tohour'] : ''} onChange={(e) => {
+        const newValue = e.target.value;
+        setCurrentRow((prevState) => ({
+          ...prevState,
+          'tohour': newValue
+        }));
+        validatByType(currentRow, 'tohour'); // קריאה לפונקציה לבדיקת תקינות
+
+      }} placeholder="To Hour (HH:mm)" />
+    </div>
+  );
+}
+        {/* <InputText type="text" value={currentRow ? currentRow['fromhour'] : ''} onChange={(e) => {
           const newValue = e.target.value;
           setCurrentRow((prevState) => ({
             ...prevState,
@@ -151,44 +217,51 @@ export const CurrentUserRequests = () => {
             ...prevState,
             'tohour': newValue
           }));
-        }} placeholder="To Hour (HH:mm)" />
-      </div>
-    );
-  }
+        }} placeholder="To Hour (HH:mm)" /> */}
+  //     </div>
+  //   );
+  // }
 
   const onRowEditSave = (event) => {
-    debugger
+ 
     const errors = validateData(event.data);
-    debugger
     if (Object.keys(errors).length === 0) {
-        dispatch(updateCurrentUserOneRequest(event.data))
+      console.log("dfgh")
+      // dispatch(updateCurrentUser(event.data)) //להחזיר
+       updateCurrentUser(event.data) //להחזיר
+
         showToast('success', 'Success', 'Row edited successfully');
     } else {
       setErrors(errors);
-    }
+     }
   };
 
   const onRowEditCancel = () => {
-    debugger
     setCurrentRow(null);
+    console.log("------------------")
     setErrors({});
+    
   };
 
   return (
     <div style={{ margin: "0 40px", width: "80%"}}>
       <Toast ref={toast} />
-      <DataTable value={requests} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} editMode="row">
-        {/* <Column field="offerCode" header="Offer Code"></Column>
-        <Column field="offerUserId" header="Offer User ID"></Column> */}
+      <DataTable value={requests}  paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} editMode="row">
+    <Column field="requestCode" header="request code"></Column>  
+        {/* <Column field="offerUserId" header="Offer User ID"></Column>  */}
         <Column field="profession" header="Profession" body={renderProfession}></Column>
-        {/* <Column field="priceForWork" header="Price for Work" editor={(props) => renderInputText(props.rowData, 'priceForWork')}></Column>
-        <Column field="pricePerVisit" header="Price per Visit" editor={(props) => renderInputText(props.rowData, 'pricePerVisit')}></Column> */}
-        <Column field="daysToWork" header="Days to Work" body={renderDaysToWork} editor={renderDaysToWorkEditor}></Column>
-        <Column header="" body={renderDeleteButton}></Column>
+         {/* <Column field="priceForWork" header="Price for Work" editor={(props) => renderInputText(props.rowData, 'priceForWork')}></Column>
+        <Column field="pricePerVisit" header="Price per Visit" editor={(props) => renderInputText(props.rowData, 'pricePerVisit')}></Column>  */}
+        <Column field="date" header="Days to Work" body={formatDate} editor={renderDaysToWorkEditor}></Column>
+        <Column field="fromhour" header="From Hour" editor={(props) => renderInputText(props.rowData, 'fromhour')}></Column>
+        <Column field="tohour" header="tohour" editor={(props) => renderInputText(props.rowData, 'tohour')}></Column>
+
         <Column header="" body={renderAddToCalendarButton}></Column>
+                <Column header="" body={renderDeleteButton}></Column>
+
         <Column rowEditor rowEditorSaveIcon="pi pi-check" rowEditorCancelIcon="pi pi-times" headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }} onRowEditSave={onRowEditSave} onRowEditCancel={onRowEditCancel}></Column>
       </DataTable>
-       {addToCalnderStatus &&  <AddMatchedDetails showToast={showToast} setAddToCalnderStatus = {setAddToCalnderStatus} type="offer" eventId={currentRow.offerCode} setCurrentRow={setCurrentRow}/> } 
+       {addToCalnderStatus &&  <AddMatchedDetails showToast={showToast} setAddToCalnderStatus = {setAddToCalnderStatus} type="req" eventId={currentRow.requestcode} setCurrentRow={setCurrentRow}/> } 
     </div>
   );
 };

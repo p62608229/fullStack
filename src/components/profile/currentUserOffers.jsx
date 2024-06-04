@@ -9,17 +9,19 @@ import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { AddMatchedDetails } from './addMatchedDetails';
 import { profession } from '../../Redux/API/profession';
+import moment from 'moment';
 
 
 
 export const CurrentUserOffers = () => {
+  const formatDate = (rowData) => moment(rowData.date).format('YYYY-MM-DD');
 
   const dispatch = useDispatch();
   const offers = useSelector(s => s.offer.currentUserOffers);
   const professions = useSelector(s => s.profession.profession);
-
+  const requests = useSelector(s => s.offer.searchrequest);
   const [currentRow, setCurrentRow] = useState(null);
-  const [errors, setErrors] = useState({});
+   const [ errors,setErrors] = useState({});
   const [addToCalnderStatus, setAddToCalnderStatus] = useState(false);
   const toast = React.useRef(null);
 
@@ -30,6 +32,7 @@ export const CurrentUserOffers = () => {
     if (!professions)
       dispatch(profession())
 
+   
 
   }, []);
 
@@ -65,7 +68,7 @@ export const CurrentUserOffers = () => {
   };
 
   const onEdit = (rowData) => {
-    debugger
+    
     setCurrentRow(rowData);
   };
 
@@ -105,19 +108,39 @@ export const CurrentUserOffers = () => {
     );
   };
 
+  // const renderDaysToWork = (rowData) => {
+  //   const formatDate = (rowData) => moment(rowData.date).format('YYYY-MM-DD');
+
+  //   return (
+      
+  //     <div>
+  //       {rowData.daysToWork.map((day, index) => (
+  //         <div key={index}>
+  //           <span>Date: {day.date}</span> {/* Format date using Moment.js */}
+  //        <span> Hours: {day.fromhour} - {day.tohour}</span>
+  //           {index !== rowData.daysToWork.length - 1 && <hr />}
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // }; 
   const renderDaysToWork = (rowData) => {
+    console.log("rowData:", rowData); // הדפסת נתונים לבדיקה
     return (
       <div>
-        {/* {rowData.daysToWork.map((day, index) => (
+        {rowData.date && rowData.date.map((day, index) => (
           <div key={index}>
-            <span>Date: {day.date}</span> {/* Format date using Moment.js */}
-        {/* <span> Hours: {day.fromhour} - {day.tohour}</span>
-            {index !== rowData.daysToWork.length - 1 && <hr />}
+            <span>Date: {moment(day.date).format('YYYY-MM-DD')}</span> {/* שימוש ב-Moment.js לתצוגת תאריך */}
+            <span> Hours: {day.fromhour} - {day.tohour}</span>
+            {index !== rowData.date.length - 1 && <hr />}
           </div>
-        ))} */}
+        ))}
       </div>
-    );
-  };
+      );
+    };
+  
+    
+  
   const renderProfession = (rowData) => {
     return (
       <div>
@@ -140,17 +163,23 @@ export const CurrentUserOffers = () => {
       />
     );
   };
-
   const renderDaysToWorkEditor = (props) => {
     return (
       <div>
-        <Calendar type="date" showIcon value={currentRow ? currentRow['date'] : ''} onChange={(e) => {
-          const newValue = e.target.value;
-          setCurrentRow((prevState) => ({
-            ...prevState,
-            'date': newValue
-          }));
-        }} />
+        <Calendar 
+          value={moment(props.rowData.date).toDate()} 
+          showIcon 
+          onChange={(e) => {
+            const newDate = e.value;
+            props.editorCallback({
+              ...props.rowData,
+              date: moment(newDate).format('YYYY-MM-DD')
+            });
+          }} 
+        />
+     
+
+    
         <InputText type="text" value={currentRow ? currentRow['fromhour'] : ''} onChange={(e) => {
           const newValue = e.target.value;
           setCurrentRow((prevState) => ({
@@ -170,35 +199,38 @@ export const CurrentUserOffers = () => {
   }
 
   const onRowEditSave = (event) => {
-    debugger
     const errors = validateData(event.data);
-    debugger
     if (Object.keys(errors).length === 0) {
-      dispatch(updateCurrentUserOneOffer(event.data))
+      dispatch(updateCurrentUserOneOffer(event.data));
       showToast('success', 'Success', 'Row edited successfully');
+      setCurrentRow(null); // איפוס השורה הנוכחית לאחר השמירה
     } else {
       setErrors(errors);
     }
   };
 
   const onRowEditCancel = () => {
-    debugger
     setCurrentRow(null);
     setErrors({});
   };
 
   return (
-    <div style={{ margin: "0 40px", width: "80%" }}>
+    <div style={{ margin: "0 40px", width: "90%" }}>
       <Toast ref={toast} />
       <DataTable value={offers} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} editMode="row">
-        <Column field="offerCode" header="Offer Code"></Column>
-        <Column field="offerUserId" header="Offer User ID"></Column>
+        {/* <Column field="offerCode" header="Offer Code"></Column> */}
+        {/* <Column field="offerUserId" header="Offer User ID"></Column> */}
         <Column field="profession" header="Profession" body={renderProfession}></Column>
-        <Column field="priceForWork" header="Price for Work" editor={(props) => renderInputText(props.rowData, 'priceForWork')}></Column>
+        <Column field="priceForWork" header="Price for Work"  editor={(props) => renderInputText(props.rowData, 'priceForWork')}></Column>
         <Column field="pricePerVisit" header="Price per Visit" editor={(props) => renderInputText(props.rowData, 'pricePerVisit')}></Column>
-        <Column field="daysToWork" header="Days to Work" body={renderDaysToWork} editor={renderDaysToWorkEditor}></Column>
-        <Column header="" body={renderDeleteButton}></Column>
+        <Column field="date" header="Days to Work" body={formatDate} editor={renderDaysToWorkEditor}></Column>
+        {/* <Column field="date" header="Days To Work" body={formatDate} editor={renderDaysToWorkEditor}></Column> */}
+        {/* <Column field="date" header="Days To Work" body={formatDate} ></Column> */}
+        <Column field="fromhour" header="From Hour" editor={(props) => renderInputText(props.rowData, 'fromhour')}></Column>
+
         <Column header="" body={renderAddToCalendarButton}></Column>
+        <Column header="" body={renderDeleteButton}></Column>
+        {/* <Column ><div><label htmlFor="tohour" >To hour</label></div></Column> */}
         <Column rowEditor rowEditorSaveIcon="pi pi-check" rowEditorCancelIcon="pi pi-times" headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }} onRowEditSave={onRowEditSave} onRowEditCancel={onRowEditCancel}></Column>
       </DataTable>
       {addToCalnderStatus && <AddMatchedDetails showToast={showToast} setAddToCalnderStatus={setAddToCalnderStatus} type="offer" event={currentRow} setCurrentRow={setCurrentRow} />}

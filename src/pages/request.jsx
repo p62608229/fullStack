@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
@@ -13,6 +13,7 @@ import { BASE_URL } from '../utils/URLs';
 import axios from 'axios';
 import moment from 'moment';
 
+
 import { searchOffer } from '../Redux/slices/request';
 import { convertStringToNumber } from '../utils/convertStirngToNumber';
 import { ProfessionSelector } from '../components/profession';
@@ -20,13 +21,16 @@ import { profession } from '../Redux/API/profession';
 
 
 export const Request = () => {
+ 
+    const [selectedDate, setSelectedDate] = useState(null);
 
     const [professionCode, setProfessionCode] = useState()
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector(s => s.users.currentUser)
-
+    useEffect(()=>{
+    }, [professionCode])
     const validate = (data) => {
         let errors = {};
 
@@ -49,7 +53,8 @@ export const Request = () => {
 
         return errors;
     };
-
+   
+    
     const onSubmit = async (data, form) => {
 
         console.log('data', data)
@@ -59,10 +64,10 @@ export const Request = () => {
             // add the req to the database
 
             debugger
-            // const newreq = { ...data, date: "2024-05-07T09:56:38.754Z",  fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour), requestUserId: currentUser.id }
-            const newreq = { ...data, date: data.date.toISOString(), fromhour: 0, tohour: 0, requestUserId: currentUser.id, city: currentUser.city, profession: professionCode }
-
-            const ADD_REQ_URL = `${BASE_URL}/Request`
+            // const newreq2 = { ...data, date: "2024-05-07T09:56:38.754Z",  fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour), requestUserId: currentUser.id }
+            const newreq = { ...data, date: moment(data.date).toISOString(),   fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour),requestUserId: currentUser.id, city: currentUser.city, profession: professionCode.professionCode}
+debugger
+            const ADD_REQ_URL = `${BASE_URL}/Request/new`
             const addOfferResponse = await axios.put(ADD_REQ_URL, newreq)
             debugger
 
@@ -70,10 +75,11 @@ export const Request = () => {
                 const SERCH_OFFER_URL = `${BASE_URL}/User/searchoffer`
                 const response = await axios.post(SERCH_OFFER_URL, newreq);
                 debugger
-                const allOffers = response.data
+                const allOffers = await response.data
                 console.log('all offers', allOffers)
 
                 if (allOffers) {
+                    console.log("-------------------",allOffers)
                     dispatch(searchOffer(allOffers));
                     navigate("/cheqoffer");
                 }
@@ -102,7 +108,7 @@ export const Request = () => {
         <div className="form-demo" style={{ padding: "30px" }}>
             <div className="flex justify-content-center">
                 <div className="card">
-                    <Form onSubmit={onSubmit} initialValues={null} validate={validate} render={({ handleSubmit }) => (
+                    <Form onSubmit={onSubmit} initialValues={{ note: '' }} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
                             <Field name="note" render={({ input, meta }) => (
                                 <div className="field">
@@ -131,28 +137,61 @@ export const Request = () => {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+  
 
-                            <Field name="date" render={({ input }) => (
-                                <div className="field">
-                                    <span className="p-float-label">
-                                        <Calendar id="date" {...input} dateFormat="dd/mm/yy" mask="99/99/9999" showIcon />
-                                        <label htmlFor="date">Date</label>
-                                    </span>
-                                </div>
-                            )} />
+            {/* <div className="field">
+                <span className="p-float-label">
+                    <Calendar id="date" onChange={this.handleDateChange} dateFormat="dd/mm/yyyy" showIcon />
+                    <label htmlFor="date">Date</label>
+                </span>
+            </div>
+        ); */}
+    
+    <Field
+  name="date"
+  render={({ input }) => (
+    <div className="field">
+      {!input.value && (
+        <label htmlFor="date">DATE</label>
+      )}
+      <span className="p-float-label">
+        <Calendar
+          id="date"
+          {...input}
+          dateFormat="dd/mm/yy"
+          showIcon
+          onChange={(e) => {
+            const selectedDate = e.value;
+            const tomorrow = moment().add(1, 'days').startOf('day');
+            if (!selectedDate || moment(selectedDate).isSame(tomorrow, 'day')) {
+              input.onChange(selectedDate);
+            }
+          }}
+        />
+        {(input.value && (
+          <label htmlFor="date">{moment(input.value).format('DD/MM/YYYY')}</label>
+        ))}
+      </span>
+    </div>
+  )}
+/>
+
+
+
+
+
 
                             <Field name="choose" render={({ input, meta }) => (
-                                <div className="field">
+                                // <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="choose" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        {/* <InputText id="choose" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
 
-                                        <label htmlFor="choose" className={classNames({ 'p-error': isFormFieldValid(meta) })}>profession</label>
+                                        <label htmlFor="choose" className={classNames({ 'p-error': isFormFieldValid(meta) })}>profession</label> */}
 
-                                        {setProfessionCode}
-                                        <ProfessionSelector setProfessionCode={setProfessionCode} />
+< ProfessionSelector setProfessionCode={setProfessionCode} professionCode={professionCode} />
 
                                     </span>
-                                </div>
+                                // </div>
                             )} />
 
                             {/* <Field name="choose" render={({ input, meta }) => (
@@ -172,6 +211,7 @@ export const Request = () => {
                             {loginError ? <div style={{ padding: "5px", color: "red" }}>Some error in connected</div> : <></>}
                         </form>
                     )} />
+                    
                 </div>
             </div>
         </div>

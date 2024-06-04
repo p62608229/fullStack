@@ -12,12 +12,12 @@ export const getAllCurrentUserRequests = createAsyncThunk(
             console.log(response, "getAllCurrentUserRequests response");
 
             const requests = response.data;
+return requests
+            // const r = requests.map(r =>
+            //     r.requestUserId == state.users.currentUser.id ? { ...r, offer: true } : r
+            // )
 
-            const r = requests.map(r =>
-                r.requestUserId == state.users.currentUser.id ? { ...r, offer: true } : r
-            )
-
-            return r;
+            // return r;
 
         } catch (e) {
             console.log(e, "getAllCurrentUserRequests error")
@@ -25,29 +25,50 @@ export const getAllCurrentUserRequests = createAsyncThunk(
     }
 )
 
-export const updateCurrentUserOneRequest = createAsyncThunk(
+// export const updateCurrentUserOneRequest = createAsyncThunk(
+//     'request/updateCurrentUserOneRequest',
+//     async () => {
+//         try {
+//             const response = await axios.put(`${BASE_URL}/Request` );
+            
+//             console.log(response, "updateCurrentUserOneRequest response");
+
+//             const request = response.data;
+//             return request
+//         }
+//         catch (e) {
+//             console.log(e, 'deleteCurrentUserOneRequest error')
+//         }
+//     }
+// )
+export const updateCurrentUser = createAsyncThunk(
     'request/updateCurrentUserOneRequest',
-    async (newRequest) => {
+    async (requestData) => {
         try {
-            const response = await axios.put(`${BASE_URL}/Request`, { newRequest });
+            const { requestCode, ...requestDataWithoutCode } = requestData;
+            const response = await axios.put(`${BASE_URL}/Request/${requestCode}`, requestDataWithoutCode);
             console.log(response, "updateCurrentUserOneRequest response");
 
-            const Offers = response.data;
-            return Offers
+            const request = response.data;
+            return request;
         }
         catch (e) {
-            console.log(e, 'deleteCurrentUserOneRequest error')
+            console.log(e, 'updateCurrentUserOneRequest error');
+            throw e;
         }
     }
-)
+);
+
+
+
 
 export const deleteCurrentUserOneRequest = createAsyncThunk(
     'request/deleteCurrentUserOneRequest',
-    async (requestId) => {
+    async (id) => {
         try {
-            const response = await axios.delete(`${BASE_URL}/Request/${requestId}`);
+            const response = await axios.delete(`${BASE_URL}/Request/${id}`);
             console.log(response, "deleteCurrentUserOneRequest response");
-            return requestId;
+            return id;debugger
         }
         catch (e) {
             console.log(e, 'deleteCurrentUserOneRequest error')

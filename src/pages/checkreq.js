@@ -7,10 +7,19 @@ import { BASE_URL } from "../utils/URLs";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import React, { useState } from 'react';
+import offer from "../Redux/slices/offer";
+import moment from 'moment';
+
 
 
 
 export const CheckReq = ({ requestss }) => {
+
+    // פונקציה זו מחזירה את התאריך בלבד בפורמט הנדרש
+    const formatDate = (rowData) => { 
+        debugger
+        return moment(rowData.date).format('YYYY-MM-DD');
+    }
 
     const [expandedRows, setExpandedRows] = useState([]);
     const requests = useSelector(s => s.offer.searchrequest);
@@ -49,8 +58,10 @@ export const CheckReq = ({ requestss }) => {
                 <p>Phone: {rowData.userR.phone}</p>
                 <p>Mail: {rowData.userR.mail}</p>
 
-              
-            </div>):(<div style={{width:'100px',minWidth:'100px',  height: '120px', minHeight: '50px'}}></div>)}
+                {/* <div style={{ width: '100px', minWidth: '100px', minHeight: '50px', height: 'auto' }}></div> */}
+                {/* <div style={{width:'100px',minWidth:'100px',  height: '120px', minHeight: '50px'}}></div> */}
+
+            </div>) : (<div style={{ width: '100px', minWidth: '220px', height: '120px', minHeight: '50px' }}></div>)}
             </>
         );
     };
@@ -61,12 +72,12 @@ export const CheckReq = ({ requestss }) => {
         // {professions && <select onChange={(e) => setProfessionCode(e.target.value)}><option >choose pro</option>   {professions.map((p, index) => {
         //     return <option value={p.professionCode} key={index} >{p.profession1}</option>
         // })}</select>}
-        
-        const currentProffesion = professions.map((p)=> p.professionCode == rowData.profession )
+
+        const currentProffesion = professions.find((p) => p.professionCode == rowData.profession)
         console.log('proffesion', currentProffesion)
-        return(
+        return (
             <>
-            <p>{currentProffesion.profession1}</p>
+                <p>{currentProffesion.profession1}</p>
             </>
         )
     }
@@ -75,13 +86,16 @@ export const CheckReq = ({ requestss }) => {
         <>
             <h1>המערכת מצאה עבורך {requests.length} אפשרויות</h1>
             <DataTable value={requests} tableStyle={{ minWidth: '50rem' }}>
-                <Column header="Profession" field={getProfesionName} />
-                <Column field="daysToWork" header="Days To Work" />
+                <Column header="Profession" field="Profession" body={getProfesionName} />
+                <Column field="date" header="Days To Work" body={formatDate} />
+                <Column field="fromhour" header="fromhour"/>
+                <Column field="tohour" header="tohour"/>
+
                 <Column field="note" header="Note" />
                 {/* Button column */}
                 <Column headerStyle={{ width: '8rem' }} body={(rowData) => (
                     <button onClick={() => toggleDetails(rowData)}>
-                        {isRowExpanded(rowData) ? 'הסתר פרטים' : 'הצג פרטים'}
+                        {isRowExpanded(rowData) ? 'סגור' : 'ליצירת קשר'}
                     </button>
                 )} />
                 {/* Details column */}

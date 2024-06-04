@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { deleteCurrentUserOneRequest, getAllCurrentUserRequests, updateCurrentUserOneRequest,  } from '../API/request';
+import { deleteCurrentUserOneRequest, getAllCurrentUserRequests, updateCurrentUserOneRequest, updateCurrentUser } from '../API/request';
 import { demoRequestList } from '../../~not use/demoValues/requests';
+import { CurrentUserRequests } from '../../components/profile/currentUserRequests';
+import { chngeInCalnderMode } from '../API/offer';
 
 
 // איתחול של הסטיט
 const initialState = {
   request: [],
-  searchOffer: null
+  currentUserRequests: null,
+  searchoffer: null
 }
 
 export const RequestSlice = createSlice({
@@ -21,24 +24,33 @@ export const RequestSlice = createSlice({
     },
     updateOneCurrentUserRequest: (state, action) => {
       debugger
-      const index = state.currentUserRequests.findIndex(r => r.requestCode === action.payload.eventId);
-      state.currentUserRequests[index] = {
-        ...state.currentUserRequests[index],
-        ...action.payload.currentEvent
-      };
-    },
+      const index = state.currentUserRequests.findIndex(r => r.requestCode === action.payload.requestCode);
+      state.currentUserRequests[index] = action.payload;
+        // ...state.currentUserRequests[index],
+        // ...action.payload.currentEvent
+      },
+    
     searchOffer: (state, action) => {
+      
+      state.searchoffer = action.payload
       debugger
-      state.searchOffer = action.payload
     }
   },
   extraReducers: (builder) => {
     builder
-    .addCase(updateCurrentUserOneRequest.fulfilled, (state, action) => {{
+    .addCase(getAllCurrentUserRequests.fulfilled, (state, action) => {{
+      
+      state.currentUserRequests  = action.payload;
+    }})
+    .addCase(updateCurrentUser.fulfilled, (state, action) => {{
       state.currentUserRequests.push(action.payload);
     }})
     .addCase(deleteCurrentUserOneRequest.fulfilled, (state, action) => {{
       state.currentUserRequests = state.currentUserRequests.filter(r => r.id != action.payload);
+    }})
+    .addCase(chngeInCalnderMode.fulfilled, (state, action) => {{
+      state.currentUserRequests = state.currentUserRequests.filter(o => o.requestCode != action.payload.requestCode)
+      state.currentUserRequests.push(action.payload);
     }})
   }
 });
