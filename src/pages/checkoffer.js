@@ -61,19 +61,56 @@ import {eventsByCode} from '../Redux/API/calendar'
 export const Checkoffer = ({ offerss }) => {
    
         // פונקציה זו מחזירה את התאריך בלבד בפורמט הנדרש
-        const formatDaysToWork = (rowData) => {
-           const days =  rowData.daysToworks.map(dayObj=>dayObj.date).join(",") 
-           return days
-        }
-        const formatthours = (rowData) => {
-            const hours =  rowData.daysToworks.map(k=>k.tohour)
-            return hours
-         }
-        const formathours = (rowData) => {
-            const hours =  rowData.daysToworks.map(k=>k.tohour)
-            return hours
-        }
+       const formatDaysToWork = (rowData) => {
+              const days = rowData.daysToworks.map(dayObj => dayObj.date).join(", ");
+              return days;
+          }
+          const [formattedInput, setFormattedInput] = useState('');
+
+          const addColonToNumbers = (str) => {
+            return str.replace(/(\d{2})(?=\d)/g, '$1:');
+          };
+      const formatthours = (rowData) => {
+              const hours = rowData.daysToworks.map(k => k.tohour).join(", ");
+              return hours;
+          }
+      const formathours = (rowData) => {
+              const hours = rowData.daysToworks.map(k => k.fromhour).join(", ");
+              return hours;
+          }
+          const handleChange = (event) => {
+            const inputValue = event.target.value; // קבלת הערך שהמשתמש מזין
+            const formattedInput = addColonToNumbers(inputValue); // החלת הפורמט לערך שהוזן על ידי המשתמש
+            // עכשיו נשתמש בערך המעוצב להצגה בממשק המשתמש
+            console.log(formattedInput); // כדי לוודא שהפורמט נכון
+            // או
+            setFormattedInput(formattedInput); // אם תרצה לשמור את הערך המעוצב בסטייט או לעשות משהו אחר איתו
+          };
+          
+          // בתוך התגית input ברוב המקרים
+          <input type="text" onChange={handleChange} />
+          
          
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+          
+          
+          
+          
+          
+          
+        
+        
     const [expandedRows, setExpandedRows] = useState([]);
     const offers = useSelector(s => s.request.searchoffer);
     const request=useSelector(o=> o.offer.searchrequest);
@@ -149,9 +186,12 @@ const dispatch=useDispatch();
             <DataTable value={offers} tableStyle={{ minWidth: '50rem' }}>
                 <Column header="Profession" field="Profession" body={getProfesionName} />
                 <Column  field="date"  header="Days To Work"body={formatDaysToWork} />
-                <Column header="From Hour" field="fromhour"/>
+                <Column header="From Hour" body={formathours}/>
                 <Column header="To Hour" body={formatthours} />
                 <Column field="note" header="Note" />
+                <Column field="priceForWork" header="priceForWork" />
+                <Column field="pricePerVisit" header="pricePerVisit" />
+
                 {/* Button column */}
                 <Column headerStyle={{ width: '8rem' }} body={(rowData) => (
                     <button onClick={() => toggleDetails(rowData)}>

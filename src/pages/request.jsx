@@ -12,7 +12,7 @@ import { updateCurrentUser } from '../Redux/slices/users';
 import { BASE_URL } from '../utils/URLs';
 import axios from 'axios';
 import moment from 'moment';
-
+import 'react-calendar/dist/Calendar.css';
 
 import { searchOffer } from '../Redux/slices/request';
 import { convertStringToNumber } from '../utils/convertStirngToNumber';
@@ -21,15 +21,21 @@ import { profession } from '../Redux/API/profession';
 
 
 export const Request = () => {
- 
-    const [selectedDate, setSelectedDate] = useState(null);
 
-    const [professionCode, setProfessionCode] = useState()
+    const [selectedDate, setSelectedDate] = useState(null);
+   
+    const [displayedDate, setDisplayedDate] = useState(null);
+    
+       const [professionCode, setProfessionCode] = useState()
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector(s => s.users.currentUser)
-    useEffect(()=>{
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        setDisplayedDate(date); // שינוי תאריך שיראה למשתמש בתוך ה-Input
+      };
+    useEffect(() => {
     }, [professionCode])
     const validate = (data) => {
         let errors = {};
@@ -53,8 +59,8 @@ export const Request = () => {
 
         return errors;
     };
-   
-    
+
+
     const onSubmit = async (data, form) => {
 
         console.log('data', data)
@@ -65,8 +71,8 @@ export const Request = () => {
 
             debugger
             // const newreq2 = { ...data, date: "2024-05-07T09:56:38.754Z",  fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour), requestUserId: currentUser.id }
-            const newreq = { ...data, date: moment(data.date).toISOString(),   fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour),requestUserId: currentUser.id, city: currentUser.city, profession: professionCode.professionCode}
-debugger
+            const newreq = { ...data, date: moment(data.date).toISOString(), fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour), requestUserId: currentUser.id, city: currentUser.city, profession: professionCode.professionCode }
+            debugger
             const ADD_REQ_URL = `${BASE_URL}/Request/new`
             const addOfferResponse = await axios.put(ADD_REQ_URL, newreq)
             debugger
@@ -79,7 +85,7 @@ debugger
                 console.log('all offers', allOffers)
 
                 if (allOffers) {
-                    console.log("-------------------",allOffers)
+                    console.log("-------------------", allOffers)
                     dispatch(searchOffer(allOffers));
                     navigate("/cheqoffer");
                 }
@@ -137,17 +143,19 @@ debugger
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-  
 
-            {/* <div className="field">
+
+                            {/* <div className="field">
                 <span className="p-float-label">
                     <Calendar id="date" onChange={this.handleDateChange} dateFormat="dd/mm/yyyy" showIcon />
                     <label htmlFor="date">Date</label>
                 </span>
             </div>
         ); */}
-    
-    <Field
+
+
+
+<Field
   name="date"
   render={({ input }) => (
     <div className="field">
@@ -162,15 +170,21 @@ debugger
           showIcon
           onChange={(e) => {
             const selectedDate = e.value;
-            const tomorrow = moment().add(1, 'days').startOf('day');
-            if (!selectedDate || moment(selectedDate).isSame(tomorrow, 'day')) {
-              input.onChange(selectedDate);
+            if (selectedDate) {
+              const tomorrow = moment(selectedDate).add(1, 'day');
+              input.onChange(tomorrow);
             }
           }}
+          
+          
+          
+          
+       
+      
         />
-        {(input.value && (
-          <label htmlFor="date">{moment(input.value).format('DD/MM/YYYY')}</label>
-        ))}
+        {/* {(input.value && ( */}
+        {/* //   <label htmlFor="date">{moment(input.value).format('DD/MM/YYYY')}</label> */}
+        {/* // ))} */}
       </span>
     </div>
   )}
@@ -181,16 +195,39 @@ debugger
 
 
 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+
+
+
+
+{/* return ( */}
+    {/* <div> */}
+      {/* <Calendar */}
+        {/* // selected={selectedDate} */}
+        {/* // onChange={handleDateChange} */}
+        {/* // dateFormat="dd/MM/yyyy" */}
+        {/* // isClearable */}
+        {/* // placeholderText="בחר תאריך" */}
+    {/* //   /> */}
+      {/* <button onClick={handleSubmit}>שמור תאריך</button> */}
+    {/* </div> */}
+  {/* ); */}
                             <Field name="choose" render={({ input, meta }) => (
                                 // <div className="field">
-                                    <span className="p-float-label">
-                                        {/* <InputText id="choose" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                <span className="p-float-label">
+                                    {/* <InputText id="choose" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
 
                                         <label htmlFor="choose" className={classNames({ 'p-error': isFormFieldValid(meta) })}>profession</label> */}
 
-< ProfessionSelector setProfessionCode={setProfessionCode} professionCode={professionCode} />
+                                    < ProfessionSelector setProfessionCode={setProfessionCode} professionCode={professionCode} />
 
-                                    </span>
+                                </span>
                                 // </div>
                             )} />
 
@@ -211,7 +248,7 @@ debugger
                             {loginError ? <div style={{ padding: "5px", color: "red" }}>Some error in connected</div> : <></>}
                         </form>
                     )} />
-                    
+
                 </div>
             </div>
         </div>

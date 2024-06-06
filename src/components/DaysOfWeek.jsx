@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import { Checkbox } from 'primereact/checkbox';
 import { useSelector } from 'react-redux';
-import { classNames } from 'primereact/utils';
-import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
-import { Calendar } from 'primereact/calendar';
-        
 
 const DaysOfWeek = (props) => {
-
-  const { setDaysToworks } = props
-  const offerCode = useSelector(s => s.users.currentUser.id)
+  const { setDaysToworks } = props;
+  const offerCode = useSelector(s => s.users.currentUser.id);
   const [checkedDays, setCheckedDays] = useState([]);
-  const [fromHour, setFromHour] = useState(0);
-  const [toHour, setToHour] = useState(0);
+  const [fromHours, setFromHours] = useState({});
+  const [toHours, setToHours] = useState({});
 
   const handleCheckboxChange = (day) => {
     const updatedCheckedDays = checkedDays.includes(day)
@@ -22,50 +17,64 @@ const DaysOfWeek = (props) => {
     setCheckedDays(updatedCheckedDays);
   };
 
-  const handleFromHourChange = (e) => {
-    setFromHour(parseInt(e.target.value, 10));
+  const handleFromHourChange = (day, value) => {
+    setFromHours({ ...fromHours, [day]: value });
   };
 
-  const handleToHourChange = (e) => {
-    setToHour(parseInt(e.target.value, 10));
+  const handleToHourChange = (day, value) => {
+    setToHours({ ...toHours, [day]: value });
+  };
+
+  const formatHour = (value) => {
+    if (!value || value === '') return '';
+  
+    return value.replace(/(\d{2})/g, '$1:').slice(0, -1);
   };
 
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   const handleSave = () => {
-    debugger
     const daysToWorks = checkedDays.map((day) => ({
       offerCode: offerCode,
       date: day,
-      fromhour: fromHour,
-      tohour: toHour
+      fromhour: fromHours[day],
+      tohour: toHours[day]
     }));
-    setDaysToworks(daysToWorks)
+    setDaysToworks(daysToWorks);
   };
-  const [time, setTime] = useState(new Date());
 
-  const handleTimeChange = (e) => {
-    setTime(e.target.value);
-  };
   return (
     <div>
-{/*     */}
-    {/* //  <div> <label htmlFor="fromHour">From hour </label> */}
-    {/* //   <Calendar value={time} onChange={(e) => setTime(e.value)} timeOnly /></div> */}
-    {/* //  <div><label htmlFor="tohour" >To hour</label> */}
-    {/* //   <Calendar value={time} onChange={(e) => setTime(e.value)} timeOnly /></div> */}
-
       {daysOfWeek.map((day, index) => (
         <div key={index} className="p-field-checkbox">
           <Checkbox
             inputId={`day${index}`}
             value={day}
             checked={checkedDays.includes(day)}
-            onChange={(e) => handleCheckboxChange(day)}
+            onChange={() => handleCheckboxChange(day)}
           />
           <label htmlFor={`day${index}`} className="p-checkbox-label">{day}</label>
+          {checkedDays.includes(day) && (
+            <div>
+              <label htmlFor={`fromHour${index}`}>From hour </label>
+              <InputText
+                id={`fromHour${index}`}
+                value={fromHours[day]}
+                onChange={(e) => handleFromHourChange(day, e.target.value)}
+              />
+              {fromHours[day] && !/^\d+$/.test(fromHours[day]) && <span style={{color: 'red'}}>הכנס שעות ללא סימני פיסוק</span>}
+              <label htmlFor={`toHour${index}`}>To hour </label>
+              <InputText
+                id={`toHour${index}`}
+                value={toHours[day]}
+                onChange={(e) => handleToHourChange(day, e.target.value)}
+              />
+              {toHours[day] && !/^\d+$/.test(toHours[day]) && <span style={{color: 'red'}}>הכנס שעות ללא סימני פיסוק</span>}
+            </div>
+          )}
         </div>
       ))}
+      
       <button onClick={handleSave}>Save the days</button>
     </div>
   );
