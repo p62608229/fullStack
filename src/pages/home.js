@@ -1,3 +1,4 @@
+import Footer from "../app/Footer";
 import {  CommentsFlow } from "../components/comments/commentFlow";
 import CommunityBanner from "../components/home/CommunityBanner";
 import { HowItWorks } from "../components/home/HowItWorks";
@@ -13,5 +14,6 @@ export function Home() {
         {!currentUser &&  <ToRegisterFlow /> }
         <HowItWorks />
         <CommentsFlow />
+        <Footer />
     </>)
 }
