@@ -67,6 +67,6 @@ export const offerSlice = createSlice({
   }
 });
 
-export const { addNewOffer, updateOneCurrentUserOffers ,searchrequest } = offerSlice.actions
+export const { addNewOffer, updateOneCurrentUserOffers ,searchrequest,deleteCurrentUserOffers } = offerSlice.actions
 
 export default offerSlice.reducer

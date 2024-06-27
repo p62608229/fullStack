@@ -17,7 +17,7 @@ export const RequestSlice = createSlice({
   initialState,
   reducers: {
     Request: (state, action) => {
-      state.request.push(action.payload);
+      // state.request.push(action.payload);
     },
     deleteCurrentUserRequests: (state) => {
       state.currentUserRequests = null
@@ -25,7 +25,7 @@ export const RequestSlice = createSlice({
     updateOneCurrentUserRequest: (state, action) => {
       debugger
       const index = state.currentUserRequests.findIndex(r => r.requestCode === action.payload.requestCode);
-      state.currentUserRequests[index] = action.payload;
+      state.currentUserRequests [index]= action.payload;
         // ...state.currentUserRequests[index],
         // ...action.payload.currentEvent
       },
@@ -43,6 +43,8 @@ export const RequestSlice = createSlice({
       state.currentUserRequests  = action.payload;
     }})
     .addCase(updateCurrentUser.fulfilled, (state, action) => {{
+      state.currentUserRequests = state.currentUserRequests.filter(o => o.requestCode != action.payload.requestCode)
+
       state.currentUserRequests.push(action.payload);
     }})
     .addCase(deleteCurrentUserOneRequest.fulfilled, (state, action) => {{

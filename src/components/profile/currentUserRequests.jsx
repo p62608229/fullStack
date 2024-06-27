@@ -14,15 +14,21 @@ import { profession } from '../../Redux/API/profession';
 import moment from 'moment';
 
 export const CurrentUserRequests = () => {
-  const formatDate = (rowData) => moment(rowData.date).format('YYYY-MM-DD');
-
+  const formatDate = (rowData) => { 
+    debugger
+    return moment(rowData.date).format('YYYY-MM-DD');
+}
   const dispatch = useDispatch();
   const requests = useSelector(s => s.request.currentUserRequests);
   const professions = useSelector(s => s.profession.profession);
+  
+
   const onEditDate = (newDate, rowData) => {
+    console.log("ROWDATA",rowData)
     const updatedRow = { ...rowData, date: moment(newDate).format('YYYY-MM-DD') };
     // dispatch(updateCurrentUserOneRequest(updatedRow)); // עדכון באמצעות פעולת Redux
     dispatch(updateOneCurrentUserRequest(updatedRow))
+
   };
   const [currentRow, setCurrentRow] = useState(null);
   const [errors, setErrors] = useState({});
@@ -81,16 +87,38 @@ export const CurrentUserRequests = () => {
   const onEdit = (rowData) => {
     setCurrentRow(rowData);
   };
-
+ 
+ 
+ 
+ 
   const onDelete = (rowData) => {
     dispatch(deleteCurrentUserOneRequest(rowData.requestCode))
-    showToast('success', 'Success', 'Row deleted successfully');
+      .then(() => {
+        showToast('success', 'Success', 'Row deleted successfully');
+      })
+      .catch((error) => {
+        showToast('error', 'Error', 'Failed to delete row');
+        console.error('Delete request failed:', error);
+      });
   };
 
   const showToast = (severity, summary, detail) => {
-
     toast.current.show({ severity, summary, detail, life: 3000 });
   };
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
 
   const onAddToCalendar = (rowData) => {
     setCurrentRow(rowData)
@@ -176,31 +204,31 @@ export const CurrentUserRequests = () => {
       <Calendar 
       // value={props.rowData && props.rowData.date ? moment(props.rowData.date).toDate() : null} 
       value={currentRow && currentRow.date ? moment(currentRow.date).toDate() : null} 
-      // showIcon 
-      onChange={(e) => onEditDate(e.value, props.rowData)}
+      showIcon 
+      onChange={(e) => onEditDate(e.value, props.rowData) }
     />
 
 
-       <InputText type="text" value={currentRow ? currentRow['fromhour'] : ''} onChange={(e) => {
-        const newValue = e.target.value;
-        setCurrentRow((prevState) => ({
-          ...prevState,
-          'fromhour': newValue
-        }));
-        validatByType(currentRow, 'fromhour'); // קריאה לפונקציה לבדיקת תקינות
+       {/* <InputText type="text" value={currentRow ? currentRow['fromhour'] : ''} onChange={(e) => { */}
+        {/* // const newValue = e.target.value; */}
+        {/* // setCurrentRow((prevState) => ({ */}
+          {/* // ...prevState, */}
+          {/* // 'fromhour': newValue */}
+        {/* // })); */}
+        {/* // validatByType(currentRow, 'fromhour'); // קריאה לפונקציה לבדיקת תקינות */}
 
-      }} placeholder="From Hour (HH:mm)" />
+      {/* // }} placeholder="From Hour (HH:mm)" /> */}
 
 
-      <InputText type="text" value={currentRow ? currentRow['tohour'] : ''} onChange={(e) => {
-        const newValue = e.target.value;
-        setCurrentRow((prevState) => ({
-          ...prevState,
-          'tohour': newValue
-        }));
-        validatByType(currentRow, 'tohour'); // קריאה לפונקציה לבדיקת תקינות
+      {/* <InputText type="text" value={currentRow ? currentRow['tohour'] : ''} onChange={(e) => { */}
+        {/* // const newValue = e.target.value; */}
+        {/* // setCurrentRow((prevState) => ({ */}
+          {/* // ...prevState, */}
+          {/* // 'tohour': newValue */}
+        {/* // })); */}
+        {/* validatByType(currentRow, 'tohour'); // קריאה לפונקציה לבדיקת תקינות */}
 
-      }} placeholder="To Hour (HH:mm)" />
+      {/* }} placeholder="To Hour (HH:mm)" /> */}
     </div>
   );
 }
@@ -222,31 +250,41 @@ export const CurrentUserRequests = () => {
   //   );
   // }
 
-  const onRowEditSave = (event) => {
+  // const onRowEditSave = (event) => {
  
-    const errors = validateData(event.data);
-    if (Object.keys(errors).length === 0) {
-      console.log("dfgh")
+    // const errors = validateData(event.data);
+    // if (Object.keys(errors).length === 0) {
+      // console.log("dfgh")
       // dispatch(updateCurrentUser(event.data)) //להחזיר
-       updateCurrentUser(event.data) //להחזיר
+      //  updateCurrentUser(event.data) //להחזיר
 
-        showToast('success', 'Success', 'Row edited successfully');
-    } else {
-      setErrors(errors);
-     }
+        // showToast('success', 'Success', 'Row edited successfully');
+    // } else {
+      // setErrors(errors);
+    //  }
+  // };
+  const onRowEditSave = (event) => {
+    dispatch(updateOneCurrentUserRequest(event.data));
+    showToast('success', 'Success', 'Row edited successfully');
   };
-
+  
+ 
+ 
+ 
   const onRowEditCancel = () => {
     setCurrentRow(null);
-    console.log("------------------")
     setErrors({});
-    
   };
+
+
+
+
+
 
   return (
     <div style={{ margin: "0 40px", width: "80%"}}>
       <Toast ref={toast} />
-      <DataTable value={requests}  paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} editMode="row">
+      <DataTable value={requests}  paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} editMode="row" onRowEditSave={onRowEditSave}>
     <Column field="requestCode" header="request code"></Column>  
         {/* <Column field="offerUserId" header="Offer User ID"></Column>  */}
         <Column field="profession" header="Profession" body={renderProfession}></Column>
@@ -261,7 +299,7 @@ export const CurrentUserRequests = () => {
 
         <Column rowEditor rowEditorSaveIcon="pi pi-check" rowEditorCancelIcon="pi pi-times" headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }} onRowEditSave={onRowEditSave} onRowEditCancel={onRowEditCancel}></Column>
       </DataTable>
-       {addToCalnderStatus &&  <AddMatchedDetails showToast={showToast} setAddToCalnderStatus = {setAddToCalnderStatus} type="req" eventId={currentRow.requestcode} setCurrentRow={setCurrentRow}/> } 
+       {addToCalnderStatus &&  <AddMatchedDetails showToast={showToast} setAddToCalnderStatus = {setAddToCalnderStatus} type="req" eventId={currentRow.requestCode} setCurrentRow={setCurrentRow}/> } 
     </div>
   );
 };

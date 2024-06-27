@@ -14,8 +14,15 @@ import moment from 'moment';
 
 
 export const CurrentUserOffers = () => {
-  const formatDate = (rowData) => moment(rowData.date).format('YYYY-MM-DD');
+  const formatDate = (rowData) =>{  
+    const days = rowData.daysToworks.map(q => q.date).join(",")
+    return days
+  }
 
+  // const formatDate = (rowData) => moment(rowData.daysToworks.map(dayObj => dayObj.date));
+  // const days = rowData.daysToworks.map(dayObj => dayObj.date)
+  const [editRowData, setEditRowData] = useState(null); // השימוש במשתנה לאירוע שורתי עריכה בלב 
+  
   const dispatch = useDispatch();
   const offers = useSelector(s => s.offer.currentUserOffers);
   const professions = useSelector(s => s.profession.profession);
@@ -31,9 +38,6 @@ export const CurrentUserOffers = () => {
       dispatch(getAllCurrentUserOffers());
     if (!professions)
       dispatch(profession())
-
-   
-
   }, []);
 
   const validateData = (rowData) => {
@@ -68,9 +72,11 @@ export const CurrentUserOffers = () => {
   };
 
   const onEdit = (rowData) => {
-    
-    setCurrentRow(rowData);
+    setEditRowData({ ...rowData }); // שמירה של השורה הנוכחית לעריכה בלבד
   };
+  
+  
+  
 
   const onDelete = (rowData) => {
     dispatch(deleteCurrentUserOneOffer(rowData.offerCode))
@@ -108,39 +114,46 @@ export const CurrentUserOffers = () => {
     );
   };
 
-  // const renderDaysToWork = (rowData) => {
-  //   const formatDate = (rowData) => moment(rowData.date).format('YYYY-MM-DD');
-
-  //   return (
-      
-  //     <div>
-  //       {rowData.daysToWork.map((day, index) => (
-  //         <div key={index}>
-  //           <span>Date: {day.date}</span> {/* Format date using Moment.js */}
-  //        <span> Hours: {day.fromhour} - {day.tohour}</span>
-  //           {index !== rowData.daysToWork.length - 1 && <hr />}
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-  // }; 
   const renderDaysToWork = (rowData) => {
-    console.log("rowData:", rowData); // הדפסת נתונים לבדיקה
-    return (
-      <div>
-        {rowData.date && rowData.date.map((day, index) => (
-          <div key={index}>
-            <span>Date: {moment(day.date).format('YYYY-MM-DD')}</span> {/* שימוש ב-Moment.js לתצוגת תאריך */}
-            <span> Hours: {day.fromhour} - {day.tohour}</span>
-            {index !== rowData.date.length - 1 && <hr />}
-          </div>
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const selectedDay = rowData.date ? moment(rowData.date).format('dddd') : '';
+
+  return (
+    <div>
+      <select
+        value={selectedDay}
+        onChange={(e) => {
+          const selectedDay = e.target.value;
+          // Implement your logic here to update rowData with the selected day
+          console.log(selectedDay);
+        }}
+      >
+        <option value="">Select Day</option>
+        {daysOfWeek.map((day) => (
+          <option key={day} value={day}>
+            {day}
+          </option>
         ))}
-      </div>
-      );
-    };
+      </select>
+      {selectedDay && (
+        <div style={{ marginTop: '5px' }}>
+          Selected Day: {selectedDay}
+        </div>
+      )}
+    </div>
+  );
+};
+ 
+                                                                                                             
+                                      
+ 
+ 
   
-    
   
+   
+  
+        
   const renderProfession = (rowData) => {
     return (
       <div>
@@ -199,15 +212,25 @@ export const CurrentUserOffers = () => {
   }
 
   const onRowEditSave = (event) => {
-    const errors = validateData(event.data);
+    const errors = validateData(editRowData);
     if (Object.keys(errors).length === 0) {
-      dispatch(updateCurrentUserOneOffer(event.data));
+      dispatch(updateCurrentUserOneOffer(editRowData));
       showToast('success', 'Success', 'Row edited successfully');
-      setCurrentRow(null); // איפוס השורה הנוכחית לאחר השמירה
+      setEditRowData(null); // איפוס השורה הנוכחית לאחר השמירה
     } else {
       setErrors(errors);
     }
   };
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   const onRowEditCancel = () => {
     setCurrentRow(null);
@@ -223,7 +246,8 @@ export const CurrentUserOffers = () => {
         <Column field="profession" header="Profession" body={renderProfession}></Column>
         <Column field="priceForWork" header="Price for Work"  editor={(props) => renderInputText(props.rowData, 'priceForWork')}></Column>
         <Column field="pricePerVisit" header="Price per Visit" editor={(props) => renderInputText(props.rowData, 'pricePerVisit')}></Column>
-        <Column field="date" header="Days to Work" body={formatDate} editor={renderDaysToWorkEditor}></Column>
+        <Column field="date" header="Days to Work" body={formatDate}editor={(props) => renderDaysToWork(props.rowData, 'Days to Work')}></Column>
+
         {/* <Column field="date" header="Days To Work" body={formatDate} editor={renderDaysToWorkEditor}></Column> */}
         {/* <Column field="date" header="Days To Work" body={formatDate} ></Column> */}
         <Column field="fromhour" header="From Hour" editor={(props) => renderInputText(props.rowData, 'fromhour')}></Column>

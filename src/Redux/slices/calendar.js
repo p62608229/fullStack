@@ -13,14 +13,18 @@ const initialState = {
 export const CalendarSlice = createSlice({
   name: 'calendar',
   initialState,
-  reducers: { },
+  reducers: {
+    deleteCurrentUserCalendar: (state) => {
+      state.events = null
+    },
+   },
   extraReducers: (builder) => {
     builder
-    .addCase(eventsByCode.fulfilled, (state, action) => {{
-      debugger
-      const events = calnderEventsArray(action.payload)
-      state.events  = events;
-    }}) 
+    // .addCase(eventsByCode.fulfilled, (state, action) => {{
+      // debugger
+      // const events = calnderEventsArray(action.payload)
+      // state.events  = events;
+    // }}) 
     .addCase(getAllEvents.fulfilled, (state, action) => {{
       debugger
       const events = calnderEventsArray(action.payload)
@@ -30,5 +34,6 @@ export const CalendarSlice = createSlice({
   
 });
 
+export const { deleteCurrentUserCalendar} = CalendarSlice.actions
 
 export default CalendarSlice.reducer

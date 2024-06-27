@@ -22,12 +22,17 @@ export const ProfessionSelector = (props) => {
       <div>
 
 <Dropdown 
-value={professionCode} 
-onChange={(e) => {setProfessionCode(e.value)}} 
-options={professions} 
-optionLabel="profession1" 
-placeholder="Select a Profession" 
-className="w-full md:w-14rem" 
+value={professionCode}
+onChange={(e) => setProfessionCode(e.value)}
+options={professions}
+optionLabel="profession1"
+placeholder="Select a Profession"
+className="w-full md:w-14rem"
+ 
+
+
+
+
 />
 
   </div>)} 

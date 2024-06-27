@@ -1,46 +1,3 @@
-
-// import axios from "axios";
-// import { useSelector } from "react-redux";
-// import { useLocation } from "react-router-dom";
-// import { BASE_URL } from "../utils/URLs";
-// import React, { useState, useEffect } from 'react';
-// import { DataTable } from 'primereact/datatable';
-// import { Column } from 'primereact/column';
-
-
-
-
-// export const CheckOffer = () => {
-
-//     const offers = useSelector(s => s.request.searchOffer);
-
-//     console.log(offers, "oferrrrrrrrrrrr")
-//     // const professions = useSelector(s => s.profession.profession);
-
-//     return (
-//         <>
-
-//             {/* {
-//                 offers.map(r =>
-//                     <div>{r.pricePerVisit}{r.profession}</div>)
-//             } */}
-//             <h1> המערכת מצאה עבורך {offers.length} אפשרויות </h1>
-
-
-//             <DataTable value={offers} tableStyle={{ minWidth: '50rem' }}>
-//                 <Column field="profession" header="Profession" ></Column>
-//                 <Column field="days To workst" header="DaysToworks"></Column>
-//                 <Column field="note" header="Note"></Column>
-//              .
-                
-//             </DataTable>
-                
-
-//         </>
-//     )
-// }
-
-
 import axios from "axios";
 // import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,16 +10,20 @@ import offer from "../Redux/slices/offer";
 import moment from 'moment';
 import request from "../Redux/slices/request";
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import {eventsByCode} from '../Redux/API/calendar'
+import {eventsByCode, getAllEvents} from '../Redux/API/calendar'
 
 
 
 
-export const Checkoffer = ({ offerss }) => {
-   
-        // פונקציה זו מחזירה את התאריך בלבד בפורמט הנדרש
+export const Checkoffer = () => {
+    
+    
        const formatDaysToWork = (rowData) => {
-              const days = rowData.daysToworks.map(dayObj => dayObj.date).join(", ");
+              const days = rowData.daysToworks.map(dayObj => dayObj.date).join(
+                <>
+                    {"\n"}
+                </>
+            );
               return days;
           }
           const [formattedInput, setFormattedInput] = useState('');
@@ -70,13 +31,32 @@ export const Checkoffer = ({ offerss }) => {
           const addColonToNumbers = (str) => {
             return str.replace(/(\d{2})(?=\d)/g, '$1:');
           };
-      const formatthours = (rowData) => {
-              const hours = rowData.daysToworks.map(k => k.tohour).join(", ");
-              return hours;
-          }
+
+        const formatthours = (rowData) => {
+            const hours = rowData.daysToworks.map(k => {
+                const fullHour = k.fromhour.toString(); // המרת השעה למחרוזת
+                const formattedHour = fullHour.slice(0, 2) + ":" + fullHour.slice(2); // חיתוך וחיבור הספרות הרלוונטיות
+                return formattedHour;
+            }).join(
+                <>
+                    {"\n"}
+                </>
+            );
+            return hours;
+        }
+        
       const formathours = (rowData) => {
-              const hours = rowData.daysToworks.map(k => k.fromhour).join(", ");
-              return hours;
+        const hours = rowData.daysToworks.map(k => {
+            const fullHour = k.tohour.toString(); // המרת השעה למחרוזת
+            const formathour = fullHour.slice(0, 2) + ":" + fullHour.slice(2);
+            return formathour;
+        }).join(
+            <>
+                {"\n"}
+            </>
+        );
+        return hours;
+             
           }
           const handleChange = (event) => {
             const inputValue = event.target.value; // קבלת הערך שהמשתמש מזין
@@ -89,27 +69,12 @@ export const Checkoffer = ({ offerss }) => {
           
           // בתוך התגית input ברוב המקרים
           <input type="text" onChange={handleChange} />
-          
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
+                  
           
           
           
           
-          
-          
-        
+    
         
     const [expandedRows, setExpandedRows] = useState([]);
     const offers = useSelector(s => s.request.searchoffer);
@@ -174,9 +139,10 @@ const dispatch=useDispatch();
         )
     }
 
-    const clickMeet=()=>{
+    const clickMeet=(rowData)=>{
+        dispatch(eventsByCode({ RCode: request.requestCode, offerCode: rowData.offerCode }));
+        // dispatch(getAllEvents())
         navigate("/calendar");
-        dispatch(eventsByCode({ RCode: 4045, offerCode: 12612 }));
 
     }
 
@@ -201,7 +167,7 @@ const dispatch=useDispatch();
                 {/* Details column */}
                 <Column expander body={detailsTemplate} />
                 <Column headerStyle={{ width: '8rem' }} body={(rowData) => (
-                    <button onClick={clickMeet}>תואמה פגישה                  
+                    <button onClick={()=>clickMeet(rowData)}>תואמה פגישה                  
 
                     </button>
                 )} />

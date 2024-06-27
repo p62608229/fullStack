@@ -2,7 +2,7 @@ import React from 'react';
 
 
 export  const colors = [
-  { type: "My offers", color: '#87CEEB' },
+  // { type: "My offers", color: '#87CEEB' },
   { type: "Matched request", color: '#FFA07A' },
   { type: "Unmatched request", color: '#FFD700' }
 ];

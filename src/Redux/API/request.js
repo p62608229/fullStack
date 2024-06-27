@@ -41,15 +41,18 @@ return requests
 //         }
 //     }
 // )
+
 export const updateCurrentUser = createAsyncThunk(
     'request/updateCurrentUserOneRequest',
     async (requestData) => {
         try {
             const { requestCode, ...requestDataWithoutCode } = requestData;
-            const response = await axios.put(`${BASE_URL}/Request/${requestCode}`, requestDataWithoutCode);
+            const response = await axios.put(`${BASE_URL}/Request`, requestDataWithoutCode);
             console.log(response, "updateCurrentUserOneRequest response");
 
             const request = response.data;
+           
+                
             return request;
         }
         catch (e) {
@@ -58,10 +61,6 @@ export const updateCurrentUser = createAsyncThunk(
         }
     }
 );
-
-
-
-
 export const deleteCurrentUserOneRequest = createAsyncThunk(
     'request/deleteCurrentUserOneRequest',
     async (id) => {

@@ -6,17 +6,17 @@ export const getAllEvents = createAsyncThunk(
     'calendar/getAllEvents',
     async (arg, { getState }) => {
         try {
-            const state = getState();
-            const response = await axios.get(`${BASE_URL}/Request?id=${state.users.currentUser.id}`);
+          const state = getState()
+            // const url = `${BASE_URL}/Request/UserCodeOffer`
+            // const response = await axios.post(url, null, { params: { RCode, offerCode, } });
+            const url =`${BASE_URL}/Request/GetByUserId?userid=${state.users.currentUser.id}`
+            const response = await axios.get(url);
             console.log(response, "getAllCurrentUserRequests response");
-
-            const requests = response.data;
-
-            const r = requests.map(r =>
-                r.userO.id == state.users.currentUser.id ? { ...r, offer: true } : r
-            )
+            // const r = requests.map(r =>
+                // r.userO.id == state.users.currentUser.id ? { ...r, offer: true } : r
+            // )
             debugger
-            return r;
+            return response.data;
 
         } catch (e) {
             console.log(e, "getAllCurrentUserRequests error")

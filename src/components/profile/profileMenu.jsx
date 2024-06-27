@@ -4,6 +4,9 @@ import { Menu } from 'primereact/menu';
 import { useDispatch } from 'react-redux';
 import { deleteCurrentUser } from '../../Redux/slices/users';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { deleteCurrentUserRequests } from '../../Redux/slices/request';
+import { deleteCurrentUserOffers } from '../../Redux/slices/offer';
+import { deleteCurrentUserCalendar } from '../../Redux/slices/calendar';
 
 export const ProfileMenu = () => {
 
@@ -47,7 +50,7 @@ export const ProfileMenu = () => {
                 {
                     label: 'Logout',
                     icon: 'pi pi-sign-out',
-                    command: () => { dispatch(deleteCurrentUser()); navigate("/"); }
+                    command: () => { dispatch(deleteCurrentUser()); dispatch(deleteCurrentUserRequests()); dispatch(deleteCurrentUserOffers());dispatch(deleteCurrentUserCalendar()); navigate("/"); }
                 }
             ]
         },

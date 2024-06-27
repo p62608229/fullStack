@@ -4,6 +4,7 @@ import { demoUser } from '../../~not use/demoValues/user';
 const initialState = {
   currentUser: null,
   searchrequestoroffers: null,
+
 }
 
 export const usersSlice = createSlice({

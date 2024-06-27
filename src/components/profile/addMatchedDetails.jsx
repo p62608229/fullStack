@@ -107,6 +107,16 @@ export const AddMatchedDetails = (props) => {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                             <Field name="note" render={({ input, meta }) => (
+                           <div className="field">
+                             <span className="p-float-label p-input-icon-right">
+                                  <i className="pi pi-matchedPhon" />
+                            <InputText id="note" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })}></InputText>
+                                 <label htmlFor="note" className={classNames({ 'p-error': isFormFieldValid(meta) })}>note</label>
+                               </span>
+                           {getFormErrorMessage(meta)}
+                             </div>
+                            )} />
                             <Button type="submit" label="Submit" className="mt-2" />
                             {error ? <div style={{ padding: "5px", color: "red" }}>{error}</div> : <></>}
                         </form>

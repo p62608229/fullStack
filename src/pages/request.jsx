@@ -18,6 +18,9 @@ import { searchOffer } from '../Redux/slices/request';
 import { convertStringToNumber } from '../utils/convertStirngToNumber';
 import { ProfessionSelector } from '../components/profession';
 import { profession } from '../Redux/API/profession';
+import { searchrequest } from '../Redux/slices/offer';
+
+import { getAllEvents} from '../Redux/API/calendar'
 
 
 export const Request = () => {
@@ -31,9 +34,16 @@ export const Request = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector(s => s.users.currentUser)
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-        setDisplayedDate(date); // שינוי תאריך שיראה למשתמש בתוך ה-Input
+    // const handleDateChange = (date) => {
+        // setSelectedDate(date);
+        // setDisplayedDate(date); // שינוי תאריך שיראה למשתמש בתוך ה-Input
+    //   };
+      const handleDateChange = (e) => {
+        const selectedDate = e.value;
+        if (selectedDate) {
+          const tomorrow = moment(selectedDate).add(1, 'day').toDate();
+          setSelectedDate(tomorrow);
+        }
       };
     useEffect(() => {
     }, [professionCode])
@@ -62,8 +72,9 @@ export const Request = () => {
 
 
     const onSubmit = async (data, form) => {
-
-        console.log('data', data)
+// dispatch לדחוף כאן את הבקשה ליומןdispatch(newreq)
+dispatch(getAllEvents())
+console.log('data', data)
         debugger
 
         try {
@@ -74,16 +85,17 @@ export const Request = () => {
             const newreq = { ...data, date: moment(data.date).toISOString(), fromhour: convertStringToNumber(data.fromhour), tohour: convertStringToNumber(data.tohour), requestUserId: currentUser.id, city: currentUser.city, profession: professionCode.professionCode }
             debugger
             const ADD_REQ_URL = `${BASE_URL}/Request/new`
-            const addOfferResponse = await axios.put(ADD_REQ_URL, newreq)
+            const requestCode = await axios.put(ADD_REQ_URL, newreq)
             debugger
 
-            if (addOfferResponse.data) {
+            if (requestCode.data !== -1) {
                 const SERCH_OFFER_URL = `${BASE_URL}/User/searchoffer`
+                newreq.requestCode = requestCode.data
                 const response = await axios.post(SERCH_OFFER_URL, newreq);
                 debugger
                 const allOffers = await response.data
                 console.log('all offers', allOffers)
-
+                dispatch(searchrequest(newreq))
                 if (allOffers) {
                     console.log("-------------------", allOffers)
                     dispatch(searchOffer(allOffers));

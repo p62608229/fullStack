@@ -18,8 +18,8 @@ export const calnderEventsArray = (requestsArray, currentUser) => {
         // { type: "Unmatched request", color: '#FFD700' }
         // astract colors
         let color = '';
-        color = request.offer ? "#87CEEB" : request.user ? "#FFA07A" : "#FFD700"
-
+        // color = request.offer ? "#87CEEB" : request.user ? "#FFA07A" : "#FFD700"
+        color = request.userCodeOffers ? "#FFA07A" : "#FFD700"
 
         // Push event object to array
         start && end && requestEvents.push({

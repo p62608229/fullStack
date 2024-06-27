@@ -16,6 +16,7 @@ import { ProfessionSelector } from "../components/profession";
 import { searchrequest } from '../Redux/slices/offer';
 import DaysOfWeek from '../components/DaysOfWeek';
 import { CurrentUserOffers } from '../components/profile/currentUserOffers';
+import { searchOffer } from '../Redux/slices/request';
 
 
 
@@ -54,20 +55,20 @@ export const Offer = () => {
 
         return errors;
     };
-
-    const onSubmit1 = async (data, form) => {
+                      
+        const onSubmit1 = async (data, form) => {
 
         debugger
         try {
             // add the offer to the database
+
             const newOffer = { ...data, daysToworks: daysToworks, profession: professionCode.professionCode , offerCode: Math.floor(Math.random() * 90000) + 10000, offerUserId: currentUser.id }   // for delete 
             // const newOffer = data   // offer code will be come identity
             const ADD_OFFER_URL = `${BASE_URL}/offer/newoffer`
             debugger
             const addOfferResponse = await axios.put(ADD_OFFER_URL, newOffer)
-
-
-            debugger
+            
+                                                                                                         debugger
             if (addOfferResponse.data) {
                 const SERCH_REQ_URL = `${BASE_URL}/User/searchrequest`
                 const response = await axios.post(SERCH_REQ_URL, newOffer);
@@ -76,6 +77,7 @@ export const Offer = () => {
                 console.log('requests',allRequest)
                 debugger
 
+                dispatch(searchOffer(newOffer))
                 if (allRequest) {
                     console.log('all reqest', allRequest)
                     dispatch(searchrequest(allRequest));
