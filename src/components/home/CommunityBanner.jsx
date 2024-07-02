@@ -1,36 +1,14 @@
 import React from 'react';
+import '../../css/home.css';
 
 const CommunityBanner = () => {
-  const containerStyle = {
-    backgroundImage: `url(${process.env.PUBLIC_URL}/img/community.jpg)`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    minHeight: '300px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    color: 'white',
-    padding: '20px',
-  };
-
-  const titleStyle = {
-    fontWeight: 'bold',
-    fontSize: '2.5rem',
-    marginBottom: '10px',
-  };
-
-  const subtitleStyle = {
-    fontSize: '1.2rem',
-  };
-
   return (
-    <div style={containerStyle}>
-      <div style={titleStyle}>Time to find good people!</div>
-      <div style={subtitleStyle}>A smart job board for the home and family</div>
+    <div className="community-banner" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/community.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div className="community-banner-title">Time to find good people!</div>
+      <div className="community-banner-subtitle">A smart job board for the home and family</div>
     </div>
   );
 }
 
 export default CommunityBanner;
+
