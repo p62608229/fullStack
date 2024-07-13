@@ -1,19 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit"
 import commentsReducer from "./slices/comments"
 import usersReducer from "./slices/users"
-import offerReducer from './slices/offer'
 import requestReducer from './slices/request'
 import proffesionReducer from './slices/profession'
 import calendarReducer from  './slices/calendar'
+import offerReducer from './slices/offer'
 
 
 export const store = configureStore({
     reducer: {
         users: usersReducer,
         comments: commentsReducer,
-        offer: offerReducer,
         request:requestReducer,
         profession:proffesionReducer,
-        calendar: calendarReducer
+        calendar: calendarReducer,
+        offer: offerReducer,
+
     },
 })

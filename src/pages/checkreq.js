@@ -31,7 +31,7 @@ export const CheckReq = ({ requestss }) => {
    
    
     const clickMeet=(rowData)=>{
-        dispatch(eventsByCode({ RCode: rowData.requestCode, offerCode: offer.offerCode }));
+        dispatch(eventsByCode({ RCode: offer.requestCode, offerCode: offer.offerCode }));
         navigate("/calendar");
 
     }

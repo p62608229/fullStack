@@ -4,6 +4,7 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
+import { BackAndNextButtons } from "./backAndNextButtons";
 
 
 
@@ -22,6 +23,7 @@ export const DefualtMenu = () => {
                     command: () => { navigate("/register") }
                 }
             ]
+    
         },
         { label: 'Home', icon: 'pi pi-home', command: () => { navigate("/") } },
        
@@ -31,10 +33,11 @@ export const DefualtMenu = () => {
         <>
             <div className="Card" >
                 <Menubar model={defualtMenuItems} />
-            </div>
-             {/* <button onClick={(e) => navigate("/login")}>sign in</button>
-            <button onClick={(e) => navigate("/register")}>sign up</button> */}
-            
+     
+            <button onClick={(e) => navigate("/login")}>sign in</button>
+             <button onClick={(e) => navigate("/register")}>sign up</button> 
+             </div>
+            {/*  */}
 
         </>
     )

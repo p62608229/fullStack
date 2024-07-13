@@ -42,6 +42,7 @@ export const EditProfile = () => {
 
 
     const onSubmit = async (data, form) => {
+        debugger
         try {
             const user = { ...data }
             const url = `${BASE_URL}/User/UpUsers`

@@ -33,16 +33,31 @@ export const getAllCurrentUserOffers = createAsyncThunk(
 
 export const updateCurrentUserOneOffer = createAsyncThunk(
     'offer/updateCurrentUserOneOffer',
-    async (newOffer) => {
+    async (offerData) => {
         try {
-            const response = await axios.post(`${BASE_URL}/offer`, {newOffer});
+            debugger
+            const {OfferCode,...offerDataWithoutCode}=offerData;
             console.log(response, "updateCurrentUserOneOffer response");
     
-            const Offers = response.data; 
-            return Offers
-        } catch (e) {
-            console.log(e, "updateCurrentUserOneOffer error")
-        }
+            const response = await axios.put(`${BASE_URL}/offer`, offerDataWithoutCode);
+    const offer= response.data
+return offer
+}
+catch (e) {
+    console.log(e, 'updateCurrentUserOneRequest error');
+    throw e;
+}
+    
+    
+        // async (requestData) => {
+            // console.log('request data', requestData)
+            // debugger
+            // try {
+                // const { RequestCode, ...requestDataWithoutCode } = requestData;
+                // debugger
+        // ole.log('------',requestData)
+                // const response = await axios.put(`${BASE_URL}/Request`, requestDataWithoutCode);
+                // console.log(response, "updateCurrentUserOneRequest response");
 
     }
 )

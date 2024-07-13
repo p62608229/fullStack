@@ -32,6 +32,7 @@ export const AddMatchedDetails = (props) => {
     };
 
     const onSubmit = async (data) => {
+        console.log("///////////////////")
         try {
             // צריך להוסיף קריאת שרת שתקבל את הנתונים ותחזיר לנו הצעה או בקשה מעודבדת כולל מי שתיאמנו איתו 
             // const matchedUser = {
@@ -45,6 +46,7 @@ export const AddMatchedDetails = (props) => {
             const matchedUser = { ...event,...data}
             const url =  type  == "offer" ? `${BASE_URL}/offer` : `${BASE_URL}/Request`
             const response = await axios.put(url, { matchedUser});
+            //  dispatch(updateCurrentUser(updatedRow))
             console.log(response.data, "response")
             if (response.data) {
                 debugger

@@ -7,6 +7,7 @@ import 'primeflex/primeflex.css';
 import { useSelector } from "react-redux";
 import { Button } from "primereact/button";
 import '../../css/Menu.css'
+import { BackAndNextButtons } from "./backAndNextButtons";
 
 
 export const Menu = () => {
@@ -61,7 +62,15 @@ export const Menu = () => {
     return (
         <div className="card" >
         <Menubar model={currentUser? userMenuItems : defaultMenuItems} end={end} start={start} />
-        <Outlet />
-      </div>
+        <BackAndNextButtons /><Outlet /> 
+   
+   
+       
+       
+       
+       
+        </div>        
+
     );
+
 };

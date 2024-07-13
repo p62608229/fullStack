@@ -55,7 +55,9 @@ export const offerSlice = createSlice({
       state.currentUserOffers  = action.payload;
     }})
     .addCase(updateCurrentUserOneOffer.fulfilled, (state, action) => {{
+      state.currentUserOffers=state.currentUserOffers .filter(o => o.offerCode != action.payload.offerCode)
       state.currentUserOffers.push(action.payload);
+
     }})
     .addCase(deleteCurrentUserOneOffer.fulfilled, (state, action) => {{
       state.currentUserOffers = state.currentUserOffers.filter(o => o.offerCode != action.payload)

@@ -45,8 +45,12 @@ return requests
 export const updateCurrentUser = createAsyncThunk(
     'request/updateCurrentUserOneRequest',
     async (requestData) => {
+        console.log('request data', requestData)
+        debugger
         try {
-            const { requestCode, ...requestDataWithoutCode } = requestData;
+            const { RequestCode, ...requestDataWithoutCode } = requestData;
+            debugger
+console.log('------',requestData)
             const response = await axios.put(`${BASE_URL}/Request`, requestDataWithoutCode);
             console.log(response, "updateCurrentUserOneRequest response");
 

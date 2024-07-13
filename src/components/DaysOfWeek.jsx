@@ -27,24 +27,24 @@ const DaysOfWeek = (props) => {
 
   const formatHour = (value) => {
     if (!value || value === '') return '';
-  
+
     return value.replace(/(\d{2})/g, '$1:').slice(0, -1);
   };
   // const daysOfWeek = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
   // const englishDaysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   // const handleSave = () => {
-    // const daysToWorks = checkedDays.map((day) => {
-      // const dayIndex = englishDaysOfWeek.indexOf(day);
-      // return {
-        // offerCode: offerCode,
-        // date: daysOfWeek[dayIndex],
-        // fromhour: fromHours[day],
-        // tohour: toHours[day]
-      // };
-    // });
-    // setDaysToworks(daysToWorks);
+  // const daysToWorks = checkedDays.map((day) => {
+  // const dayIndex = englishDaysOfWeek.indexOf(day);
+  // return {
+  // offerCode: offerCode,
+  // date: daysOfWeek[dayIndex],
+  // fromhour: fromHours[day],
+  // tohour: toHours[day]
   // };
-  
+  // });
+  // setDaysToworks(daysToWorks);
+  // };
+
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   // const daysOfWeek = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
 
@@ -80,42 +80,42 @@ const DaysOfWeek = (props) => {
               {/* {fromHours[day] && !/^\d+$/.test(fromHours[day]) && <span style={{color: 'red'}}>הכנס שעות ללא סימני פיסוק</span>} */}
               {/* <label htmlFor={`toHour${index}`}>To hour </label> */}
               {/* <InputText */}
-                {/* // id={`toHour${index}`} */}
-                {/* // value={toHours[day]} */}
-                {/* // onChange={(e) => handleToHourChange(day, e.target.value)} */}
+              {/* // id={`toHour${index}`} */}
+              {/* // value={toHours[day]} */}
+              {/* // onChange={(e) => handleToHourChange(day, e.target.value)} */}
               {/* // /> */}
               {/* {toHours[day] && !/^\d+$/.test(toHours[day]) && <span style={{color: 'red'}}>הכנס שעות ללא סימני פיסוק</span>} */}
-              
 
 
 
 
 
 
-{fromHours[day] && !/^\d+$/.test(fromHours[day]) ? (
-    <span style={{color: 'red'}}>הכנס שעות ללא סימני פיסוק</span>
-) : fromHours[day] && !/^\d{2}:\d{2}$/.test(fromHours[day]) ? (
-    <span style={{color: 'red'}}>הכנס שעה במבנה HHMM</span>
-) : null}
 
-<label htmlFor={`toHour${index}`}>To hour </label>
-<InputText
-    id={`toHour${index}`}
-    value={toHours[day]}
-    onChange={(e) => handleToHourChange(day, e.target.value)}
-    style={{ width: '200px' }} // גודל קבוע לשדה TOHOUR
-/>
-{toHours[day] && !/^\d+$/.test(toHours[day]) ? (
-    <span style={{color: 'red'}}>הכנס שעות ללא סימני פיסוק</span>
-) : toHours[day] && !/^\d{2}:\d{2}$/.test(toHours[day]) ? (
-    <span style={{color: 'red'}}>הכנס שעה במבנה HHMM</span>
-) : null}
+              {fromHours[day] && !/^\d+$/.test(fromHours[day]) ? (
+                <span style={{ color: 'red' }}>הכנס שעות ללא סימני פיסוק</span>
+              ) : fromHours[day] && !/^\d{2}:\d{2}$/.test(fromHours[day]) ? (
+                <span style={{ color: 'red' }}>הכנס שעה במבנה HHMM</span>
+              ) : null}
 
-             </div>
+              <label htmlFor={`toHour${index}`}>To hour </label>
+              <InputText
+                id={`toHour${index}`}
+                value={toHours[day]}
+                onChange={(e) => handleToHourChange(day, e.target.value)}
+                style={{ width: '200px' }} // גודל קבוע לשדה TOHOUR
+              />
+              {toHours[day] && !/^\d+$/.test(toHours[day]) ? (
+                <span style={{ color: 'red' }}>הכנס שעות ללא סימני פיסוק</span>
+              ) : toHours[day] && !/^\d{2}:\d{2}$/.test(toHours[day]) ? (
+                <span style={{ color: 'red' }}>הכנס שעה במבנה HHMM</span>
+              ) : null}
+
+            </div>
           )}
         </div>
       ))}
-      
+
       <button onClick={handleSave}>Save the days</button>
     </div>
   );
