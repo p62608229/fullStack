@@ -1,0 +1,83 @@
+/* styles.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+  
+.section {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .about-container, .comment, footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .community-banner {
+    /* background-image: url('${process.env.PUBLIC_URL}/img/community.jpg'); */
+    /* background-size: cover;
+    background-position: center; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 20px;
+    height: 100%; /* להתאים את הגובה לגובה של ה-section */
+  }
+  
+  .community-banner-title {
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .community-banner-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .to-register-flow {
+    background-color: #443f3f;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%; /* להתאים את הגובה לגובה של ה-section */
+  }
+  
+  .register-button {
+    background-color: #fe4a6b;
+    color: white;
+    border: none;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-button:hover {
+    background-color: red;
+  }
+  
+  
+  
