@@ -55,7 +55,7 @@ export const Menu = () => {
         <div style={{textAlign: 'center', position: "center"}} >Hello {currentUser.firstName}</div> 
     </div>
     const start = <div> 
-        <div> <img src="/img/logo.png" alt="Logo" style={{ height: '30px', marginRight: '10px'}} /> 
+        <div> <img src="/img/logo.png" alt="Logo" style={{ width: '70px', height: '60px', marginRight: '10px'}} /> 
  </div>
     </div>
 
