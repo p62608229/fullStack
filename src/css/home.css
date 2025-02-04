@@ -26,8 +26,10 @@ body, html {
     align-items: center;
     text-align: center;
     box-sizing: border-box;
+    color: rgb(70, 2, 67);
   }
-
+  .comment{background-color: }
+  .about-container{color: #f61c43;}
   .community-banner {
     display: flex;
     flex-direction: column;
@@ -74,9 +76,13 @@ body, html {
   }
 
   .about-content {
-    margin-right: 100px;
+       text-align: left;
+ margin-right: 100px;
     margin-left: 100px;
-
+    text-indent: 100px;
+  }
+  .about-content p {
+    text-indent: 100px; /* יוצר שולי שמאלי של 100 פיקסלים */
   }
   
   

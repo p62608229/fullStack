@@ -17,7 +17,7 @@ const convertOffersToEventsArray = (offersArray) => {
                     type: "offer",
                     start: moment(start).toDate()                    ,
                     end: moment(end).toDate() ,
-                    title: item.note,
+                    // title: item.phone,
                     backgroundColor: 'rgb(236, 128, 128)'
                 });
             });
@@ -52,7 +52,7 @@ const convertRequestsToEventsArray = (requestArray) => {
                 start: moment(start).toDate() ,
                 type: "request",
                 end: moment(end).toDate() ,
-                title: request.note,
+                // title: request.note,
                 backgroundColor: 'rgb(174, 225, 225)'
             });
       }   

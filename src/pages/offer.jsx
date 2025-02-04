@@ -17,6 +17,7 @@ import { searchrequest } from '../Redux/slices/offer';
 import DaysOfWeek from '../components/DaysOfWeek';
 import { CurrentUserOffers } from '../components/profile/currentUserOffers';
 import { searchOffer } from '../Redux/slices/request';
+import { getAllCurrentUserOffers } from '../Redux/API/offer';
 
 
 
@@ -81,6 +82,8 @@ export const Offer = () => {
                 if (allRequest) {
                     console.log('all reqest', allRequest)
                     dispatch(searchrequest(allRequest));
+                    dispatch(getAllCurrentUserOffers(allRequest));
+
                     navigate("/cheqreq");
                 }
                 else
@@ -190,7 +193,8 @@ export const Offer = () => {
                                 </div> */}
                             {/* )} />    */}
 
-                            <Button type="submit" label="Submit" className="mt-2" />
+                            <Button type="submit" label="Submit" className="mt-2"     style={{backgroundColor:'rgb(171, 146, 165)'}}/>
+                            
                             {loginError ? <div style={{ padding: "5px", color: "red" }}>Some error in connected</div> : <></>}
 
 

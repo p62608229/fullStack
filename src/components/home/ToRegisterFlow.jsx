@@ -10,10 +10,10 @@ export const ToRegisterFlow = () => {
     navigate('/register');
   };
 
-  return (
-    <div className="to-register-flow">
-      <p>Register now and you can search for candidates or look for a job easily and conveniently!</p>
-      <Button className="register-button" label="Register" onClick={handleRegisterClick} />
-    </div>
-  );
+  // return (
+  //   <div className="to-register-flow">
+  //     <p>Register now and you can search for candidates or look for a job easily and conveniently!</p>
+  //     <Button className="register-button" label="Register" onClick={handleRegisterClick} />
+  //   </div>
+  // );
 }

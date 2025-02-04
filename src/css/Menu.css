@@ -1,22 +1,22 @@
 .p-menubar {
     color:  #443f3f;
-    background-color: #efece4;
+    background-color: #c4c2bb;
     border: none;
     font-weight: bold;
 
 }
 
 .color-pink {
-    color: #fe4a6b
+    color: #ad1477
 }
 
 .p-menuitem-text	{
-    color: #443f3f;
+    color: #ad1477 ;
 
 }
 
 .p-menuitem-icon	 {
-    color: #443f3f;
+    color: #ad1477;
 }
 
 

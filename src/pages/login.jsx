@@ -85,7 +85,8 @@ export const Login = () => {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Button type="submit" label="Submit" className="mt-2" />
+                            <Button type="submit" label="Submit" className="mt-2"         style={{    backgroundColor:'rgb(171, 146, 165)'}}/>
+                            
                             {loginError ? <div style={{ padding: "5px", color: "red" }}>Some error in connected</div> : <></>}
                         </form>
                     )} />

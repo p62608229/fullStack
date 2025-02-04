@@ -35,13 +35,15 @@ export const updateCurrentUserOneOffer = createAsyncThunk(
     'offer/updateCurrentUserOneOffer',
     async (offerData) => {
         try {
+            console.log("offerData",offerData);
             debugger
-            const {OfferCode,...offerDataWithoutCode}=offerData;
-            console.log(response, "updateCurrentUserOneOffer response");
+            //const {OfferCode,...offerDataWithoutCode}=offerData;
+            
+            // console.log(response, "updateCurrentUserOneOffer response");
     
-            const response = await axios.put(`${BASE_URL}/offer`, offerDataWithoutCode);
-    const offer= response.data
-return offer
+            const response = await axios.put(`${BASE_URL}/offer`, offerData);
+            const offer= response.data;
+            return offer;
 }
 catch (e) {
     console.log(e, 'updateCurrentUserOneRequest error');

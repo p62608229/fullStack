@@ -30,18 +30,25 @@ const DaysOfWeek = (props) => {
 
     return value.replace(/(\d{2})/g, '$1:').slice(0, -1);
   };
-  // const daysOfWeek = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
-  // const englishDaysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  // const handleSave = () => {
-  // const daysToWorks = checkedDays.map((day) => {
-  // const dayIndex = englishDaysOfWeek.indexOf(day);
-  // return {
-  // offerCode: offerCode,
-  // date: daysOfWeek[dayIndex],
-  // fromhour: fromHours[day],
-  // tohour: toHours[day]
+  // const daysOfWeek = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי','שבת'];
+  // const englishDaysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday'];
+  // const dayMapping = {
+  //   'Sunday': 'ראשון',
+  //   'Monday': 'שני',
+  //   'Tuesday': 'שלישי',
+  //   'Wednesday': 'רביעי',
+  //   'Thursday': 'חמישי',
+  //   'Friday': 'שישי',
+  //   'Saturday': 'שבת'
   // };
-  // });
+  // const handleSave = () => {
+  //   const daysToWorks = checkedDays.map((day) => ({
+  //     offerCode: offerCode,
+  //     date: dayMapping[day], // משתמש במפה להמיר את היום לעברית
+  //     fromhour: fromHours[day],
+  //     tohour: toHours[day]
+  //   }));
+  
   // setDaysToworks(daysToWorks);
   // };
 

@@ -9,13 +9,14 @@ import { Column } from 'primereact/column';
 import React, { useState } from 'react';
 import offer from "../Redux/slices/offer";
 import moment from 'moment';
-import {eventsByCode} from '../Redux/API/calendar'
+import {eventsByCode, eventsByCodeOffer} from '../Redux/API/calendar'
+import { getevents } from "../Redux/slices/calendar";
 
 
 
 
 
-export const CheckReq = ({ requestss }) => {
+export const CheckReq = () => {
 
     const navigate = useNavigate()  
     const dispatch = useDispatch()
@@ -30,11 +31,15 @@ export const CheckReq = ({ requestss }) => {
    
    
    
-    const clickMeet=(rowData)=>{
-        dispatch(eventsByCode({ RCode: offer.requestCode, offerCode: offer.offerCode }));
-        navigate("/calendar");
-
+    const clickMeet=(rowData,date)=>{
+        dispatch(eventsByCode())
+        dispatch(eventsByCodeOffer({ OCode: offer.offerCode, RequestCode: rowData.RequestCode }));
+        console.log("date",date);
+        // dispatch(getevents({ RCode: request.requestCode, offerCode: rowData.offerCode }));
+        // dispatch(getAllEvents())
+        navigate(`/calendar?date=${date}`);
     }
+
     const [expandedRows, setExpandedRows] = useState([]);
     const requests = useSelector(s => s.offer.searchrequest);
     const professions = useSelector(s => s.profession.profession);
@@ -145,8 +150,8 @@ export const CheckReq = ({ requestss }) => {
                 {/* Details column */}
                 <Column expander body={detailsTemplate} />
                 <Column headerStyle={{ width: '8rem' }} body={(rowData) => (
-      <button onClick={()=>clickMeet(rowData)}>תואמה פגישה               
-      </button>
+                   <button onClick={()=>clickMeet(rowData,rowData.date)}>תואמה פגישה               
+                </button>
   )} />
                 {/* <Column expander body={(rowData)=>(isRowExpanded(rowData)? detailsTemplate : <div></div>)
                 } /> */}

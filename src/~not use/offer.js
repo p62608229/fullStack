@@ -45,7 +45,7 @@ export const Offerr = () => {
     }
 
     const hundleSubmit = async () => {
-        const Offer = { offerUserId: currentUser.id, PriceForWork, Note, PricePerVisit, DateTime, professionCode, FromHour, ToHour }
+        const Offer = { offerUserId: currentUser.id, PriceForWork, PricePerVisit, DateTime, professionCode, FromHour, ToHour }
         // const DayTo = {DateTime,FromHour,ToHour}
         const url = `${BASE_URL}/Offer/newoffer`
         const response = await axios.put(url, Offer);

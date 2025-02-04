@@ -191,7 +191,7 @@ export const EditProfile = () => {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Button type="submit" label="Submit" className="mt-2" />
+                            <Button type="submit" label="Submit" className="mt-2" style={{    backgroundColor:'rgb(171, 146, 165)'}} />
                             {newUserError ? <div style={{ padding: "5px", color: "red" }}>{newUserError}</div> : <></>}
                         </form>
                     )} />

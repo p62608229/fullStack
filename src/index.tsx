@@ -5,7 +5,9 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { Provider } from 'react-redux';
 import { store } from './Redux/store.js';
-
+import 'primereact/resources/themes/saga-blue/theme.css';  // נושא
+import 'primereact/resources/primereact.min.css';         // סגנונות של PrimeReact
+import 'primeicons/primeicons.css';                       // אייקונים
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 

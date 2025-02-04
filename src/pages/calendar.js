@@ -53,17 +53,19 @@ export const UserCalendar = () => {
             onSelectEvent={handleEventClick}
           />
           {selectedEvent && (
+            
             <div style={{ marginTop: '20px', borderTop: '1px solid #ccc', textAlign: "center", padding: '20px', backgroundColor: selectedEvent.backgroundColor }}>
               <h3>Event Details:</h3>
               {selectedEvent.userO && <p>Name: {selectedEvent.userO.firstName} {selectedEvent.userO.LastName}</p>} 
                            <p>Date: {moment(selectedEvent.start).format('DD/MM/YYYY')}</p>
               <p>Hours: {moment(selectedEvent.start).format('HH:mm')} - {moment(selectedEvent.end).format('HH:mm')}</p>
-              <p>Note: {selectedEvent.note}</p>
-              <p>proffesion: {selectedEvent.profession8}</p>
+              {/* <p>Note: {selectedEvent.note}</p> */}
+              <p>phone: {"0578789698"}</p>
+              {/* <p>proffesion: {selectedEvent.profession8}</p> */}
               
   {/* {professions && professions.find(p => p.professionCode == rowData.profession)?.profession1} */}
               {selectedEvent.matchedName && <p style={{ backgroundColor: "gray", padding: "5px" }}> {selectedEvent.type === "request" ? "Offers" : "Requesting"} details:
-                <p>Name: {selectedEvent.matchedName} | Phone: {selectedEvent.matchedPhon} | Email: {selectedEvent.matchedEmail}</p>
+                <p>Name: {selectedEvent.matchedName} | Phone: {selectedEvent.Phon} | Email: {selectedEvent.matchedEmail}</p>
               </p>}
               <p></p>
             </div>

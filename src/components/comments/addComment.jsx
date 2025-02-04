@@ -7,10 +7,13 @@ import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { AddComment } from '../../Redux/API/comment';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { Rating } from 'primereact/rating';
+import { useState } from 'react';
 
 
 export const Addcomment = (props) => {
 
+const [value,setValue]=useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,7 +25,7 @@ export const Addcomment = (props) => {
     if (!data.commentv) {
       errors.commentv = 'required provider comment.';
     }
-
+debugger
     return errors;
 
 };
@@ -32,7 +35,10 @@ export const Addcomment = (props) => {
       namecomment: currentUser.name,
       ContentCommentv: data.commentv,
       CommentUserId: currentUser.id,
+rating: value
     }
+    console.log(newComment, "Data sent to API");
+
     dispatch(AddComment(newComment))
     if (props.closeMe)
       props.closeMe()
@@ -50,7 +56,7 @@ export const Addcomment = (props) => {
       <div className="flex justify-content-center">
           <div className="card">
               <Form onSubmit={onSubmit} initialValues={{ commentv: '' }} validate={validate} render={({ handleSubmit }) => (
-                  <form onSubmit={handleSubmit} className="p-fluid">
+                  <form onSubmit={handleSubmit} className="p-fluid" >
                       <Field name="commentv" render={({ input, meta }) => (
                           <div className="field">
                               <span className="p-float-label">
@@ -60,7 +66,10 @@ export const Addcomment = (props) => {
                               {getFormErrorMessage(meta)}
                           </div>
                       )} />
-                      <Button type="submit" label="Submit" className="mt-2" />
+                       <Rating value={value} onChange={(e) => setValue(e.value)} style={{ width: '70px', height: '90px', marginRight: '30px',marginLeft:'120px'} } />
+                      <Button type="submit"  label="Submit" className="mt-2" style={{
+                   backgroundColor:'rgb(171, 146, 165)'}}/>
+                     
                   </form>
               )} />
           </div>

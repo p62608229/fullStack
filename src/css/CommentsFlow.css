@@ -1,19 +1,42 @@
 .comments-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
-}
-
-.comment {
-    margin-bottom: 10px;
+    justify-content: center;
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .comment {
     text-align: center;
-    color: rgb(174, 225, 225);
-}
+    background-color: #f3eff5;
+    padding: 50px;
+    border-radius: 50px;
 
-.content {
-    color: #fe4a6b
-}
-
-.name {
-    color: rgb(255, 255, 255);
-}
+  }
+  
+  .prev-arrow, .next-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    background-color: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  .prev-arrow {
+    left: 10px;
+  }
+  
+  .next-arrow {
+    right: 10px;
+  }
+  
+  button:disabled {
+    color: #ccc; /* אם הכפתור מושבת, יהיה בצבע אפור */
+    cursor: not-allowed;
+  }
+  

@@ -43,6 +43,7 @@ export const commentSlice = createSlice({
       .addCase(AddComment.fulfilled, (state, action) => {
         state.status = "success"
         state.comments.push(action.payload)
+        console.log("עיייייייי",state.comments)
       })
       .addCase(AddComment.rejected, (state, action) => {
         state.status = "error"

@@ -50,8 +50,12 @@ export const Register = () => {
             const currentUser = response.data
             console.log(response.data, "response")
             dispatch(updateCurrentUser(currentUser));
+      
             if (response.data) {
+               
+
                 navigate("/");
+              
             }
             else {
                 setnewUserError("some error")
@@ -190,7 +194,8 @@ export const Register = () => {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Button type="submit" label="Submit" className="mt-2" />
+                            <Button type="submit" label="Submit" className="mt-2" style={{ backgroundColor:'rgb(146, 161, 171)'}}/>
+                           
                             {newUserError ? <div style={{ padding: "5px", color: "red" }}>{newUserError}</div> : <></>}
                         </form>
                     )} />

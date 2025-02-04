@@ -21,6 +21,7 @@ import { profession } from '../Redux/API/profession';
 import { searchrequest } from '../Redux/slices/offer';
 
 import { getAllEvents} from '../Redux/API/calendar'
+import calendar, { getevents } from '../Redux/slices/calendar';
 
 
 export const Request = () => {
@@ -73,7 +74,9 @@ export const Request = () => {
 
     const onSubmit = async (data, form) => {
 // dispatch לדחוף כאן את הבקשה ליומןdispatch(newreq)
-dispatch(getAllEvents())
+dispatch(getevents())
+
+
 console.log('data', data)
         debugger
 
@@ -256,7 +259,8 @@ console.log('data', data)
                                 </div>
                             )} /> */}
 
-                            <Button type="submit" label="Submit" className="mt-2" />
+                            <Button type="submit" label="Submit" className="mt-2" style={{   backgroundColor:'rgb(171, 146, 165)'}}/>
+ 
                             {loginError ? <div style={{ padding: "5px", color: "red" }}>Some error in connected</div> : <></>}
                         </form>
                     )} />

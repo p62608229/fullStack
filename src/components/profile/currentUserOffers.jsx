@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
+import { Form, Field } from 'react-final-form';
 
 import { deleteCurrentUserOneOffer, getAllCurrentUserOffers, updateCurrentUserOneOffer } from '../../Redux/API/offer';
 import { InputText } from 'primereact/inputtext';
@@ -14,20 +15,32 @@ import DaysOfWeek from '../../components/DaysOfWeek';
 import { Checkbox } from 'primereact/checkbox';
 import { updateOneCurrentUserOffers } from '../../Redux/slices/offer';
 import { updateCurrentUser } from '../../Redux/slices/users';
+import { Alert } from 'react-bootstrap';
+import { classNames } from 'primereact/utils';
 
 
 
 export const CurrentUserOffers = () => {
-  const formatDate = (rowData) =>{  
-    const days = rowData.daysToworks.map(q => q.date).join(",")
-    return days
-  }
-
+  // const formatDate = (rowData) =>{  
+  //   const days = rowData.daysToworks.map(q => q.date).join(",")
+  //   return days
+  // }
+  const formatDate = (rowData) => {
+       if (rowData && rowData.daysToworks) {
+      const days = rowData.daysToworks.map(q => q.date).join(",");
+      return days;
+    }}
+    const formatDatee = (rowData) => {
+      if (rowData && rowData.daysToworks) {
+     const days = rowData.daysToworks.map(q => q.fromhour).join(",");
+     return days;
+   }}
   // const formatDate = (rowData) => moment(rowData.daysToworks.map(dayObj => dayObj.date));
   // const days = rowData.daysToworks.map(dayObj => dayObj.date)
   const [editRowData, setEditRowData] = useState(null); // השימוש במשתנה לאירוע שורתי עריכה בלב 
   const [daysToworks, setDaysToworks] = useState()
-  
+  const [error, setError] = useState('');
+
 const offerCode = useSelector(s => s.users.currentUser.id);
 const [checkedDays, setCheckedDays] = useState([]);
   const dispatch = useDispatch();
@@ -38,6 +51,7 @@ const [checkedDays, setCheckedDays] = useState([]);
    const [ errors,setErrors] = useState({});
   const [addToCalnderStatus, setAddToCalnderStatus] = useState(false);
   const toast = React.useRef(null);
+    const [value, setValue] = useState(); // משתמש באסטייט לאיתחול השדה ולניהול שינויים
 
   useEffect(() => {
     debugger
@@ -241,48 +255,52 @@ const [checkedDays, setCheckedDays] = useState([]);
     );
   }
   
+  const renderInput = (rowData, field) => {
+    const handleInputChange = (e) => {
 
+    const newValue = e.target.value; // הערך החדש שנכנס
+    setValue(newValue); // עדכון הערך בסטייט המקומי
 
+    const updatedRowData = { ...rowData, [field]: newValue }; // עדכון השורה המקורית עם הערך החדש
+    dispatch(updateOneCurrentUserOffers(updatedRowData)); // שליחת פעולת Redux לעדכון המצב הגלובלי
+  };
 
+  return (
+    <div className="p-field">
+      <label htmlFor={field}></label>
+      <InputText
+        id={field} 
+        value={value}
+        onChange={handleInputChange}
+        placeholder="Enter a comment"
+      />
+    </div>
+  );
+};
+const renderInputText2 = ({ rowData, field }) => {
 
+const handleTimeChange = (newValue) => {
+  if (newValue.length > 4) {
+    setError('יש להזין עד 4 ספרות בלבד');
+  } else {
+    setError('');
+    const updatedRowData = { ...rowData, [field]: newValue };
+    dispatch(updateOneCurrentUserOffers(updatedRowData))
+     
+  
+  }
+};
 
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
-
-  const renderInputText2= (rowData, field) => {
-    const handleTimeChange = (newValue) => {
- 
-      if(newValue >999){
-
-      dispatch(updateOneCurrentUserOffers({
-        ...rowData,
-        [field]: newValue
-      }))
-       
-      }}
-   
- 
- 
-      return (
-        <InputText
-          onChange={(e) => handleTimeChange(e.target.value)}
-           placeholder="price"
-        />
-        
-      );
-       }
- 
- 
+return (
+  <div>
+    <InputText
+      onChange={(e) => handleTimeChange(e.target.value)}
+      placeholder="hour in HHMM"
+    />
+    {error && <div style={{ color: 'red' }}>{error}</div>}
+  </div>
+);
+}
  
  
   // const renderDaysToWorkEditor = (props) => {
@@ -320,20 +338,32 @@ const [checkedDays, setCheckedDays] = useState([]);
     // );
   // }
 
-  const onRowEditSave = (event) => {
-    const errors = validateData(editRowData);
-    if (Object.keys(errors).length === 0) {
-      dispatch(updateCurrentUserOneOffer(editRowData));
-      showToast('success', 'Success', 'Row edited successfully');
-      setEditRowData(null); // איפוס השורה הנוכחית לאחר השמירה
-    } else {
-      setErrors(errors);
-    }
-  };
+  // const onRowEditSave = (event) => {
+    // const errors = validateData(editRowData);
+    // if (Object.keys(errors).length === 0) {
+      // dispatch(updateCurrentUserOneOffer(editRowData));
+      // showToast('success', 'Success', 'Row edited successfully');
+      // setEditRowData(null); // איפוס השורה הנוכחית לאחר השמירה
+    // } else {
+      // setErrors(errors);
+    // }
+  // };
   const onRowEditComplete = (event) => {
+    const newData = {
+      ...event.data,
+      daysToworks: [
+        {
+          dayCode: 0,
+          offerCode: 0,
+          date: "sunday", // Replace "string" with the actual date value if known
+          fromhour: 0,
+          tohour: 0
+        }
+      ]
+    };
     debugger
-    console.log("event",event.data)
-    dispatch(updateCurrentUserOneOffer(event.data));
+    console.log("event********************",newData)
+    dispatch(updateCurrentUserOneOffer(newData));
     showToast('success', 'Success', 'Row edited successfully');
     console.log("----------12")
     // dispatch(searchOffer(event.data));
@@ -350,16 +380,19 @@ const [checkedDays, setCheckedDays] = useState([]);
     <div style={{ margin: "0 40px", width: "90%" }}>
       <Toast ref={toast} />
       <DataTable value={offers}   editMode="row"  onRowEditComplete= {onRowEditComplete} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-        <Column field="offerCode" header="Offer Code"></Column>
+        {/* <Column field="offerCode" header="Offer Code"></Column> */}
         {/* <Column field="offerUserId" header="Offer User ID"></Column> */}
         <Column field="profession" header="Profession" body={renderProfession}></Column>
         <Column field="priceForWork" header="Price for Work"editor={(props) => renderInputText(props.rowData, 'priceForWork')}></Column>
-        <Column field="pricePerVisit" header="Price per Visit" editor={(props) => renderInputText2(props.rowData, 'pricePerVisit')}></Column>
-        <Column field="date" header="Days to Work" body={formatDate}editor={(props) => renderDaysToWork(props.rowData, 'Days to Work')}></Column>
-
+        <Column field="pricePerVisit" header="Price per Visit" editor={(props) => renderInputText(props.rowData, 'pricePerVisit')}></Column>
+        {/* <Column field="date" header="Days to Work" body={formatDate}editor={(props) => renderDaysToWork(props.rowData, 'Days to Work')}></Column> */}
+  
+           <Column field="date" header="Days to Work" body={formatDate}></Column>
+          <Column field='note'header="note" editor={(props) => renderInput(props.rowData, 'note')}></Column>
         {/* <Column field="date" header="Days To Work" body={formatDate} editor={renderDaysToWorkEditor}></Column> */}
         {/* <Column field="date" header="Days To Work" body={formatDate} ></Column> */}
-        <Column field="fromhour" header="From Hour" editor={(props) => renderInputText(props.rowData, 'fromhour')}></Column>
+        {/* <Column field="fromhour" header="From Hour" editor={(props) => renderInputText2(props.rowData, 'fromhour')}></Column> */}
+        <Column field="fromhour" header="From Hour" body={formatDatee}></Column>
 
         <Column header="" body={renderAddToCalendarButton}></Column>
         <Column header="" body={renderDeleteButton}></Column>

@@ -1,0 +1,12 @@
+/* עיצוב הכוכבים */
+.p-rating .p-rating-icon {
+    color: #930762; /* צבע הכוכב */
+  }
+  
+  .p-rating .p-rating-icon.p-filled {
+    color: #770472; /* צבע כוכב מלא */
+  }
+  
+  .p-rating .p-rating-icon.p-empty {
+    color: #ddd; /* צבע כוכב ריק */
+  }

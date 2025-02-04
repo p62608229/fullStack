@@ -17,6 +17,11 @@ export const CalendarSlice = createSlice({
     deleteCurrentUserCalendar: (state) => {
       state.events = null
     },
+    getevents:(state,action)=>{
+      console.log("action",action);
+      state.events = null
+
+    }
    },
   extraReducers: (builder) => {
     builder
@@ -34,6 +39,6 @@ export const CalendarSlice = createSlice({
   
 });
 
-export const { deleteCurrentUserCalendar} = CalendarSlice.actions
+export const { deleteCurrentUserCalendar,getevents} = CalendarSlice.actions
 
 export default CalendarSlice.reducer

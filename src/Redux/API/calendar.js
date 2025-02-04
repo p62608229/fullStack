@@ -39,5 +39,20 @@ export const eventsByCode = createAsyncThunk(
     }
   }
 );
+export const eventsByCodeOffer = createAsyncThunk(
+  'offer/UserCoderequest',
+  async ({ OCode, RequestCode }, thunkAPI) => {
+    try {
+        const url = `${BASE_URL}/offer/UserCoderequest`
+      const response = await axios.post(url, null, { params: { OCode, RequestCode } });
+      console.log(response, "UserCodeRequest");
+
+      return response.data;
+    } catch (error) {
+      console.error(error, "updateCurrentUserOneOffer error");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 
